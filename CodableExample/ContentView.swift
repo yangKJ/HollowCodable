@@ -18,7 +18,7 @@ struct ContentView: View {
     @State var longText: String = (try? Self.datas.toJSONString(Model.self, prettyPrint: true)) ?? "hellow word!"
     
     var color = Color(Self.datas.randomElement()?.color ?? .blue)
-    var backgroundColor = Color(Self.datas.randomElement()?.backgroundColor ?? .blue)
+    var backgroundColor = Color(Self.datas.randomElement()?.background_color ?? .blue)
     
     var body: some View {
         VStack {

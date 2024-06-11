@@ -37,7 +37,7 @@ struct YourModel: MappingCodable {
     var amount: NSDecimalNumber?
     
     @RGBAColorCoding
-    var backgroundColor: HollowColor?
+    var background_color: HollowColor?
     
     var dict: DictAA?
     
@@ -50,7 +50,6 @@ struct YourModel: MappingCodable {
         return [
             ReplaceKeys.init(replaceKey: "color", originalKey: "hex_color"),
             ReplaceKeys.init(replaceKey: "url", originalKey: "github"),
-            ReplaceKeys.init(replaceKey: "backgroundColor", originalKey: "background_color"),
         ]
     }
 }
@@ -64,7 +63,6 @@ struct YourModel: MappingCodable {
     "data": [{
         "id": 2,
         "title": "Harbeth Framework",
-        "imageURL": "https://upload-images.jianshu.io/upload_images/1933747-4bc58b5a94713f99.jpeg",
         "github": "https://github.com/yangKJ/Harbeth",
         "amount": "23.6",
         "hex_color": "#FA6D5B",
@@ -84,7 +82,6 @@ struct YourModel: MappingCodable {
     }, {
         "id": 7,
         "title": "Network Framework",
-        "imageURL": "https://upload-images.jianshu.io/upload_images/1933747-4bc58b5a94713f99.jpeg",
         "github": "https://github.com/yangKJ/RxNetworks",
         "amount": 120.3,
         "hex_color": "#1AC756",

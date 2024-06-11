@@ -12,7 +12,6 @@ struct Model: MappingCodable {
     @Immutable
     var id: Int
     var title: String?
-    var imageURL: URL?
     
     var url: URL?
     
@@ -41,7 +40,7 @@ struct Model: MappingCodable {
     var amount: NSDecimalNumber?
     
     @RGBAColorCoding
-    var backgroundColor: HollowColor?
+    var background_color: HollowColor?
     
     var dict: DictAA?
     
@@ -54,7 +53,6 @@ struct Model: MappingCodable {
         return [
             ReplaceKeys.init(replaceKey: "color", originalKey: "hex_color"),
             ReplaceKeys.init(replaceKey: "url", originalKey: "github"),
-            ReplaceKeys.init(replaceKey: "backgroundColor", originalKey: "background_color"),
         ]
     }
 }
