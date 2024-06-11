@@ -12,6 +12,10 @@ import Foundation
     
     public var wrappedValue: T?
     
+    public init(_ wrappedValue: T?) {
+        self.wrappedValue = wrappedValue
+    }
+    
     public init(from decoder: Decoder) throws {
         self.wrappedValue = try EnumDecoding<T>(from: decoder).wrappedValue
     }

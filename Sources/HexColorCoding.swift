@@ -18,6 +18,10 @@ public typealias HollowColor = NSColor
     
     public var wrappedValue: HollowColor?
     
+    public init(_ wrappedValue: HollowColor?) {
+        self.wrappedValue = wrappedValue
+    }
+    
     public init(from decoder: Decoder) throws {
         self.wrappedValue = try HexColorDecoding(from: decoder).wrappedValue
     }

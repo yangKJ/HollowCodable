@@ -11,6 +11,10 @@ import Foundation
     
     public var wrappedValue: Data?
     
+    public init(_ wrappedValue: Data?) {
+        self.wrappedValue = wrappedValue
+    }
+    
     public init(from decoder: Decoder) throws {
         self.wrappedValue = try Base64DataDecoding(from: decoder).wrappedValue
     }

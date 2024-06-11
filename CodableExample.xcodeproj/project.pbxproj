@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		876D56A32C18333C0006E25E /* CustomizedCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A22C18333C0006E25E /* CustomizedCoding.swift */; };
+		876D56A52C183D6F0006E25E /* RGBAColorCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A42C183D6F0006E25E /* RGBAColorCoding.swift */; };
+		876D56A72C1845470006E25E /* CGRectCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A62C1845470006E25E /* CGRectCoding.swift */; };
 		F76AF7902C16A29A005DC327 /* CodableExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF78F2C16A29A005DC327 /* CodableExampleApp.swift */; };
 		F76AF7922C16A29A005DC327 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7912C16A29A005DC327 /* ContentView.swift */; };
 		F76AF7942C16A29B005DC327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F76AF7932C16A29B005DC327 /* Assets.xcassets */; };
@@ -26,7 +29,7 @@
 		F76AF7C22C16A415005DC327 /* FormatterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7AB2C16A415005DC327 /* FormatterConverter.swift */; };
 		F76AF7C32C16A415005DC327 /* HexColorCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7AC2C16A415005DC327 /* HexColorCoding.swift */; };
 		F76AF7C42C16A415005DC327 /* Hollow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7AD2C16A415005DC327 /* Hollow.swift */; };
-		F76AF7C52C16A415005DC327 /* Fixedable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7AE2C16A415005DC327 /* Fixedable.swift */; };
+		F76AF7C52C16A415005DC327 /* Immutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7AE2C16A415005DC327 /* Immutable.swift */; };
 		F76AF7C62C16A415005DC327 /* ISO8601DateCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7AF2C16A415005DC327 /* ISO8601DateCoding.swift */; };
 		F76AF7C72C16A415005DC327 /* KeyedDecodingContainer+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7B02C16A415005DC327 /* KeyedDecodingContainer+Ext.swift */; };
 		F76AF7C82C16A415005DC327 /* KeyedEncodingContainer+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7B12C16A415005DC327 /* KeyedEncodingContainer+Ext.swift */; };
@@ -42,6 +45,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		876D56A22C18333C0006E25E /* CustomizedCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizedCoding.swift; sourceTree = "<group>"; };
+		876D56A42C183D6F0006E25E /* RGBAColorCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAColorCoding.swift; sourceTree = "<group>"; };
+		876D56A62C1845470006E25E /* CGRectCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectCoding.swift; sourceTree = "<group>"; };
 		F76AF78C2C16A29A005DC327 /* CodableExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodableExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F76AF78F2C16A29A005DC327 /* CodableExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExampleApp.swift; sourceTree = "<group>"; };
 		F76AF7912C16A29A005DC327 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,7 +69,7 @@
 		F76AF7AB2C16A415005DC327 /* FormatterConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatterConverter.swift; sourceTree = "<group>"; };
 		F76AF7AC2C16A415005DC327 /* HexColorCoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexColorCoding.swift; sourceTree = "<group>"; };
 		F76AF7AD2C16A415005DC327 /* Hollow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hollow.swift; sourceTree = "<group>"; };
-		F76AF7AE2C16A415005DC327 /* Fixedable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fixedable.swift; sourceTree = "<group>"; };
+		F76AF7AE2C16A415005DC327 /* Immutable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Immutable.swift; sourceTree = "<group>"; };
 		F76AF7AF2C16A415005DC327 /* ISO8601DateCoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISO8601DateCoding.swift; sourceTree = "<group>"; };
 		F76AF7B02C16A415005DC327 /* KeyedDecodingContainer+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyedDecodingContainer+Ext.swift"; sourceTree = "<group>"; };
 		F76AF7B12C16A415005DC327 /* KeyedEncodingContainer+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "KeyedEncodingContainer+Ext.swift"; sourceTree = "<group>"; };
@@ -139,21 +145,24 @@
 				F76AF7A22C16A415005DC327 /* Base64DataCoding.swift */,
 				F76AF7A32C16A415005DC327 /* BoolCoding.swift */,
 				F76AF7A42C16A415005DC327 /* BoolHasCoding.swift */,
+				876D56A62C1845470006E25E /* CGRectCoding.swift */,
+				876D56A22C18333C0006E25E /* CustomizedCoding.swift */,
 				F76AF7A52C16A415005DC327 /* CustomWrappers.swift */,
 				F76AF7A62C16A415005DC327 /* DateFormatterCoding.swift */,
 				F76AF7A72C16A415005DC327 /* DecimalNumberCoding.swift */,
 				F76AF7A82C16A415005DC327 /* Decodering.swift */,
 				F76AF7A92C16A415005DC327 /* Encodable+Ext.swift */,
 				F76AF7AA2C16A415005DC327 /* EnumCoding.swift */,
-				F76AF7AE2C16A415005DC327 /* Fixedable.swift */,
 				F76AF7AB2C16A415005DC327 /* FormatterConverter.swift */,
 				F76AF7AC2C16A415005DC327 /* HexColorCoding.swift */,
 				F76AF7AD2C16A415005DC327 /* Hollow.swift */,
+				F76AF7AE2C16A415005DC327 /* Immutable.swift */,
 				F76AF7AF2C16A415005DC327 /* ISO8601DateCoding.swift */,
 				F76AF7B02C16A415005DC327 /* KeyedDecodingContainer+Ext.swift */,
 				F76AF7B12C16A415005DC327 /* KeyedEncodingContainer+Ext.swift */,
 				F76AF7B22C16A415005DC327 /* MappingCodable.swift */,
 				F76AF7B32C16A415005DC327 /* ReplaceKeys.swift */,
+				876D56A42C183D6F0006E25E /* RGBAColorCoding.swift */,
 				F76AF7B42C16A415005DC327 /* Since1970DateCoding.swift */,
 				F76AF7D52C16D593005DC327 /* StringRepresentation.swift */,
 				F76AF7B52C16A415005DC327 /* TransientCodable.swift */,
@@ -235,7 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F76AF7C72C16A415005DC327 /* KeyedDecodingContainer+Ext.swift in Sources */,
-				F76AF7C52C16A415005DC327 /* Fixedable.swift in Sources */,
+				F76AF7C52C16A415005DC327 /* Immutable.swift in Sources */,
 				F76AF7922C16A29A005DC327 /* ContentView.swift in Sources */,
 				F76AF7BA2C16A415005DC327 /* BoolCoding.swift in Sources */,
 				F76AF7D62C16D593005DC327 /* StringRepresentation.swift in Sources */,
@@ -249,8 +258,11 @@
 				F76AF7CC2C16A415005DC327 /* TransientCodable.swift in Sources */,
 				F76AF7C82C16A415005DC327 /* KeyedEncodingContainer+Ext.swift in Sources */,
 				F76AF7CB2C16A415005DC327 /* Since1970DateCoding.swift in Sources */,
+				876D56A32C18333C0006E25E /* CustomizedCoding.swift in Sources */,
+				876D56A52C183D6F0006E25E /* RGBAColorCoding.swift in Sources */,
 				F76AF7902C16A29A005DC327 /* CodableExampleApp.swift in Sources */,
 				F76AF7BF2C16A415005DC327 /* Decodering.swift in Sources */,
+				876D56A72C1845470006E25E /* CGRectCoding.swift in Sources */,
 				F76AF7BD2C16A415005DC327 /* DateFormatterCoding.swift in Sources */,
 				F76AF7B72C16A415005DC327 /* AnyCodingKey.swift in Sources */,
 				F76AF7C32C16A415005DC327 /* HexColorCoding.swift in Sources */,

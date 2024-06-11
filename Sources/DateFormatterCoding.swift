@@ -39,6 +39,10 @@ extension DateFormatter: FormatterConverter { }
     
     public var wrappedValue: Date?
     
+    public init(_ wrappedValue: Date?) {
+        self.wrappedValue = wrappedValue
+    }
+    
     public init(from decoder: Decoder) throws {
         self.wrappedValue = try DateFormatterDecoding<D>(from: decoder).wrappedValue
     }

@@ -8,8 +8,8 @@
 import Foundation
 
 /// Made immutable via property wrapper composition, It can be used with other encoding/decoding.
-/// Like this: `@Fixedable @BoolCoding var bar: Bool?`
-@propertyWrapper public struct Fixedable<T>: ImmutableGetWrapper {
+/// Like this: `@Immutable @BoolCoding var bar: Bool?`
+@propertyWrapper public struct Immutable<T>: ImmutableGetWrapper {
     
     public let wrappedValue: T
     
@@ -18,12 +18,12 @@ import Foundation
     }
 }
 
-extension Fixedable: Encodable, TransientEncodable where T: Encodable { }
-extension Fixedable: Decodable, TransientDecodable where T: Decodable { }
-extension Fixedable: TransientCodable where T: Codable { }
+extension Immutable: Encodable, TransientEncodable where T: Encodable { }
+extension Immutable: Decodable, TransientDecodable where T: Decodable { }
+extension Immutable: TransientCodable where T: Codable { }
 
-extension Fixedable: Equatable where T: Equatable { }
-extension Fixedable: Hashable where T: Hashable { }
+extension Immutable: Equatable where T: Equatable { }
+extension Immutable: Hashable where T: Hashable { }
 
 public protocol ImmutableGetWrapper {
     associatedtype T

@@ -25,6 +25,10 @@ public extension Hollow {
     
     public var wrappedValue: Date?
     
+    public init(_ wrappedValue: Date?) {
+        self.wrappedValue = wrappedValue
+    }
+    
     public init(from decoder: Decoder) throws {
         self.wrappedValue = try Since1970DateDecoding<D>(from: decoder).wrappedValue
     }

@@ -11,6 +11,10 @@ import Foundation
     
     public var wrappedValue: Bool
     
+    public init(_ wrappedValue: Bool) {
+        self.wrappedValue = wrappedValue
+    }
+    
     public init(from decoder: Decoder) throws {
         self.wrappedValue = try BoolHasDecoding<Def>(from: decoder).wrappedValue
     }

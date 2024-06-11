@@ -11,6 +11,10 @@ import Foundation
     
     public var wrappedValue: NSDecimalNumber?
     
+    public init(_ wrappedValue: NSDecimalNumber?) {
+        self.wrappedValue = wrappedValue
+    }
+    
     public init(from decoder: Decoder) throws {
         self.wrappedValue = try DecimalNumberDecoding(from: decoder).wrappedValue
     }

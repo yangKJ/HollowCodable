@@ -9,14 +9,14 @@ import Foundation
 //import HollowCodable
 
 struct Model: MappingCodable {
-    @Fixedable
+    @Immutable
     var id: Int
     var title: String?
     var imageURL: URL?
     
     var url: URL?
     
-    @Fixedable @BoolCoding
+    @Immutable @BoolCoding
     var bar: Bool?
     
 //    @DefaultFalseCoding
@@ -40,6 +40,9 @@ struct Model: MappingCodable {
     @DecimalNumberCoding
     var amount: NSDecimalNumber?
     
+    @RGBAColorCoding
+    var backgroundColor: HollowColor?
+    
     var dict: DictAA?
     
     struct DictAA: MappingCodable {
@@ -47,12 +50,11 @@ struct Model: MappingCodable {
         var amount: NSDecimalNumber?
     }
     
-    //var list: [DictAA]?
-    
     static var codingKeys: [ReplaceKeys] {
         return [
             ReplaceKeys.init(replaceKey: "color", originalKey: "hex_color"),
             ReplaceKeys.init(replaceKey: "url", originalKey: "github"),
+            ReplaceKeys.init(replaceKey: "backgroundColor", originalKey: "background_color"),
         ]
     }
 }

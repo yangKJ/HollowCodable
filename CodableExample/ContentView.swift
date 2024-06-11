@@ -18,12 +18,14 @@ struct ContentView: View {
     @State var longText: String = (try? Self.datas.toJSONString(Model.self, prettyPrint: true)) ?? "hellow word!"
     
     var color = Color(Self.datas.randomElement()?.color ?? .blue)
+    var backgroundColor = Color(Self.datas.randomElement()?.backgroundColor ?? .blue)
     
     var body: some View {
         VStack {
             Text("Test Codable")
                 .font(.body)
                 .italic()
+                .background(backgroundColor)
             TextEditor(text: $longText)
                 .foregroundColor(color)
                 .font(.custom("HelveticaNeue", size: 18))
