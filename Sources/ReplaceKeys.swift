@@ -13,25 +13,40 @@ public struct ReplaceKeys {
     public let replaceKey: String
     
     /// The old coding key will be replaced.
-    public let originalKey: String
+    public let keys: [String]
     
-    public init(replaceKey: String, originalKey: String) {
+    public init(replaceKey: String, originalKey: String...) {
         self.replaceKey = replaceKey
-        self.originalKey = originalKey
+        self.keys = originalKey
+    }
+    
+    public init(location: CodingKey, keys: [String]) {
+        self.replaceKey = location.stringValue
+        self.keys = keys
+    }
+    
+    public init(location: CodingKey, keys: String...) {
+        self.replaceKey = location.stringValue
+        self.keys = keys
     }
 }
 
 extension Collection where Element == ReplaceKeys {
     
     public var toDecoderingMappingKeys: Dictionary<String, String> {
-        Dictionary(uniqueKeysWithValues: self.map {
-            ($0.originalKey, $0.replaceKey)
-        })
+        Dictionary(uniqueKeysWithValues: self.map({ a in
+            a.keys.map { ($0, a.replaceKey) }
+        }).reduce([], +))
     }
     
     public var toEncoderingMappingKeys: Dictionary<String, String> {
-        Dictionary(uniqueKeysWithValues: self.map {
-            ($0.replaceKey, $0.originalKey)
-        })
+        Dictionary(uniqueKeysWithValues: self.compactMap {
+            if let key = $0.keys.first {
+                return ($0.replaceKey, key)
+            }
+            return nil
+        }.filterDuplicates({
+            $0.0
+        }))
     }
 }

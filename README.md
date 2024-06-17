@@ -9,7 +9,7 @@
 - Make Complex Codable Serializate a breeze with declarative annotations!
 
 ```swift
-struct YourModel: MappingCodable {
+struct YourModel: HollowCodable {
     @Immutable
     var id: Int
     
@@ -41,15 +41,15 @@ struct YourModel: MappingCodable {
     
     var dict: DictAA?
     
-    struct DictAA: MappingCodable {
+    struct DictAA: HollowCodable {
         @DecimalNumberCoding
         var amount: NSDecimalNumber?
     }
     
     static var codingKeys: [ReplaceKeys] {
         return [
-            ReplaceKeys.init(replaceKey: "color", originalKey: "hex_color"),
-            ReplaceKeys.init(replaceKey: "url", originalKey: "github"),
+            ReplaceKeys(location: CodingKeys.color, keys: "hex_color", "hex_color2"),
+            ReplaceKeys(location: CodingKeys.url, keys: "github"),
         ]
     }
 }
@@ -126,7 +126,7 @@ This module is serialize and deserialize the data, Replace HandyJSON.
 func request(_ count: Int) -> Observable<[CodableModel]> {
     CodableAPI.cache(count)
         .request(callbackQueue: DispatchQueue(label: "request.codable"))
-        .deserialized(ApiResponse<[CodableModel]>.self, mapping: CodableModel.self)
+        .deserialized(ApiResponse<[CodableModel]>.self)
         .compactMap({ $0.data })
         .observe(on: MainScheduler.instance)
         .catchAndReturn([])

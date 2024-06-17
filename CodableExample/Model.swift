@@ -8,7 +8,7 @@
 import Foundation
 //import HollowCodable
 
-struct Model: MappingCodable {
+struct Model: HollowCodable {
     @Immutable
     var id: Int
     var title: String?
@@ -18,8 +18,8 @@ struct Model: MappingCodable {
     @Immutable @BoolCoding
     var bar: Bool?
     
-//    @DefaultFalseCoding
-//    var hasDefBool: Bool
+    @DefaultFalseCoding
+    var hasDefBool: Bool
     
     @SecondsSince1970DateCoding
     var timestamp: Date?
@@ -42,19 +42,32 @@ struct Model: MappingCodable {
     @RGBAColorCoding
     var background_color: HollowColor?
     
+    @StringRepresentationCoding
+    var intString: String?
+    
     var dict: DictAA?
     
-    struct DictAA: MappingCodable {
-        @DecimalNumberCoding
-        var amount: NSDecimalNumber?
-    }
+    //@DecimalNumberCoding
+    //var dictAmount: NSDecimalNumber?
+    
+    var list: [FruitAA]?
     
     static var codingKeys: [ReplaceKeys] {
         return [
-            ReplaceKeys.init(replaceKey: "color", originalKey: "hex_color"),
-            ReplaceKeys.init(replaceKey: "url", originalKey: "github"),
+            ReplaceKeys(location: CodingKeys.color, keys: "hex_color", "hex_color2"),
+            ReplaceKeys(location: CodingKeys.url, keys: "github"),
         ]
     }
+}
+
+struct DictAA: HollowCodable {
+    @DecimalNumberCoding
+    var amount: NSDecimalNumber?
+}
+
+struct FruitAA: HollowCodable {
+    var fruit: String?
+    var dream: String?
 }
 
 enum TextEnumType: String {

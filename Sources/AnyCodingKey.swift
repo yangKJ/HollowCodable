@@ -7,16 +7,17 @@
 
 import Foundation
 
-public struct AnyCodingKey: CodingKey, Hashable {
-    public var stringValue: String
+struct AnyCodingKey: CodingKey, Hashable {
     
-    public init(stringValue: String) {
+    var stringValue: String
+    
+    init(stringValue: String) {
         self.stringValue = stringValue
     }
     
-    public var intValue: Int?
+    var intValue: Int?
     
-    public init(intValue: Int) {
+    init(intValue: Int) {
         self.intValue = intValue
         self.stringValue = "\(intValue)"
     }

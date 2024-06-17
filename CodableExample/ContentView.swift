@@ -11,11 +11,11 @@ struct ContentView: View {
     
     static let datas = {
         let data = Res.jsonData("Codable")!
-        let response = try? Decodering<ApiResponse<[Model]>>.decodering(Model.self, element: data)
-        return response?.data ?? []
+        //return [ApiResponse<Model>.deserialize(from: data)!]
+        return ApiResponse<[Model]>.deserialize(from: data) ?? []
     }()
     
-    @State var longText: String = (try? Self.datas.toJSONString(Model.self, prettyPrint: true)) ?? "hellow word!"
+    @State var longText: String = (Self.datas.toJSONString(prettyPrint: true)) ?? "hellow word!"
     
     var color = Color(Self.datas.randomElement()?.color ?? .blue)
     var backgroundColor = Color(Self.datas.randomElement()?.background_color ?? .blue)
