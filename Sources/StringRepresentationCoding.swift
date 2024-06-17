@@ -12,6 +12,10 @@ import Foundation
     
     public var wrappedValue: String?
     
+    public init(_ wrappedValue: String?) {
+        self.wrappedValue = wrappedValue
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let val = try? container.decode(String.self) {

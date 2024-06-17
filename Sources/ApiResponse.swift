@@ -8,12 +8,23 @@
 import Foundation
 
 public struct ApiResponse<T: Codable>: HollowCodable {
-    public var code: Int
+    
+    @StringRepresentationCoding
+    public var code: String?
+    
     public var message: String?
+    
     public var data: T?
     
     public var isSuccess: Bool {
-        return 200 ..< 300 ~= code
+        return 200 ..< 300 ~= codeX
+    }
+    
+    public var codeX: Int {
+        guard let code = code else {
+            return 0
+        }
+        return Int(code) ?? 0
     }
     
     public static var codingKeys: [ReplaceKeys] {
@@ -21,25 +32,19 @@ public struct ApiResponse<T: Codable>: HollowCodable {
             ReplaceKeys(location: CodingKeys.data, keys: "list")
         ]
     }
-    
-    public init(code: Int = -100010, message: String? = nil, data: T? = nil) {
-        self.code = code
-        self.message = message
-        self.data = data
-    }
 }
 
 extension ApiResponse where T: HollowCodable {
     
-    public static func deserialize(from element: Any) -> T? {
+    public static func deserializeData(from element: Any) -> T? {
         do {
-            return try deserialize(element: element)
+            return try deserializeData(element: element)
         } catch {
             return nil
         }
     }
     
-    public static func deserialize(element: Any) throws -> T {
+    public static func deserializeData(element: Any) throws -> T {
         let decoder = JSONDecoder()
         decoder.setupKeyStrategy(T.self)
         let data: Data
@@ -57,15 +62,15 @@ extension ApiResponse where T: HollowCodable {
 
 extension ApiResponse where T: Collection, T.Element: HollowCodable {
     
-    public static func deserialize(from element: Any) -> [T.Element]? {
+    public static func deserializeData(from element: Any) -> [T.Element]? {
         do {
-            return try deserialize(element: element)
+            return try deserializeData(element: element)
         } catch {
             return nil
         }
     }
     
-    public static func deserialize(element: Any) throws -> [T.Element] {
+    public static func deserializeData(element: Any) throws -> [T.Element] {
         let decoder = JSONDecoder()
         decoder.setupKeyStrategy(T.Element.self)
         let data: Data
