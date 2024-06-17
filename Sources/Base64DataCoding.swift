@@ -30,8 +30,19 @@ import Foundation
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        let value = try container.decode(String.self)
-        self.wrappedValue = Data.init(base64Encoded: value)
+        if let value = try? container.decode(String.self),
+           let data = Data.init(base64Encoded: value) {
+            self.wrappedValue = data
+        } else {
+            self.wrappedValue = nil
+            if Hollow.Logger.logIfNeeded {
+                let error = DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Failed to convert an instance of \(Data.self) from \(container.codingPath.last!.stringValue)"
+                )
+                Hollow.Logger.logDebug(error)
+            }
+        }
     }
 }
 

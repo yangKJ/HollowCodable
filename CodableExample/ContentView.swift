@@ -11,8 +11,7 @@ struct ContentView: View {
     
     static let datas = {
         let data = Res.jsonData("Codable")!
-        //return [ApiResponse<Model>.deserialize(from: data)!]
-        return ApiResponse<[Model]>.deserialize(from: data) ?? []
+        return ApiResponse<[Model]>.deserialize(from: data)?.data ?? []
     }()
     
     @State var longText: String = (Self.datas.toJSONString(prettyPrint: true)) ?? "hellow word!"

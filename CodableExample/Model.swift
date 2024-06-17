@@ -15,10 +15,10 @@ struct Model: HollowCodable {
     
     var url: URL?
     
-    @Immutable @BoolCoding
+    @Immutable @AnyBacked<Bool>
     var bar: Bool?
     
-    @DefaultFalseCoding
+    @DefaultBacked<Bool>
     var hasDefBool: Bool
     
     @SecondsSince1970DateCoding
@@ -36,19 +36,26 @@ struct Model: HollowCodable {
     @EnumCoding<TextEnumType>
     var type: TextEnumType?
     
+    enum TextEnumType: String {
+        case text1 = "text1"
+        case text2 = "text2"
+    }
+    
     @DecimalNumberCoding
     var amount: NSDecimalNumber?
     
     @RGBAColorCoding
     var background_color: HollowColor?
     
-    @StringRepresentationCoding
-    var intString: String?
+    @AnyBacked<String>
+    var anyString: String?
     
     var dict: DictAA?
     
-    //@DecimalNumberCoding
-    //var dictAmount: NSDecimalNumber?
+    struct DictAA: HollowCodable {
+        @DecimalNumberCoding
+        var amount: NSDecimalNumber?
+    }
     
     var list: [FruitAA]?
     
@@ -56,21 +63,12 @@ struct Model: HollowCodable {
         return [
             ReplaceKeys(location: CodingKeys.color, keys: "hex_color", "hex_color2"),
             ReplaceKeys(location: CodingKeys.url, keys: "github"),
+            ReplaceKeys(location: CodingKeys.hasDefBool, keys: "has_default_bool"),
         ]
     }
-}
-
-struct DictAA: HollowCodable {
-    @DecimalNumberCoding
-    var amount: NSDecimalNumber?
 }
 
 struct FruitAA: HollowCodable {
     var fruit: String?
     var dream: String?
-}
-
-enum TextEnumType: String {
-    case text1 = "text1"
-    case text2 = "text2"
 }

@@ -55,4 +55,15 @@ extension Collection {
         }
         return result
     }
+    
+    func removeFromEnd(_ count: Int) -> [Element]? {
+        guard count >= 0 else {
+            return nil
+        }
+        let endIndex = self.count - count
+        guard endIndex >= 0 else {
+            return nil
+        }
+        return Array(self.prefix(endIndex))
+    }
 }

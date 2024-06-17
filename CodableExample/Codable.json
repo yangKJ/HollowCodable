@@ -10,10 +10,10 @@
         "type": "text1",
         "timestamp" : 590277534,
         "bar": 1,
-        "hasDefBool": "",
+        "has_default_bool": "",
         "time": "2024-05-29 23:49:55",
-        "iso8601": "2023-07-23T23:36:38Z",
-        "intString": 5,
+        "iso8601": null,
+        "anyString": 5,
         "background_color": {
             "red": 255,
             "green": 128,
@@ -35,24 +35,15 @@
         "github": "https://github.com/yangKJ/RxNetworks",
         "amount": 120.3,
         "hex_color2": "#1AC756",
-        "type": "text2",
+        "type": null,
         "timestamp" : 590288534,
-        "bar": "yes",
-        "hasDefBool": null,
+        "bar": null,
+        "has_default_bool": null,
         "time": "2024-05-29 20:23:46",
         "iso8601": "2023-05-23T09:43:38Z",
-        "intString": 7.0,
-        "background_color": {
-            "red": 200,
-            "green": 63,
-            "blue": 94
-        },
-        "dict": {
-            "amount": 200,
-        },
-        "list": [{
-           "fruit": "Orange",
-           "dream": "yesterday"
-        }]
+        "anyString": null,
+        "background_color": null,
+        "dict": null,
+        "list": null
     }]
 }

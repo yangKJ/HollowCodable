@@ -30,19 +30,21 @@ import Foundation
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(Int.self) {
+        if let value = try? container.decode(Bool.self) {
+            self.wrappedValue = value
+        } else if let value = try? container.decode(Int.self) {
             self.wrappedValue = value > 0 ? true : false
         } else if let value = try? container.decode(String.self) {
-            switch value.lowercased() {
-            case "1", "y", "t", "yes", "true":
-                self.wrappedValue = true
-            case "0", "n", "f", "no", "false":
-                self.wrappedValue = true
-            default:
-                self.wrappedValue = nil
-            }
+            self.wrappedValue = Bool.init(value)
         } else {
             self.wrappedValue = nil
+            if Hollow.Logger.logIfNeeded {
+                let error = DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Failed to convert an instance of \(Bool.self) from \(container.codingPath.last!.stringValue)"
+                )
+                Hollow.Logger.logDebug(error)
+            }
         }
     }
 }
@@ -56,6 +58,11 @@ import Foundation
     }
     
     public func encode(to encoder: Encoder) throws {
-        try BoolHasEncoding<Hollow.HasBoolean.nothing>(wrappedValue).encode(to: encoder)
+        var container = encoder.singleValueContainer()
+        if let value = self.wrappedValue {
+            try container.encode(value.description)
+        } else {
+            try container.encodeNil()
+        }
     }
 }

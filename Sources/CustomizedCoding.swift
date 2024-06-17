@@ -37,7 +37,17 @@ public protocol Customizedable: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        let value = try container.decode<T>(T.self)
+        guard let value = try? container.decode<T>(T.self) else {
+            self.wrappedValue = nil
+            if Hollow.Logger.logIfNeeded {
+                let error = DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Failed to convert an instance of \(T.self) from \(container.codingPath.last!.stringValue)"
+                )
+                Hollow.Logger.logDebug(error)
+            }
+            return
+        }
         self.wrappedValue = value.toValue()
     }
 }

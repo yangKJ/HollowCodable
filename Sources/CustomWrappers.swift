@@ -22,7 +22,6 @@ public typealias DateFormatCoding<T: HollowValueProvider> = DateFormatterCoding<
 public typealias DateFormatDecoding<T: HollowValueProvider> = DateFormatterDecoding<T>
 public typealias DateFormatEncoding<T: HollowValueProvider> = DateFormatterEncoding<T>
 
-
 // MARK: - Color
 
 public typealias HexColorHasAlphaCoding = HexColorHasCoding<Hollow.HasBoolean.yes>
@@ -32,11 +31,3 @@ public typealias HexColorHasAlphaEncoding = HexColorHasEncoding<Hollow.HasBoolea
 /// When coding the color hex value hasn't alpha.
 public typealias HexColorCoding = HexColorHasCoding<Hollow.HasBoolean.no>
 public typealias HexColorEncoding = HexColorHasEncoding<Hollow.HasBoolean.no>
-
-// MARK: - Bool
-
-public typealias DefaultFalseCoding = BoolHasCoding<Hollow.HasBoolean.no>
-public typealias DefaultFalseDecoding = BoolHasDecoding<Hollow.HasBoolean.no>
-
-public typealias DefaultTrueCoding = BoolHasDecoding<Hollow.HasBoolean.yes>
-public typealias DefaultTrueDecoding = BoolHasDecoding<Hollow.HasBoolean.yes>

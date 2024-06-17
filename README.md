@@ -12,11 +12,15 @@
 struct YourModel: HollowCodable {
     @Immutable
     var id: Int
+    var title: String?
     
     var url: URL?
     
-    @Immutable @BoolCoding
+    @Immutable @AnyBacked<Bool>
     var bar: Bool?
+    
+    @DefaultBacked<Bool>
+    var hasDefBool: Bool
     
     @SecondsSince1970DateCoding
     var timestamp: Date?
@@ -33,11 +37,19 @@ struct YourModel: HollowCodable {
     @EnumCoding<TextEnumType>
     var type: TextEnumType?
     
+    enum TextEnumType: String {
+        case text1 = "text1"
+        case text2 = "text2"
+    }
+    
     @DecimalNumberCoding
     var amount: NSDecimalNumber?
     
     @RGBAColorCoding
     var background_color: HollowColor?
+    
+    @AnyBacked<String>
+    var anyString: String?
     
     var dict: DictAA?
     
@@ -50,9 +62,12 @@ struct YourModel: HollowCodable {
         return [
             ReplaceKeys(location: CodingKeys.color, keys: "hex_color", "hex_color2"),
             ReplaceKeys(location: CodingKeys.url, keys: "github"),
+            ReplaceKeys(location: CodingKeys.hasDefBool, keys: "has_default_bool"),
         ]
     }
 }
+
+let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
 ```
 - Like this json:
 
@@ -69,8 +84,10 @@ struct YourModel: HollowCodable {
         "type": "text1",
         "timestamp" : 590277534,
         "bar": 1,
+        "has_default_bool": "",
         "time": "2024-05-29 23:49:55",
-        "iso8601": "2023-07-23T23:36:38Z",
+        "iso8601": null,
+        "anyString": 5,
         "background_color": {
             "red": 255,
             "green": 128,
@@ -78,26 +95,30 @@ struct YourModel: HollowCodable {
         },
         "dict": {
             "amount": "52.9",
-        }
+        },
+        "list": [{
+           "fruit": "Apple",
+           "dream": "Day"
+        }, {
+            "fruit": "Banana",
+            "dream": "Night"
+         }]
     }, {
         "id": 7,
         "title": "Network Framework",
         "github": "https://github.com/yangKJ/RxNetworks",
         "amount": 120.3,
-        "hex_color": "#1AC756",
-        "type": "text2",
+        "hex_color2": "#1AC756",
+        "type": null,
         "timestamp" : 590288534,
-        "bar": "yes",
+        "bar": null,
+        "has_default_bool": null,
         "time": "2024-05-29 20:23:46",
         "iso8601": "2023-05-23T09:43:38Z",
-        "background_color": {
-            "red": 200,
-            "green": 63,
-            "blue": 94
-        },
-        "dict": {
-            "amount": 200,
-        }
+        "anyString": null,
+        "background_color": null,
+        "dict": null,
+        "list": null
     }]
 }
 ```
@@ -130,6 +151,15 @@ func request(_ count: Int) -> Observable<[CodableModel]> {
         .compactMap({ $0.data })
         .observe(on: MainScheduler.instance)
         .catchAndReturn([])
+}
+
+public extension Observable where Element: Any {
+    
+    @discardableResult func deserialized<T: HollowCodable>(_ type: T.Type) -> Observable<T> {
+        return self.map { element -> T in
+            return try T.deserialize(element: element)
+        }
+    }
 }
 ```
 

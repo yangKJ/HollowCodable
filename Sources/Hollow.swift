@@ -32,14 +32,6 @@ public struct Hollow {
             public static let hasValue: Bool? = nil
         }
     }
-    
-    public struct EmptyString: HollowValueProvider {
-        public static var hasValue: String { "" }
-    }
-    
-    public struct ZeroInt: HollowValueProvider {
-        public static var hasValue: Int { 0 }
-    }
 }
 
 public struct HollowWrapper<Base> {

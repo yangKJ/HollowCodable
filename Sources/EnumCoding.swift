@@ -35,6 +35,13 @@ import Foundation
             self.wrappedValue = T.init(rawValue: value)
         } else {
             self.wrappedValue = nil
+            if Hollow.Logger.logIfNeeded {
+                let error = DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Failed to convert an instance of \(T.self) from \(container.codingPath.last!.stringValue)"
+                )
+                Hollow.Logger.logDebug(error)
+            }
         }
     }
 }

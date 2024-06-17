@@ -43,13 +43,21 @@ public extension Hollow {
     public var wrappedValue: Date?
     
     public init(from decoder: Decoder) throws {
-        if let timeInterval = try? TimeInterval(from: decoder) {
+        let container = try decoder.singleValueContainer()
+        if let timeInterval = try? container.decode(TimeInterval.self) {
             self.wrappedValue = Date(timeIntervalSince1970: timeInterval / Self.val)
-        } else if let timeString = try? String(from: decoder) {
+        } else if let timeString = try? container.decode(String.self) {
             let timeInterval = TimeInterval(atof(timeString))
             self.wrappedValue = Date(timeIntervalSince1970: timeInterval / Self.val)
         } else {
             self.wrappedValue = nil
+            if Hollow.Logger.logIfNeeded {
+                let error = DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Failed to convert an instance of \(Date.self) from \(container.codingPath.last!.stringValue)"
+                )
+                Hollow.Logger.logDebug(error)
+            }
         }
     }
     

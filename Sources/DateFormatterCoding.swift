@@ -57,12 +57,20 @@ extension DateFormatter: FormatterConverter { }
     public var wrappedValue: Date?
     
     public init(from decoder: Decoder) throws {
-        if let timeInterval = try? TimeInterval(from: decoder) {
+        let container = try decoder.singleValueContainer()
+        if let timeInterval = try? container.decode(TimeInterval.self) {
             self.wrappedValue = Self.decodableFormatter?.date(from: "\(timeInterval)")
-        } else if let dateString = try? String(from: decoder) {
+        } else if let dateString = try? container.decode(String.self) {
             self.wrappedValue = Self.decodableFormatter?.date(from: dateString)
         } else {
             self.wrappedValue = nil
+            if Hollow.Logger.logIfNeeded {
+                let error = DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Failed to convert an instance of \(Date.self) from \(container.codingPath.last!.stringValue)"
+                )
+                Hollow.Logger.logDebug(error)
+            }
         }
     }
     

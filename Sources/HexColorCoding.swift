@@ -38,7 +38,18 @@ public typealias HollowColor = NSColor
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let hex = try container.decode(String.self)
-        self.wrappedValue = HexColorDecoding.color(with: hex)
+        if let color = HexColorDecoding.color(with: hex) {
+            self.wrappedValue = color
+        } else {
+            self.wrappedValue = nil
+            if Hollow.Logger.logIfNeeded {
+                let error = DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Failed to convert an instance of \(HollowColor.self) from \(container.codingPath.last!.stringValue)"
+                )
+                Hollow.Logger.logDebug(error)
+            }
+        }
     }
     
     static func color(with hex: String) -> HollowColor? {

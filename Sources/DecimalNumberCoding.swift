@@ -54,6 +54,13 @@ import Foundation
             self.wrappedValue = decimal(string: String(describing: val))
         } else {
             self.wrappedValue = decimal(string: nil)
+            if Hollow.Logger.logIfNeeded {
+                let error = DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Failed to convert an instance of \(NSDecimalNumber.self) from \(container.codingPath.last!.stringValue)"
+                )
+                Hollow.Logger.logDebug(error)
+            }
         }
     }
 }
