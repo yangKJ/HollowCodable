@@ -48,20 +48,45 @@ extension Hollow.Logger {
             assert(false, "\(error)")
         }
         if let error = error as? DecodingError {
-            switch error {
-            case .keyNotFound:
-                print("No value associated with key.")
-            case .valueNotFound( _, let context):
-                print(context.debugDescription)
-            case .typeMismatch( _, let context):
-                print(context.debugDescription)
-            case .dataCorrupted(let context):
-                print(context.debugDescription)
-            default:
-                break
-            }
+            printDecodingError(error)
         } else {
             print(error.localizedDescription)
         }
+    }
+    
+    private static func printDecodingError(_ error: DecodingError) {
+        var string: String = ""
+        switch error {
+        case .keyNotFound(let key, let context):
+            let codingPath = codingPath(context: context)
+            string += "\(key): No value associated with \(codingPath)"
+        case .valueNotFound(_, let context):
+            let codingPath = codingPath(context: context)
+            let key = context.codingPath.last?.stringValue ?? ""
+            string += "\(key): " + context.debugDescription + " from \(codingPath)"
+        case .typeMismatch(_, let context):
+            let codingPath = codingPath(context: context)
+            let key = context.codingPath.last?.stringValue ?? ""
+            string += "\(key): " + context.debugDescription + " from \(codingPath)"
+        case .dataCorrupted(let context):
+            let codingPath = codingPath(context: context)
+            let key = context.codingPath.last?.stringValue ?? ""
+            string += "\(key): " + context.debugDescription + " from \(codingPath)"
+        default:
+            return
+        }
+        print(string + " 👈🏻")
+    }
+    
+    private static func codingPath(context: DecodingError.Context) -> String {
+        let pattern = "Index \\d+" // 排除这种数据
+        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        let matchedKeys = context.codingPath.map({
+            $0.stringValue
+        }).filter { key in
+            let range = NSRange(key.startIndex..<key.endIndex, in: key)
+            return regex.firstMatch(in: key, options: [], range: range) == nil
+        }
+        return matchedKeys.joined(separator: ".")
     }
 }

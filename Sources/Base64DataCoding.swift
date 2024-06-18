@@ -36,11 +36,8 @@ import Foundation
         } else {
             self.wrappedValue = nil
             if Hollow.Logger.logIfNeeded {
-                let error = DecodingError.dataCorruptedError(
-                    in: container,
-                    debugDescription: "Failed to convert an instance of \(Data.self) from \(container.codingPath.last!.stringValue)"
-                )
-                Hollow.Logger.logDebug(error)
+                let err = DecodingError.dataCorruptedError(in: container, debugDescription: "Failed to convert an instance of \(Data.self)")
+                Hollow.Logger.logDebug(err)
             }
         }
     }
