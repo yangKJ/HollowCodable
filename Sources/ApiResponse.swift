@@ -21,7 +21,8 @@ public struct ApiResponse<T: Codable>: HollowCodable {
     
     public static var codingKeys: [ReplaceKeys] {
         return [
-            ReplaceKeys(location: CodingKeys.data, keys: "list")
+            ReplaceKeys(location: CodingKeys.data, keys: "list"),
+            ReplaceKeys(location: CodingKeys.message, keys: "message", "msg"),
         ]
     }
 }

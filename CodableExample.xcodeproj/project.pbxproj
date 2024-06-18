@@ -21,7 +21,6 @@
 		F76AF7B72C16A415005DC327 /* AnyCodingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A02C16A415005DC327 /* AnyCodingKey.swift */; };
 		F76AF7B82C16A415005DC327 /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A12C16A415005DC327 /* ApiResponse.swift */; };
 		F76AF7B92C16A415005DC327 /* Base64DataCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A22C16A415005DC327 /* Base64DataCoding.swift */; };
-		F76AF7BA2C16A415005DC327 /* BoolCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A32C16A415005DC327 /* BoolCoding.swift */; };
 		F76AF7BC2C16A415005DC327 /* CustomWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A52C16A415005DC327 /* CustomWrappers.swift */; };
 		F76AF7BD2C16A415005DC327 /* DateFormatterCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A62C16A415005DC327 /* DateFormatterCoding.swift */; };
 		F76AF7BE2C16A415005DC327 /* DecimalNumberCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A72C16A415005DC327 /* DecimalNumberCoding.swift */; };
@@ -65,7 +64,6 @@
 		F76AF7A02C16A415005DC327 /* AnyCodingKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodingKey.swift; sourceTree = "<group>"; };
 		F76AF7A12C16A415005DC327 /* ApiResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 		F76AF7A22C16A415005DC327 /* Base64DataCoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64DataCoding.swift; sourceTree = "<group>"; };
-		F76AF7A32C16A415005DC327 /* BoolCoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolCoding.swift; sourceTree = "<group>"; };
 		F76AF7A52C16A415005DC327 /* CustomWrappers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWrappers.swift; sourceTree = "<group>"; };
 		F76AF7A62C16A415005DC327 /* DateFormatterCoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterCoding.swift; sourceTree = "<group>"; };
 		F76AF7A72C16A415005DC327 /* DecimalNumberCoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecimalNumberCoding.swift; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 				F76AF7A02C16A415005DC327 /* AnyCodingKey.swift */,
 				F76AF7A12C16A415005DC327 /* ApiResponse.swift */,
 				F76AF7A22C16A415005DC327 /* Base64DataCoding.swift */,
-				F76AF7A32C16A415005DC327 /* BoolCoding.swift */,
 				876D56A62C1845470006E25E /* CGRectCoding.swift */,
 				876D56A22C18333C0006E25E /* CustomizedCoding.swift */,
 				F76AF7A52C16A415005DC327 /* CustomWrappers.swift */,
@@ -259,7 +256,6 @@
 				F76AF7C72C16A415005DC327 /* KeyedDecodingContainer+Ext.swift in Sources */,
 				F76AF7C52C16A415005DC327 /* Immutable.swift in Sources */,
 				F76AF7922C16A29A005DC327 /* ContentView.swift in Sources */,
-				F76AF7BA2C16A415005DC327 /* BoolCoding.swift in Sources */,
 				F76AF7CA2C16A415005DC327 /* ReplaceKeys.swift in Sources */,
 				F76AF7BE2C16A415005DC327 /* DecimalNumberCoding.swift in Sources */,
 				F76AF7C22C16A415005DC327 /* FormatterConverter.swift in Sources */,

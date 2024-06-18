@@ -31,3 +31,9 @@ public typealias HexColorHasAlphaEncoding = HexColorHasEncoding<Hollow.HasBoolea
 /// When coding the color hex value hasn't alpha.
 public typealias HexColorCoding = HexColorHasCoding<Hollow.HasBoolean.no>
 public typealias HexColorEncoding = HexColorHasEncoding<Hollow.HasBoolean.no>
+
+// MARK: - Bool
+
+public typealias BoolCoding = AnyBacked<Bool>
+public typealias BoolDecoding = AnyBackedDecoding<Bool>
+public typealias BoolEncoding = AnyBackedEncoding<Bool>
