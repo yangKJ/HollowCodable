@@ -18,9 +18,9 @@ extension JSONEncoder {
         self.keyEncodingStrategy = .custom({ codingPath in
             let key = codingPath.last!.stringValue
             if let mapped = mapping[key] {
-                return AnyCodingKey(stringValue: mapped)
+                return PathCodingKey(stringValue: mapped)
             } else {
-                return AnyCodingKey(stringValue: key)
+                return PathCodingKey(stringValue: key)
             }
         })
     }
@@ -37,9 +37,9 @@ extension JSONDecoder {
         self.keyDecodingStrategy = .custom({ codingPath in
             let key = codingPath.last!.stringValue
             if let mapped = mapping[key] {
-                return AnyCodingKey(stringValue: mapped)
+                return PathCodingKey(stringValue: mapped)
             } else {
-                return AnyCodingKey(stringValue: key)
+                return PathCodingKey(stringValue: key)
             }
         })
     }

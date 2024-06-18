@@ -7,6 +7,8 @@
 
 import Foundation
 
+public typealias AnyBackedCoding<T: StringRepresentable> = AnyBacked<T>
+
 /// Support `Int`、`UInt`、`Float`、`CGFloat`、`Double`、`TimeInterval`、`String`、`Bool`、`Int64`、`UInt64`
 /// Or that implements the `StringRepresentable` protocol object.
 @propertyWrapper public struct AnyBacked<T: StringRepresentable>: Codable {

@@ -50,6 +50,9 @@ struct Model: HollowCodable {
     @AnyBacked<String>
     var anyString: String?
     
+    @IgnoredKey
+    var ignorKey: String? = "1234"
+    
     var dict: DictAA?
     
     struct DictAA: HollowCodable {

@@ -9,8 +9,11 @@ import Foundation
 
 extension Encodable where Self: HollowCodable {
     
-    public func toData() throws -> Data {
+    public func toData(prettyPrint: Bool = false) throws -> Data {
         let encoder = JSONEncoder()
+        if prettyPrint {
+            encoder.outputFormatting = .prettyPrinted
+        }
         encoder.setupKeyStrategy(Self.self)
         return try encoder.encode(self)
     }
@@ -29,12 +32,7 @@ extension Encodable where Self: HollowCodable {
     }
     
     public func toJSONString(prettyPrinted: Bool = false) throws -> String {
-        let encoder = JSONEncoder()
-        if prettyPrinted {
-            encoder.outputFormatting = .prettyPrinted
-        }
-        encoder.setupKeyStrategy(Self.self)
-        let jsonData = try encoder.encode(self)
+        let jsonData = try toData(prettyPrint: prettyPrinted)
         return String(decoding: jsonData, as: UTF8.self)
     }
 }

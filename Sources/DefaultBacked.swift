@@ -7,6 +7,8 @@
 
 import Foundation
 
+public typealias DefaultBackedCoding<T: StringRepresentable> = DefaultBacked<T>
+
 /// 具有默认值，布尔型默认为`false`
 @propertyWrapper public struct DefaultBacked<T: StringRepresentable>: Codable, CustomStringConvertible {
     
@@ -21,7 +23,7 @@ import Foundation
     }
     
     public init(from decoder: Decoder) throws {
-        self.wrappedValue = try AnyBacked<T>.init(from: decoder).wrappedValue ?? T.hasDefaultValue
+        self.wrappedValue = try AnyBackedDecoding<T>.init(from: decoder).wrappedValue ?? T.hasDefaultValue
     }
     
     public func encode(to encoder: Encoder) throws {

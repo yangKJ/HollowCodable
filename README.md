@@ -16,7 +16,7 @@ struct YourModel: HollowCodable {
     
     var url: URL?
     
-    @Immutable @AnyBacked<Bool>
+    @Immutable @AnyBackedCoding<Bool>
     var bar: Bool?
     
     @DefaultBacked<Bool>
@@ -48,8 +48,11 @@ struct YourModel: HollowCodable {
     @RGBAColorCoding
     var background_color: HollowColor?
     
-    @AnyBacked<String>
+    @AnyBackedCoding<String>
     var anyString: String?
+    
+    @IgnoredKeyCoding
+    var ignorKey: String? = "1234"
     
     var dict: DictAA?
     
@@ -125,8 +128,8 @@ let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
 
 ### Available Property Wrappers
 - [@Immutable](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Immutable.swift): Becomes an immutable property.
+- [@IgnoredKey](https://github.com/yangKJ/HollowCodable/blob/master/Sources/IgnoredKey.swift): Optional Property to not included it when Encoding or Decoding.
 - [@Base64DataCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Base64DataCoding.swift): For a Data property that should be serialized to a Base64 encoded String.
-- [@BoolCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/BoolCoding.swift): Sometimes an API uses an `Int` or `String` for a booleans.
 - [@DateFormatterCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/DateFormatterCoding.swift): Date property that should be serialized using the customized DataFormat.
 - [@ISO8601DateFormatter](https://github.com/yangKJ/HollowCodable/blob/master/Sources/ISO8601DateFormatter.swift): Date property that should be serialized using the ISO8601DateFormatter.
 - [@Since1970DateCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Since1970DateCoding.swift): Date property that should be serialized to Since1970.

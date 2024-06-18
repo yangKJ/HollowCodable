@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		87341A2F2C217D4400DF23FF /* IgnoredKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87341A2E2C217D4400DF23FF /* IgnoredKey.swift */; };
 		876D56A32C18333C0006E25E /* CustomizedCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A22C18333C0006E25E /* CustomizedCoding.swift */; };
 		876D56A52C183D6F0006E25E /* RGBAColorCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A42C183D6F0006E25E /* RGBAColorCoding.swift */; };
 		876D56A72C1845470006E25E /* CGRectCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A62C1845470006E25E /* CGRectCoding.swift */; };
@@ -18,7 +19,7 @@
 		F76AF7942C16A29B005DC327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F76AF7932C16A29B005DC327 /* Assets.xcassets */; };
 		F76AF7982C16A29B005DC327 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F76AF7972C16A29B005DC327 /* Preview Assets.xcassets */; };
 		F76AF79F2C16A3C0005DC327 /* Codable.json in Resources */ = {isa = PBXBuildFile; fileRef = F76AF79E2C16A3C0005DC327 /* Codable.json */; };
-		F76AF7B72C16A415005DC327 /* AnyCodingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A02C16A415005DC327 /* AnyCodingKey.swift */; };
+		F76AF7B72C16A415005DC327 /* PathCodingKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A02C16A415005DC327 /* PathCodingKey.swift */; };
 		F76AF7B82C16A415005DC327 /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A12C16A415005DC327 /* ApiResponse.swift */; };
 		F76AF7B92C16A415005DC327 /* Base64DataCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A22C16A415005DC327 /* Base64DataCoding.swift */; };
 		F76AF7BC2C16A415005DC327 /* CustomWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7A52C16A415005DC327 /* CustomWrappers.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		87341A2E2C217D4400DF23FF /* IgnoredKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredKey.swift; sourceTree = "<group>"; };
 		876D56A22C18333C0006E25E /* CustomizedCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizedCoding.swift; sourceTree = "<group>"; };
 		876D56A42C183D6F0006E25E /* RGBAColorCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAColorCoding.swift; sourceTree = "<group>"; };
 		876D56A62C1845470006E25E /* CGRectCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectCoding.swift; sourceTree = "<group>"; };
@@ -61,7 +63,7 @@
 		F76AF7952C16A29B005DC327 /* CodableExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodableExample.entitlements; sourceTree = "<group>"; };
 		F76AF7972C16A29B005DC327 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F76AF79E2C16A3C0005DC327 /* Codable.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Codable.json; sourceTree = "<group>"; };
-		F76AF7A02C16A415005DC327 /* AnyCodingKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodingKey.swift; sourceTree = "<group>"; };
+		F76AF7A02C16A415005DC327 /* PathCodingKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathCodingKey.swift; sourceTree = "<group>"; };
 		F76AF7A12C16A415005DC327 /* ApiResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 		F76AF7A22C16A415005DC327 /* Base64DataCoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64DataCoding.swift; sourceTree = "<group>"; };
 		F76AF7A52C16A415005DC327 /* CustomWrappers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWrappers.swift; sourceTree = "<group>"; };
@@ -147,7 +149,6 @@
 			isa = PBXGroup;
 			children = (
 				F7EA7B642C2051EC0048E264 /* AnyBacked.swift */,
-				F76AF7A02C16A415005DC327 /* AnyCodingKey.swift */,
 				F76AF7A12C16A415005DC327 /* ApiResponse.swift */,
 				F76AF7A22C16A415005DC327 /* Base64DataCoding.swift */,
 				876D56A62C1845470006E25E /* CGRectCoding.swift */,
@@ -164,12 +165,14 @@
 				F76AF7AC2C16A415005DC327 /* HexColorCoding.swift */,
 				F76AF7AD2C16A415005DC327 /* Hollow.swift */,
 				F76AF7B22C16A415005DC327 /* HollowCodable.swift */,
+				87341A2E2C217D4400DF23FF /* IgnoredKey.swift */,
 				F76AF7AE2C16A415005DC327 /* Immutable.swift */,
 				F76AF7AF2C16A415005DC327 /* ISO8601DateCoding.swift */,
 				F76AF7B02C16A415005DC327 /* KeyedDecodingContainer+Ext.swift */,
 				F76AF7B12C16A415005DC327 /* KeyedEncodingContainer+Ext.swift */,
 				87F2AB832C1FCF2B006DF62F /* KeyStrategy.swift */,
 				F7EA7B6A2C20712A0048E264 /* Logger.swift */,
+				F76AF7A02C16A415005DC327 /* PathCodingKey.swift */,
 				F76AF7B32C16A415005DC327 /* ReplaceKeys.swift */,
 				876D56A42C183D6F0006E25E /* RGBAColorCoding.swift */,
 				F76AF7B42C16A415005DC327 /* Since1970DateCoding.swift */,
@@ -273,11 +276,12 @@
 				F76AF7BF2C16A415005DC327 /* Deserializer.swift in Sources */,
 				876D56A72C1845470006E25E /* CGRectCoding.swift in Sources */,
 				F76AF7BD2C16A415005DC327 /* DateFormatterCoding.swift in Sources */,
-				F76AF7B72C16A415005DC327 /* AnyCodingKey.swift in Sources */,
+				F76AF7B72C16A415005DC327 /* PathCodingKey.swift in Sources */,
 				F76AF7C32C16A415005DC327 /* HexColorCoding.swift in Sources */,
 				F76AF7D02C16A604005DC327 /* Model.swift in Sources */,
 				F7EA7B6B2C20712A0048E264 /* Logger.swift in Sources */,
 				87F2AB862C1FCFDE006DF62F /* Ext.swift in Sources */,
+				87341A2F2C217D4400DF23FF /* IgnoredKey.swift in Sources */,
 				F76AF7C42C16A415005DC327 /* Hollow.swift in Sources */,
 				F76AF7C12C16A415005DC327 /* EnumCoding.swift in Sources */,
 				F7EA7B672C205A5E0048E264 /* StringRepresentable.swift in Sources */,
