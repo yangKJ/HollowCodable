@@ -7,27 +7,43 @@
 
 import Foundation
 
-public typealias DefaultBackedCoding<T: StringRepresentable> = DefaultBacked<T>
+public typealias DefaultBackedCoding<T: AnyBackedable> = DefaultBacked<T> where T: HasDefaultValuable, T.DefaultType == T.DecodeType
 
-/// 具有默认值，布尔型默认为`false`
-@propertyWrapper public struct DefaultBacked<T: StringRepresentable>: Codable, CustomStringConvertible {
+@propertyWrapper public struct DefaultBacked<T: AnyBackedable>: Codable where T: HasDefaultValuable, T.DefaultType == T.DecodeType {
     
-    public var wrappedValue: T
+    public var wrappedValue: T.DecodeType
     
-    public var description: String {
-        wrappedValue.description
-    }
-    
-    public init(_ wrappedValue: T) {
+    public init(_ wrappedValue: T.DecodeType) {
         self.wrappedValue = wrappedValue
     }
     
     public init(from decoder: Decoder) throws {
-        self.wrappedValue = try AnyBackedDecoding<T>.init(from: decoder).wrappedValue ?? T.hasDefaultValue
+        self.wrappedValue = try DefaultBackedDecoding<T>(from: decoder).wrappedValue
     }
     
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(wrappedValue.description)
+        try DefaultBackedEncoding<T>(wrappedValue).encode(to: encoder)
+    }
+}
+
+@propertyWrapper public struct DefaultBackedDecoding<T: AnyBackedable>: Decodable where T: HasDefaultValuable, T.DefaultType == T.DecodeType {
+    
+    public var wrappedValue: T.DecodeType
+    
+    public init(from decoder: Decoder) throws {
+        self.wrappedValue = try AnyBackedDecoding<T>.init(from: decoder).wrappedValue ?? T.defaultValue
+    }
+}
+
+@propertyWrapper public struct DefaultBackedEncoding<T: AnyBackedable>: Encodable {
+    
+    public let wrappedValue: T.DecodeType
+    
+    public init(_ wrappedValue: T.DecodeType) {
+        self.wrappedValue = wrappedValue
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        try AnyBackedEncoding<T>(wrappedValue).encode(to: encoder)
     }
 }

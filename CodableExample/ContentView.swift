@@ -11,7 +11,7 @@ struct ContentView: View {
     
     static let datas = {
         let data = Res.jsonData("Codable")!
-        let datas = ApiResponse<[Model]>.deserialize(from: data)?.data ?? []
+        let datas = ApiResponse<[YourModel]>.deserialize(from: data)?.data ?? []
         return datas
     }()
     

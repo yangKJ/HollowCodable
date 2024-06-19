@@ -26,16 +26,16 @@ struct YourModel: HollowCodable {
     
     var url: URL?
     
-    @Immutable @AnyBacked<Bool>
+    @Immutable @BoolCoding
     var bar: Bool?
     
-    @DefaultBacked<Bool>
+    @TrueBoolCoding
     var hasDefBool: Bool
     
     @SecondsSince1970DateCoding
     var timestamp: Date?
     
-    @DateFormatCoding<Hollow.DateFormat.yyyy_mm_dd_hh_mm_ss>
+    @DateCoding<Hollow.DateFormat.yyyy_mm_dd_hh_mm_ss, Hollow.Since1970.seconds>
     var time: Date?
     
     @ISO8601DateCoding
@@ -55,7 +55,7 @@ struct YourModel: HollowCodable {
     @DecimalNumberCoding
     var amount: NSDecimalNumber?
     
-    @RGBAColorCoding
+    @RGBColorCoding
     var background_color: HollowColor?
     
     @AnyBacked<String>
@@ -67,15 +67,20 @@ struct YourModel: HollowCodable {
     var dict: DictAA?
     
     struct DictAA: HollowCodable {
-        @DecimalNumberCoding
-        var amount: NSDecimalNumber?
+        @AnyBacked<Double> var amount: Double?
+    }
+    
+    var list: [FruitAA]?
+    
+    struct FruitAA: HollowCodable {
+        var fruit: String?
+        var dream: String?
     }
     
     static var codingKeys: [ReplaceKeys] {
         return [
             ReplaceKeys(location: CodingKeys.color, keys: "hex_color", "hex_color2"),
             ReplaceKeys(location: CodingKeys.url, keys: "github"),
-            ReplaceKeys(location: CodingKeys.hasDefBool, keys: "has_default_bool"),
         ]
     }
 }

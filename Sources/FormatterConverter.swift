@@ -11,3 +11,6 @@ public protocol FormatterConverter {
     func string(from date: Date) -> String
     func date(from string: String) -> Date?
 }
+
+extension DateFormatter: FormatterConverter { }
+extension ISO8601DateFormatter: FormatterConverter { }

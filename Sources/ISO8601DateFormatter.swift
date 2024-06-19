@@ -7,8 +7,6 @@
 
 import Foundation
 
-extension ISO8601DateFormatter: FormatterConverter { }
-
 extension Hollow.DateFormat {
     public enum ISO8601Date: HollowValueProvider {
         public static let hasValue: ISO8601DateFormatter = {
@@ -18,7 +16,3 @@ extension Hollow.DateFormat {
         }()
     }
 }
-
-public typealias ISO8601DateCoding = DateFormatCoding<Hollow.DateFormat.ISO8601Date>
-public typealias ISO8601DateDeoding = DateFormatterDecoding<Hollow.DateFormat.ISO8601Date>
-public typealias ISO8601DateEnoding = DateFormatterEncoding<Hollow.DateFormat.ISO8601Date>

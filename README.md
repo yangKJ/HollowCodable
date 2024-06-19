@@ -16,16 +16,16 @@ struct YourModel: HollowCodable {
     
     var url: URL?
     
-    @Immutable @AnyBackedCoding<Bool>
+    @Immutable @BoolCoding
     var bar: Bool?
     
-    @DefaultBacked<Bool>
+    @TrueBoolCoding
     var hasDefBool: Bool
     
     @SecondsSince1970DateCoding
     var timestamp: Date?
     
-    @DateFormatCoding<Hollow.DateFormat.yyyy_mm_dd_hh_mm_ss>
+    @DateCoding<Hollow.DateFormat.yyyy_mm_dd_hh_mm_ss, Hollow.Since1970.seconds>
     var time: Date?
     
     @ISO8601DateCoding
@@ -45,31 +45,39 @@ struct YourModel: HollowCodable {
     @DecimalNumberCoding
     var amount: NSDecimalNumber?
     
-    @RGBAColorCoding
+    @RGBColorCoding
     var background_color: HollowColor?
     
-    @AnyBackedCoding<String>
+    @AnyBacked<String>
     var anyString: String?
     
-    @IgnoredKeyCoding
+    @IgnoredKey
     var ignorKey: String? = "1234"
     
     var dict: DictAA?
     
     struct DictAA: HollowCodable {
-        @DecimalNumberCoding
-        var amount: NSDecimalNumber?
+        @AnyBacked<Double> var amount: Double?
+    }
+    
+    var list: [FruitAA]?
+    
+    struct FruitAA: HollowCodable {
+        var fruit: String?
+        var dream: String?
     }
     
     static var codingKeys: [ReplaceKeys] {
         return [
             ReplaceKeys(location: CodingKeys.color, keys: "hex_color", "hex_color2"),
             ReplaceKeys(location: CodingKeys.url, keys: "github"),
-            ReplaceKeys(location: CodingKeys.hasDefBool, keys: "has_default_bool"),
         ]
     }
 }
+```
 
+```swift
+/// You can used like:
 let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
 ```
 - Like this json:
@@ -87,7 +95,7 @@ let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
         "type": "text1",
         "timestamp" : 590277534,
         "bar": 1,
-        "has_default_bool": "",
+        "hasDefBool": "",
         "time": "2024-05-29 23:49:55",
         "iso8601": null,
         "anyString": 5,
@@ -115,7 +123,7 @@ let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
         "type": null,
         "timestamp" : 590288534,
         "bar": null,
-        "has_default_bool": null,
+        "hasDefBool": null,
         "time": "2024-05-29 20:23:46",
         "iso8601": "2023-05-23T09:43:38Z",
         "anyString": null,
@@ -129,15 +137,23 @@ let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
 ### Available Property Wrappers
 - [@Immutable](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Immutable.swift): Becomes an immutable property.
 - [@IgnoredKey](https://github.com/yangKJ/HollowCodable/blob/master/Sources/IgnoredKey.swift): Optional Property to not included it when Encoding or Decoding.
-- [@Base64DataCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Base64DataCoding.swift): For a Data property that should be serialized to a Base64 encoded String.
-- [@DateFormatterCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/DateFormatterCoding.swift): Date property that should be serialized using the customized DataFormat.
-- [@ISO8601DateFormatter](https://github.com/yangKJ/HollowCodable/blob/master/Sources/ISO8601DateFormatter.swift): Date property that should be serialized using the ISO8601DateFormatter.
-- [@Since1970DateCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Since1970DateCoding.swift): Date property that should be serialized to Since1970.
-- [@DecimalNumberCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/DecimalNumberCoding.swift): Deserialization the `String`、`Double`、`Float`、`CGFloat`、`Int` or `Int64` to a NSDecimalNumber property.
-- [@EnumCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/EnumCoding.swift): Serialization to enumeration with RawRepresentable.
-- [@HexColorHasCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/HexColorHasCoding.swift): UIColor/NSColor property that should be serialized to hex string.
-- [@RGBAColorCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/RGBAColorCoding.swift): RGBA color serialization/deserialization.
-- [@CustomizedCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/CustomizedCoding.swift): Customized coding serialization/deserialization.
+- [@AnyBackedCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/AnyBacked.swift): Support multiple types when Encoding or Decoding.
+- [@DefaultBackedCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/DefaultBacked.swift): When Decoding fails, the default value will be set.
+- [@BoolCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Boolean.swift): Bool Encoding or Decoding and can set default value.
+- [@Base64DataCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Base64Data.swift): For a Data property that should be serialized to a Base64 encoded String.
+- [@DateFormatterCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/DateFormatter.swift): Date property that should be serialized using the customized DataFormat.
+- [@ISO8601DateCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/ISO8601DateFormatter.swift): Date property that should be serialized using the ISO8601DateFormatter.
+- [@Since1970DateCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Since1970Date.swift): Date property that should be serialized to Since1970.
+- [@DecimalNumberCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/DecimalNumber.swift): Deserialization to a NSDecimalNumber property.
+- [@EnumCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Enum.swift): Serialization to enumeration with RawRepresentable.
+- [@HexColorCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/HexColor.swift): UIColor/NSColor property that should be serialized to hex string.
+- [@RGBAColorCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/RGBAColor.swift): RGBA color Encoding or Decoding.
+- [@PointCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/CGPoint.swift): CGPoint Encoding or Decoding.
+- [@RectCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/CGRect.swift): CGRect Encoding or Decoding.
+
+And support customization, you only need to implement the [AnyBackedable](https://github.com/yangKJ/HollowCodable/blob/master/Sources/AnyBackedable.swift) protocol.
+
+It also supports the attribute wrapper that can set the default value, and you need to implement the [HasDefaultValuable](https://github.com/yangKJ/HollowCodable/blob/master/Sources/HasDefaultValuable.swift) protocol.
 
 ### Booming
 **[Booming](https://github.com/yangKJ/RxNetworks)** is a base network library for Swift. Developed for Swift 5, it aims to make use of the latest language features. The framework's ultimate goal is to enable easy networking that makes it easy to write well-maintainable code.
