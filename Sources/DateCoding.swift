@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DateValue<D: HollowValueProvider, E: HollowValueProvider>: AnyBackedable {
+public struct DateValue<D: HollowValueProvider, E: HollowValueProvider>: Transformer {
     
     var dateString: String?
     
@@ -18,11 +18,7 @@ public struct DateValue<D: HollowValueProvider, E: HollowValueProvider>: AnyBack
         self.dateString = string
     }
     
-    public func toEncodeVaule() -> EncodeType? {
-        dateString
-    }
-    
-    public func toDecodeValue() -> DecodeType? {
+    public func transform() throws -> Date? {
         guard let dateString = dateString else {
             return nil
         }
@@ -39,7 +35,7 @@ public struct DateValue<D: HollowValueProvider, E: HollowValueProvider>: AnyBack
         return nil
     }
     
-    public static func create(with value: DecodeType) throws -> DateValue {
+    public static func transform(from value: Date) throws -> String {
         let dateString: String? = {
             if let dateFormatter = E.hasValue as? FormatterConverter {
                 return dateFormatter.string(from: value)
@@ -58,7 +54,7 @@ public struct DateValue<D: HollowValueProvider, E: HollowValueProvider>: AnyBack
             ]
             throw NSError(domain: "com.condy.hollow.codable", code: -100014, userInfo: userInfo)
         }
-        return DateValue.init(string)!
+        return string
     }
     
     static func formatter(dateFormat: String?) -> FormatterConverter? {
@@ -76,9 +72,7 @@ public struct DateValue<D: HollowValueProvider, E: HollowValueProvider>: AnyBack
 
 extension DateValue: HasDefaultValuable {
     
-    public typealias DefaultType = Date
-    
-    public static var defaultValue: DefaultType {
+    public static var hasDefaultValue: Date {
         Date()
     }
 }

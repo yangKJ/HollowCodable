@@ -20,7 +20,7 @@ extension KeyedEncodingContainer {
     public mutating func encode<T>(_ value: T, forKey key: KeyedEncodingContainer<K>.Key) throws {
         switch value {
         case let col as HollowColor:
-            try self.encode(HexColor<Hollow.HasBoolean.no>.create(with: col).hex, forKey: key)
+            try self.encode(HexColor<True>.transform(from: col), forKey: key)
         case let del as NSDecimalNumber:
             try self.encode(del.description, forKey: key)
         case let ee as Encodable:

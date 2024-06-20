@@ -151,7 +151,7 @@ let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
 - [@PointCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/CGPoint.swift): CGPoint Encoding or Decoding.
 - [@RectCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/CGRect.swift): CGRect Encoding or Decoding.
 
-And support customization, you only need to implement the [AnyBackedable](https://github.com/yangKJ/HollowCodable/blob/master/Sources/AnyBackedable.swift) protocol.
+And support customization, you only need to implement the [Transformer](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transformer.swift) protocol.
 
 It also supports the attribute wrapper that can set the default value, and you need to implement the [HasDefaultValuable](https://github.com/yangKJ/HollowCodable/blob/master/Sources/HasDefaultValuable.swift) protocol.
 

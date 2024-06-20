@@ -7,17 +7,12 @@
 
 import Foundation
 
-public struct RGBA: AnyBackedable {
+public struct RGBA {
     
     var red: CGFloat?
     var green: CGFloat?
     var blue: CGFloat?
     var alpha: CGFloat?
-    
-    public typealias DecodeType = HollowColor
-    public typealias EncodeType = String
-    
-    public init?(_ string: String) { }
     
     init(red: CGFloat? = nil, green: CGFloat? = nil, blue: CGFloat? = nil, alpha: CGFloat? = nil) {
         self.red = red
@@ -25,8 +20,16 @@ public struct RGBA: AnyBackedable {
         self.blue = blue
         self.alpha = alpha
     }
+}
+
+extension RGBA: Transformer {
     
-    public func toDecodeValue() -> DecodeType? {
+    public typealias DecodeType = HollowColor
+    public typealias EncodeType = RGBA
+    
+    public init?(_ string: String) { }
+    
+    public func transform() throws -> HollowColor? {
         let r = (red ?? 255.0) / 255.0
         let g = (green ?? 255.0) / 255.0
         let b = (blue ?? 255.0) / 255.0
@@ -34,7 +37,7 @@ public struct RGBA: AnyBackedable {
         return DecodeType.init(red: r, green: g, blue: b, alpha: a)
     }
     
-    public static func create(with value: DecodeType) throws -> RGBA {
+    public static func transform(from value: HollowColor) throws -> RGBA {
         let comps = value.cgColor.components!
         let r = comps[0] * 255.0
         let g = comps[1] * 255.0
@@ -46,9 +49,7 @@ public struct RGBA: AnyBackedable {
 
 extension RGBA: HasDefaultValuable {
     
-    public typealias DefaultType = HollowColor
-    
-    public static var defaultValue: DefaultType {
+    public static var hasDefaultValue: HollowColor {
         .clear
     }
 }

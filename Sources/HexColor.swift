@@ -15,9 +15,9 @@ public typealias HollowColor = NSColor
 #endif
 
 /// Support the hex string color with format `#RGB`、`#RGBA`、`#RRGGBB`、`#RRGGBBAA`
-public struct HexColor<HasAlpha: HollowValueProvider>: AnyBackedable where HasAlpha.Value == Bool {
+public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha.DefaultType == Bool {
     
-    var hex: String?
+    let hex: String?
     
     public typealias DecodeType = HollowColor
     public typealias EncodeType = String
@@ -26,11 +26,7 @@ public struct HexColor<HasAlpha: HollowValueProvider>: AnyBackedable where HasAl
         self.hex = string
     }
     
-    public func toEncodeVaule() -> EncodeType? {
-        hex
-    }
-    
-    public func toDecodeValue() -> DecodeType? {
+    public func transform() throws -> HollowColor? {
         guard let hex = hex else {
             return nil
         }
@@ -68,7 +64,7 @@ public struct HexColor<HasAlpha: HollowValueProvider>: AnyBackedable where HasAl
         return HollowColor.init(red: r, green: g, blue: b, alpha: a)
     }
     
-    public static func create(with value: DecodeType) throws -> HexColor {
+    public static func transform(from value: HollowColor) throws -> String {
         let comps = value.cgColor.components!
         let r = Int(comps[0] * 255)
         let g = Int(comps[1] * 255)
@@ -76,18 +72,16 @@ public struct HexColor<HasAlpha: HollowValueProvider>: AnyBackedable where HasAl
         let a = Int(comps[3] * 255)
         var hexString: String = "#"
         hexString += String(format: "%02X%02X%02X", r, g, b)
-        if HasAlpha.hasValue {
+        if HasAlpha.hasDefaultValue {
             hexString += String(format: "%02X", a)
         }
-        return HexColor.init(hexString)!
+        return hexString
     }
 }
 
 extension HexColor: HasDefaultValuable {
     
-    public typealias DefaultType = HollowColor
-    
-    public static var defaultValue: DefaultType {
+    public static var hasDefaultValue: HollowColor {
         .clear
     }
 }

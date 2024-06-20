@@ -16,23 +16,7 @@ public protocol HollowValueProvider {
     static var hasValue: Value { get }
 }
 
-public struct Hollow {
-    public struct HasBoolean {
-        /// Used types to pass values, equivalent to true.
-        public enum yes: HollowValueProvider { 
-            public static let hasValue: Bool = true
-        }
-        /// Used types to pass values, equivalent to false.
-        public enum no: HollowValueProvider { 
-            public static let hasValue: Bool = false
-        }
-        /// Used types to pass values, equivalent to nil.
-        public enum nothing: HollowValueProvider {
-            public typealias Value = Bool?
-            public static let hasValue: Bool? = nil
-        }
-    }
-}
+public struct Hollow { }
 
 public struct HollowWrapper<Base> {
     public let base: Base

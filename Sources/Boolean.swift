@@ -7,9 +7,9 @@
 
 import Foundation
 
-public struct BooleanValue<HasDefault: HollowValueProvider>: AnyBackedable where HasDefault.Value == Bool {
+public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where HasDefault.DefaultType == Bool {
     
-    var boolean: Bool
+    let boolean: Bool
     
     public typealias DecodeType = Bool
     public typealias EncodeType = Bool
@@ -25,16 +25,8 @@ public struct BooleanValue<HasDefault: HollowValueProvider>: AnyBackedable where
         }
     }
     
-    init(value: Bool) {
-        self.boolean = value
-    }
-    
-    public func toDecodeValue() -> DecodeType? {
+    public func transform() throws -> Bool? {
         boolean
-    }
-    
-    public static func create(with value: DecodeType) throws -> BooleanValue {
-        BooleanValue.init(value: value)
     }
 }
 
@@ -42,7 +34,7 @@ extension BooleanValue: HasDefaultValuable {
     
     public typealias DefaultType = Bool
     
-    public static var defaultValue: DefaultType {
-        HasDefault.hasValue
+    public static var hasDefaultValue: DefaultType {
+        HasDefault.hasDefaultValue
     }
 }

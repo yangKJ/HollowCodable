@@ -7,9 +7,9 @@
 
 import Foundation
 
-public typealias DefaultBackedCoding<T: AnyBackedable> = DefaultBacked<T> where T: HasDefaultValuable, T.DefaultType == T.DecodeType
+public typealias DefaultBackedCoding<T: Transformer> = DefaultBacked<T> where T: HasDefaultValuable, T.DefaultType == T.DecodeType
 
-@propertyWrapper public struct DefaultBacked<T: AnyBackedable>: Codable where T: HasDefaultValuable, T.DefaultType == T.DecodeType {
+@propertyWrapper public struct DefaultBacked<T: Transformer>: Codable where T: HasDefaultValuable, T.DefaultType == T.DecodeType {
     
     public var wrappedValue: T.DecodeType
     
@@ -26,16 +26,16 @@ public typealias DefaultBackedCoding<T: AnyBackedable> = DefaultBacked<T> where 
     }
 }
 
-@propertyWrapper public struct DefaultBackedDecoding<T: AnyBackedable>: Decodable where T: HasDefaultValuable, T.DefaultType == T.DecodeType {
+@propertyWrapper public struct DefaultBackedDecoding<T: Transformer>: Decodable where T: HasDefaultValuable, T.DefaultType == T.DecodeType {
     
     public var wrappedValue: T.DecodeType
     
     public init(from decoder: Decoder) throws {
-        self.wrappedValue = try AnyBackedDecoding<T>.init(from: decoder).wrappedValue ?? T.defaultValue
+        self.wrappedValue = try AnyBackedDecoding<T>.init(from: decoder).wrappedValue ?? T.hasDefaultValue
     }
 }
 
-@propertyWrapper public struct DefaultBackedEncoding<T: AnyBackedable>: Encodable {
+@propertyWrapper public struct DefaultBackedEncoding<T: Transformer>: Encodable {
     
     public let wrappedValue: T.DecodeType
     

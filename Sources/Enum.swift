@@ -8,28 +8,31 @@
 import Foundation
 
 /// 枚举系列
-public struct EnumValue<T: RawRepresentable>: AnyBackedable where T.RawValue: Codable {
+public struct EnumValue<T: RawRepresentable> where T.RawValue: Codable {
     
     var value: T.RawValue?
-    
-    public typealias DecodeType = T
-    public typealias EncodeType = String
-    
-    public init?(_ string: String) { }
     
     init(value: T.RawValue? = nil) {
         self.value = value
     }
+}
+
+extension EnumValue: Transformer {
     
-    public func toDecodeValue() -> DecodeType? {
+    public typealias DecodeType = T
+    public typealias EncodeType = T.RawValue
+    
+    public init?(_ string: String) { }
+    
+    public func transform() throws -> T? {
         guard let value = value else {
             return nil
         }
         return T.init(rawValue: value)
     }
     
-    public static func create(with value: DecodeType) throws -> EnumValue {
-        EnumValue(value: value.rawValue)
+    public static func transform(from value: T) throws -> T.RawValue {
+        value.rawValue
     }
 }
 
@@ -37,7 +40,7 @@ extension EnumValue: HasDefaultValuable where T: CaseIterable {
     
     public typealias DefaultType = T
     
-    public static var defaultValue: DefaultType {
+    public static var hasDefaultValue: DefaultType {
         T.allCases.first!
     }
 }

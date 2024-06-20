@@ -7,26 +7,29 @@
 
 import Foundation
 
-public struct PointValue: AnyBackedable {
+public struct PointValue {
     
     var x: CGFloat?
     var y: CGFloat?
-    
-    public typealias DecodeType = CGPoint
-    public typealias EncodeType = String
-    
-    public init?(_ string: String) { }
     
     init(x: CGFloat? = nil, y: CGFloat? = nil) {
         self.x = x
         self.y = y
     }
+}
+
+extension PointValue: Transformer {
     
-    public func toDecodeValue() -> DecodeType? {
+    public typealias DecodeType = CGPoint
+    public typealias EncodeType = PointValue
+    
+    public init?(_ string: String) { }
+    
+    public func transform() throws -> CGPoint? {
         .init(x: x ?? 0, y: y ?? 0)
     }
     
-    public static func create(with value: DecodeType) throws -> PointValue {
+    public static func transform(from value: CGPoint) throws -> PointValue {
         PointValue.init(x: value.x, y: value.y)
     }
 }
@@ -35,7 +38,7 @@ extension PointValue: HasDefaultValuable {
     
     public typealias DefaultType = CGPoint
     
-    public static var defaultValue: DefaultType {
+    public static var hasDefaultValue: DefaultType {
         .zero
     }
 }

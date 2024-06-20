@@ -46,9 +46,9 @@ public typealias DecimalNumberEncoding = AnyBackedEncoding<DecimalNumberValue>
 
 // MARK: - Color
 
-public typealias HexColorHasAlphaCoding   = AnyBacked<HexColor<Hollow.HasBoolean.yes>>
-public typealias HexColorHasAlphaDecoding = AnyBackedDecoding<HexColor<Hollow.HasBoolean.yes>>
-public typealias HexColorHasAlphaEncoding = AnyBackedEncoding<HexColor<Hollow.HasBoolean.yes>>
+public typealias HexColorHasAlphaCoding   = AnyBacked<HexColor<True>>
+public typealias HexColorHasAlphaDecoding = AnyBackedDecoding<HexColor<True>>
+public typealias HexColorHasAlphaEncoding = AnyBackedEncoding<HexColor<True>>
 
 public typealias RGBColorCoding   = AnyBacked<RGB>
 public typealias RGBColorDecoding = AnyBackedDecoding<RGB>
@@ -59,23 +59,23 @@ public typealias RGBAColorDecoding = AnyBackedDecoding<RGBA>
 public typealias RGBAColorEncoding = AnyBackedEncoding<RGBA>
 
 /// When coding the color hex value hasn't alpha.
-public typealias HexColorCoding   = AnyBacked<HexColor<Hollow.HasBoolean.no>>
-public typealias HexColorDecoding = AnyBackedDecoding<HexColor<Hollow.HasBoolean.no>>
-public typealias HexColorEncoding = AnyBackedEncoding<HexColor<Hollow.HasBoolean.no>>
+public typealias HexColorCoding   = AnyBacked<HexColor<False>>
+public typealias HexColorDecoding = AnyBackedDecoding<HexColor<False>>
+public typealias HexColorEncoding = AnyBackedEncoding<HexColor<False>>
 
 // MARK: - Bool
 
-public typealias BoolCoding   = AnyBacked<BooleanValue<Hollow.HasBoolean.no>>
-public typealias BoolDecoding = AnyBackedDecoding<BooleanValue<Hollow.HasBoolean.no>>
-public typealias BoolEncoding = AnyBackedEncoding<BooleanValue<Hollow.HasBoolean.no>>
+public typealias BoolCoding   = AnyBacked<BooleanValue<False>>
+public typealias BoolDecoding = AnyBackedDecoding<BooleanValue<False>>
+public typealias BoolEncoding = AnyBackedEncoding<BooleanValue<False>>
 
-public typealias FalseBoolCoding   = DefaultBacked<BooleanValue<Hollow.HasBoolean.no>>
-public typealias FalseBoolDecoding = DefaultBackedDecoding<BooleanValue<Hollow.HasBoolean.no>>
-public typealias FalseBoolEncoding = DefaultBackedEncoding<BooleanValue<Hollow.HasBoolean.no>>
+public typealias FalseBoolCoding   = DefaultBacked<BooleanValue<False>>
+public typealias FalseBoolDecoding = DefaultBackedDecoding<BooleanValue<False>>
+public typealias FalseBoolEncoding = DefaultBackedEncoding<BooleanValue<False>>
 
-public typealias TrueBoolCoding   = DefaultBacked<BooleanValue<Hollow.HasBoolean.yes>>
-public typealias TrueBoolDecoding = DefaultBackedDecoding<BooleanValue<Hollow.HasBoolean.yes>>
-public typealias TrueBoolEncoding = DefaultBackedEncoding<BooleanValue<Hollow.HasBoolean.yes>>
+public typealias TrueBoolCoding   = DefaultBacked<BooleanValue<True>>
+public typealias TrueBoolDecoding = DefaultBackedDecoding<BooleanValue<True>>
+public typealias TrueBoolEncoding = DefaultBackedEncoding<BooleanValue<True>>
 
 // MARK: - CGRect
 

@@ -18,9 +18,4 @@ public extension Hollow {
         /// The interval is in nanoseconds since midnight UTC on January 1st, 1970.
         public enum nanoseconds: HollowValueProvider { public static let hasValue: TimeInterval = 1_000_000_000 }
     }
-    
-//    static func hasDateFormat<T>(_ type_: T.Type) -> Bool {
-//        let array = String(describing: type_).components(separatedBy: ".")
-//        return array.contains("Since1970")
-//    }
 }

@@ -7,17 +7,12 @@
 
 import Foundation
 
-public struct RectValue: AnyBackedable {
+public struct RectValue {
     
     var x: CGFloat?
     var y: CGFloat?
     var width: CGFloat?
     var height: CGFloat?
-    
-    public typealias DecodeType = CGRect
-    public typealias EncodeType = String
-    
-    public init?(_ string: String) { }
     
     init(x: CGFloat? = nil, y: CGFloat? = nil, width: CGFloat? = nil, height: CGFloat? = nil) {
         self.x = x
@@ -25,12 +20,20 @@ public struct RectValue: AnyBackedable {
         self.width = width
         self.height = height
     }
+}
+
+extension RectValue: Transformer {
     
-    public func toDecodeValue() -> DecodeType? {
+    public typealias DecodeType = CGRect
+    public typealias EncodeType = RectValue
+    
+    public init?(_ string: String) { }
+    
+    public func transform() throws -> CGRect? {
         CGRect(x: x ?? 0, y: y ?? 0, width: width ?? 0, height: height ?? 0)
     }
     
-    public static func create(with value: DecodeType) throws -> RectValue {
+    public static func transform(from value: CGRect) throws -> RectValue {
         RectValue.init(x: value.origin.x, y: value.origin.y, width: value.size.width, height: value.size.height)
     }
 }
@@ -39,7 +42,7 @@ extension RectValue: HasDefaultValuable {
     
     public typealias DefaultType = CGRect
     
-    public static var defaultValue: DefaultType {
+    public static var hasDefaultValue: DefaultType {
         .zero
     }
 }

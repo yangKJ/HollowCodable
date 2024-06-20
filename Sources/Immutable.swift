@@ -18,9 +18,27 @@ import Foundation
     }
 }
 
-extension Immutable: Encodable, TransientEncodable where T: Encodable { }
-extension Immutable: Decodable, TransientDecodable where T: Decodable { }
-extension Immutable: TransientCodable where T: Codable { }
+extension Immutable: Encodable where T: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        try wrappedValue.encode(to: encoder)
+    }
+}
+
+extension Immutable: Decodable where T: Decodable {
+    public init(from decoder: Decoder) throws {
+        self.init(wrappedValue: try T(from: decoder))
+    }
+}
+
+extension Immutable where T: Codable {
+    public init(from decoder: Decoder) throws {
+        self.init(wrappedValue: try T(from: decoder))
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        try wrappedValue.encode(to: encoder)
+    }
+}
 
 extension Immutable: Equatable where T: Equatable { }
 extension Immutable: Hashable where T: Hashable { }

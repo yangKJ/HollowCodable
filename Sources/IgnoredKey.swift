@@ -29,9 +29,6 @@ import Foundation
     }
 }
 
-/// Protocol to indicate instances should be skipped when encoding
-public protocol OmitableFromEncoding: Encodable { }
-
 extension KeyedDecodingContainer {
     // This is used to override the default decoding behavior for OptionalCodingWrapper to allow a value to avoid a missing key Error
     public func decode<T>(_ type: T.Type, forKey key: KeyedDecodingContainer<K>.Key) throws -> T where T: OmitableFromDecoding {
@@ -45,6 +42,8 @@ extension KeyedEncodingContainer {
         return
     }
 }
+
+public protocol OmitableFromEncoding: Encodable { }
 
 extension OmitableFromEncoding {
     // This shouldn't ever be called since KeyedEncodingContainer should skip it due to the included extension
@@ -62,8 +61,8 @@ extension OmitableFromDecoding {
     }
 }
 
-extension IgnoredKeyEncoding: Decodable, TransientDecodable where T: Decodable { }
-extension IgnoredKeyDecoding: Encodable, TransientEncodable where T: Encodable { }
+extension IgnoredKeyEncoding: Decodable where T: Decodable { }
+extension IgnoredKeyDecoding: Encodable where T: Encodable { }
 
 extension IgnoredKeyEncoding: Equatable where T: Equatable { }
 extension IgnoredKeyDecoding: Equatable where T: Equatable { }

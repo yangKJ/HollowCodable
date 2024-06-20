@@ -11,27 +11,27 @@ extension KeyedDecodingContainer {
     
     public func decodeIfPresent(_ type: HollowColor.Type, forKey key: Key) throws -> HollowColor? {
         let value = try self.decode(String.self, forKey: key)
-        return HexColor<Hollow.HasBoolean.no>.init(value)?.toDecodeValue()
+        return try HexColor<False>.init(value)?.transform()
     }
     
     public func decodeIfPresent(_ type: NSDecimalNumber.Type, forKey key: Key) throws -> NSDecimalNumber? {
         if let val = try? self.decode(String.self, forKey: key) {
-            return DecimalNumberValue(val)?.toDecodeValue()
+            return try DecimalNumberValue(val)?.transform()
         }
         if let val = try? self.decode(Float.self, forKey: key) {
-            return DecimalNumberValue(String(describing: val))?.toDecodeValue()
+            return try DecimalNumberValue(String(describing: val))?.transform()
         }
         if let val = try? self.decode(Int.self, forKey: key) {
-            return DecimalNumberValue(String(describing: val))?.toDecodeValue()
+            return try DecimalNumberValue(String(describing: val))?.transform()
         }
         if let val = try? self.decode(CGFloat.self, forKey: key) {
-            return DecimalNumberValue(String(describing: val))?.toDecodeValue()
+            return try DecimalNumberValue(String(describing: val))?.transform()
         }
         if let val = try? self.decode(Int64.self, forKey: key) {
-            return DecimalNumberValue(String(describing: val))?.toDecodeValue()
+            return try DecimalNumberValue(String(describing: val))?.transform()
         }
         if let val = try? self.decode(Double.self, forKey: key) {
-            return DecimalNumberValue(String(describing: val))?.toDecodeValue()
+            return try DecimalNumberValue(String(describing: val))?.transform()
         }
         return nil
     }
