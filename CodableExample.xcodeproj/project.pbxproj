@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		87341A2F2C217D4400DF23FF /* IgnoredKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87341A2E2C217D4400DF23FF /* IgnoredKey.swift */; };
+		8744C20C2C251FE500E50C7C /* DefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744C20B2C251FE500E50C7C /* DefaultValues.swift */; };
 		876D56A32C18333C0006E25E /* AnyBacked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A22C18333C0006E25E /* AnyBacked.swift */; };
 		876D56A52C183D6F0006E25E /* RGBAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A42C183D6F0006E25E /* RGBAColor.swift */; };
 		876D56A72C1845470006E25E /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A62C1845470006E25E /* CGRect.swift */; };
@@ -53,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		87341A2E2C217D4400DF23FF /* IgnoredKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredKey.swift; sourceTree = "<group>"; };
+		8744C20B2C251FE500E50C7C /* DefaultValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultValues.swift; sourceTree = "<group>"; };
 		876D56A22C18333C0006E25E /* AnyBacked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyBacked.swift; sourceTree = "<group>"; };
 		876D56A42C183D6F0006E25E /* RGBAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAColor.swift; sourceTree = "<group>"; };
 		876D56A62C1845470006E25E /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				F76AF7A62C16A415005DC327 /* DateFormatter.swift */,
 				F76AF7A72C16A415005DC327 /* DecimalNumber.swift */,
 				F7EA7B682C205EA40048E264 /* DefaultBacked.swift */,
+				8744C20B2C251FE500E50C7C /* DefaultValues.swift */,
 				F76AF7A82C16A415005DC327 /* Deserializer.swift */,
 				87F2AB872C200C8A006DF62F /* Enserializer.swift */,
 				F76AF7AA2C16A415005DC327 /* Enum.swift */,
@@ -281,6 +284,7 @@
 				876D56A52C183D6F0006E25E /* RGBAColor.swift in Sources */,
 				F747FFD82C232328001A4680 /* HasDefaultValuable.swift in Sources */,
 				F7EA7B692C205EA40048E264 /* DefaultBacked.swift in Sources */,
+				8744C20C2C251FE500E50C7C /* DefaultValues.swift in Sources */,
 				F76AF7902C16A29A005DC327 /* CodableExampleApp.swift in Sources */,
 				F76AF7BF2C16A415005DC327 /* Deserializer.swift in Sources */,
 				876D56A72C1845470006E25E /* CGRect.swift in Sources */,

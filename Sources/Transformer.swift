@@ -105,3 +105,11 @@ extension String: Transformer {
     public typealias DecodeType = String
     public typealias EncodeType = String
 }
+
+extension Array: Transformer where Array.Element: HollowCodable {
+    public typealias DecodeType = Array
+    public typealias EncodeType = Array
+    public init?(_ string: String) {
+        self = [Array.Element].deserialize(from: string) ?? []
+    }
+}

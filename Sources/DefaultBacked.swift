@@ -13,15 +13,15 @@ public typealias DefaultBackedCoding<T: Transformer> = DefaultBacked<T> where T:
     
     public var wrappedValue: T.DecodeType
     
-    public init(_ wrappedValue: T.DecodeType) {
-        self.wrappedValue = wrappedValue
+    @inline(__always) public init(_ wrappedValue: T.DecodeType? = nil) {
+        self.wrappedValue = wrappedValue ?? T.hasDefaultValue
     }
     
-    public init(from decoder: Decoder) throws {
+    @inline(__always) public init(from decoder: Decoder) throws {
         self.wrappedValue = try DefaultBackedDecoding<T>(from: decoder).wrappedValue
     }
     
-    public func encode(to encoder: Encoder) throws {
+    @inline(__always) public func encode(to encoder: Encoder) throws {
         try DefaultBackedEncoding<T>(wrappedValue).encode(to: encoder)
     }
 }
@@ -30,20 +30,21 @@ public typealias DefaultBackedCoding<T: Transformer> = DefaultBacked<T> where T:
     
     public var wrappedValue: T.DecodeType
     
-    public init(from decoder: Decoder) throws {
+    @inline(__always) public init(from decoder: Decoder) throws {
         self.wrappedValue = try AnyBackedDecoding<T>.init(from: decoder).wrappedValue ?? T.hasDefaultValue
     }
 }
 
-@propertyWrapper public struct DefaultBackedEncoding<T: Transformer>: Encodable {
+@propertyWrapper public struct DefaultBackedEncoding<T: Transformer>: Encodable where T: HasDefaultValuable, T.DefaultType == T.DecodeType {
     
-    public let wrappedValue: T.DecodeType
+    public let wrappedValue: T.DecodeType?
     
-    public init(_ wrappedValue: T.DecodeType) {
+    @inline(__always) public init(_ wrappedValue: T.DecodeType? = nil) {
         self.wrappedValue = wrappedValue
     }
     
-    public func encode(to encoder: Encoder) throws {
-        try AnyBackedEncoding<T>(wrappedValue).encode(to: encoder)
+    @inline(__always) public func encode(to encoder: Encoder) throws {
+        let value = wrappedValue ?? T.hasDefaultValue
+        try AnyBackedEncoding<T>(value).encode(to: encoder)
     }
 }

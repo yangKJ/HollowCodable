@@ -13,15 +13,19 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
     
     public var wrappedValue: T.DecodeType?
     
-    public init(_ wrappedValue: T.DecodeType?) {
+    @inline(__always) public init() {
+        self.wrappedValue = nil
+    }
+    
+    @inline(__always) public init(_ wrappedValue: T.DecodeType?) {
         self.wrappedValue = wrappedValue
     }
     
-    public init(from decoder: Decoder) throws {
+    @inline(__always) public init(from decoder: Decoder) throws {
         self.wrappedValue = try AnyBackedDecoding<T>(from: decoder).wrappedValue
     }
     
-    public func encode(to encoder: Encoder) throws {
+    @inline(__always) public func encode(to encoder: Encoder) throws {
         try AnyBackedEncoding<T>(wrappedValue).encode(to: encoder)
     }
 }
@@ -30,18 +34,18 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
     
     public var wrappedValue: T.DecodeType?
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let loggerDataCorruptedError = {
+    @inline(__always) public init(from decoder: Decoder) throws {
+        let loggerDataCorruptedError = { (container: SingleValueDecodingContainer) in
             if Hollow.Logger.logIfNeeded == false {
                 return
             }
             let err = DecodingError.dataCorruptedError(in: container, debugDescription: "Failed to convert an instance of \(T.DecodeType.self)")
             Hollow.Logger.logDebug(err)
         }
+        let container = try decoder.singleValueContainer()
         if container.decodeNil() {
             self.wrappedValue = nil
-            loggerDataCorruptedError()
+            loggerDataCorruptedError(container)
             return
         }
         if let value = try? container.decode<T>(T.self) {
@@ -60,13 +64,25 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             self.wrappedValue = try T.init(String(describing: value))?.transform()
         } else if let value = try? container.decode(Bool.self) {
             self.wrappedValue = try T.init(String(describing: value))?.transform()
+        } else if let value = try? container.decode(Int8.self) {
+            self.wrappedValue = try T.init(String(describing: value))?.transform()
+        } else if let value = try? container.decode(Int16.self) {
+            self.wrappedValue = try T.init(String(describing: value))?.transform()
+        } else if let value = try? container.decode(Int32.self) {
+            self.wrappedValue = try T.init(String(describing: value))?.transform()
         } else if let value = try? container.decode(Int64.self) {
+            self.wrappedValue = try T.init(String(describing: value))?.transform()
+        } else if let value = try? container.decode(UInt8.self) {
+            self.wrappedValue = try T.init(String(describing: value))?.transform()
+        } else if let value = try? container.decode(UInt16.self) {
+            self.wrappedValue = try T.init(String(describing: value))?.transform()
+        } else if let value = try? container.decode(UInt32.self) {
             self.wrappedValue = try T.init(String(describing: value))?.transform()
         } else if let value = try? container.decode(UInt64.self) {
             self.wrappedValue = try T.init(String(describing: value))?.transform()
         } else {
             self.wrappedValue = nil
-            loggerDataCorruptedError()
+            loggerDataCorruptedError(container)
         }
     }
 }
@@ -75,11 +91,15 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
     
     public let wrappedValue: T.DecodeType?
     
-    public init(_ wrappedValue: T.DecodeType?) {
+    @inline(__always) public init() {
+        self.wrappedValue = nil
+    }
+    
+    @inline(__always) public init(_ wrappedValue: T.DecodeType?) {
         self.wrappedValue = wrappedValue
     }
     
-    public func encode(to encoder: Encoder) throws {
+    @inline(__always) public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         if let value = self.wrappedValue {
             if let value = try? T.transform(from: value) {

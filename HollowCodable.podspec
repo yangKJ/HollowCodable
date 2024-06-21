@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HollowCodable'
-  s.version          = '1.1.4'
+  s.version          = '2.0.0'
   s.summary          = 'Codable Customization using Property Wrappers.'
   
   # This description is used to generate tags and improve search results.
