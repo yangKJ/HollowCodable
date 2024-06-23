@@ -52,3 +52,26 @@ extension Collection where Element: HollowCodable {
         return try decoder.decode([Element].self, from: data)
     }
 }
+
+extension Dictionary where Key: Decodable, Value: HollowCodable {
+    
+    public static func deserialize(from element: Any) -> Dictionary<Key, Value>? {
+        do {
+            return try deserialize(element: element)
+        } catch {
+            return nil
+        }
+    }
+    
+    public static func deserialize(element: Any) throws -> Dictionary<Key, Value> {
+        let decoder = JSONDecoder()
+        decoder.setupKeyStrategy(Value.self)
+        let data: Data
+        if let data_ = element as? Data {
+            data = data_
+        } else {
+            data = try JSONSerialization.data(withJSONObject: element)
+        }
+        return try decoder.decode(Dictionary<Key, Value>.self, from: data)
+    }
+}

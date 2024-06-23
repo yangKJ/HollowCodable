@@ -41,6 +41,65 @@ extension String {
             try? JSONSerialization.jsonObject(with: $0)
         }
     }
+    
+    func snakeCamelConvert() -> String? {
+        let result: String
+        if contains("_") {
+            result = snakeToCamel()
+        } else {
+            result = camelToSnake()
+        }
+        if self == result {
+            return nil
+        }
+        return result
+    }
+    
+    private func snakeToCamel() -> String {
+        guard !isEmpty, let firstNonUnderscore = firstIndex(where: { $0 != "_" }) else {
+            return self
+        }
+        let stringKey = self
+        var lastNonUnderscore = stringKey.index(before: stringKey.endIndex)
+        while lastNonUnderscore > firstNonUnderscore, stringKey[lastNonUnderscore] == "_" {
+            stringKey.formIndex(before: &lastNonUnderscore)
+        }
+        let keyRange = firstNonUnderscore ... lastNonUnderscore
+        let leadingUnderscoreRange = stringKey.startIndex ..< firstNonUnderscore
+        let trailingUnderscoreRange = stringKey.index(after: lastNonUnderscore) ..< stringKey.endIndex
+        let components = stringKey[keyRange].split(separator: "_")
+        let joinedString: String
+        if components.count == 1 {
+            joinedString = String(stringKey[keyRange])
+        } else {
+            joinedString = ([components[0].lowercased()] + components[1...].map { $0.capitalized }).joined()
+        }
+        
+        let result: String
+        if leadingUnderscoreRange.isEmpty, trailingUnderscoreRange.isEmpty {
+            result = joinedString
+        } else if !leadingUnderscoreRange.isEmpty, !trailingUnderscoreRange.isEmpty {
+            result = String(stringKey[leadingUnderscoreRange]) + joinedString + String(stringKey[trailingUnderscoreRange])
+        } else if !leadingUnderscoreRange.isEmpty {
+            result = String(stringKey[leadingUnderscoreRange]) + joinedString
+        } else {
+            result = joinedString + String(stringKey[trailingUnderscoreRange])
+        }
+        return result
+    }
+    
+    private func camelToSnake() -> String {
+        var chars = Array(self)
+        for (i, char) in chars.enumerated().reversed() {
+            if char.isUppercase {
+                chars[i] = String.Element(char.lowercased())
+                if i > 0 {
+                    chars.insert("_", at: i)
+                }
+            }
+        }
+        return String(chars)
+    }
 }
 
 extension Collection {

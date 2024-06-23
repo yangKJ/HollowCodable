@@ -29,13 +29,13 @@ struct YourModel: HollowCodable {
     @Immutable @BoolCoding
     var bar: Bool?
     
-    @TrueBoolCoding
+    @FalseBoolCoding
     var hasDefBool: Bool
     
     @SecondsSince1970DateCoding
     var timestamp: Date?
     
-    @DateCoding<Hollow.DateFormat.yyyy_mm_dd_hh_mm_ss, Hollow.Since1970.seconds>
+    @DateCoding<Hollow.DateFormat.yyyy_mm_dd_hh_mm_ss, Hollow.Timestamp.secondsSince1970>
     var time: Date?
     
     @ISO8601DateCoding
@@ -64,17 +64,21 @@ struct YourModel: HollowCodable {
     @IgnoredKey
     var ignorKey: String? = "1234"
     
+    lazy var ignorKey2: String? = "123"
+    
     var dict: DictAA?
     
     struct DictAA: HollowCodable {
         @AnyBacked<Double> var amount: Double?
     }
     
-    var list: [FruitAA]?
+    @DefaultBacked<[FruitAA]>
+    var list: [FruitAA]
     
     struct FruitAA: HollowCodable {
         var fruit: String?
-        var dream: String?
+        @DefaultBacked<String>
+        var dream: String
     }
     
     static var codingKeys: [ReplaceKeys] {

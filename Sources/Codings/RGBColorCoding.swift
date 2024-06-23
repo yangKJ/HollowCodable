@@ -20,7 +20,7 @@ public struct RGB {
     }
 }
 
-extension  RGB: Transformer {
+extension RGB: Transformer {
     
     public typealias DecodeType = HollowColor
     public typealias EncodeType = RGB

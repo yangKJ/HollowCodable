@@ -10,7 +10,7 @@
         "type": "text1",
         "timestamp" : 590277534,
         "bar": 1,
-        "hasDefBool": "",
+        "hasDefBool": 2,
         "time": "2024-05-29 23:49:55",
         "iso8601": null,
         "anyString": 5,
@@ -24,7 +24,7 @@
         },
         "list": [{
            "fruit": "Apple",
-           "dream": "Day"
+           "dream": null
         }, {
             "fruit": "Banana",
             "dream": "Night"

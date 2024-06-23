@@ -7,6 +7,9 @@
 
 import Foundation
 
+/// String or Int -> Bool converter.
+/// Uses <= 0 as false, and > 0 as true.
+/// Uses lowercase "true"/"yes"/"y"/"t"/"1" and "false"/"no"/"f"/"n"/"0".
 public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where HasDefault.DefaultType == Bool {
     
     let boolean: Bool
@@ -14,14 +17,18 @@ public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where Ha
     public typealias DecodeType = Bool
     public typealias EncodeType = Bool
     
-    public init?(_ string: String) { 
-        switch string.lowercased() {
-        case "1", "1.0", "y", "t", "yes", "true":
+    public init?(_ string: String) {
+        let value = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        switch value {
+        case "1", "y", "t", "yes", "true":
             self.boolean = true
-        case "0", "0.0", "n", "f", "no", "false":
+        case "0", "n", "f", "no", "false":
             self.boolean = false
         default:
-            return nil
+            guard let val = Double(value) else {
+                return nil
+            }
+            self.boolean = val > 0 ? true : false
         }
     }
     

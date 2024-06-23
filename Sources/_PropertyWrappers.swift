@@ -9,34 +9,44 @@ import Foundation
 
 // MARK: - Date
 
-/// If you want to use it like this: `@DateCoding<Hollow.DateFormat.yyyy, Hollow.Since1970.milliseconds>`
-public typealias DateCoding<D: HollowValueProvider, E: HollowValueProvider> = AnyBacked<DateValue<D,E>>
-public typealias DateDecoding<D: HollowValueProvider> = AnyBackedDecoding<DateValue<D,D>>
-public typealias DateEncoding<E: HollowValueProvider> = AnyBackedEncoding<DateValue<E,E>>
+/// If you want to use it like this: `@DateCoding<Hollow.DateFormat.yyyy, Hollow.Timestamp.secondsSince1970>`
+public typealias DateCoding<D: DateConverter, E: DateConverter> = AnyBacked<DateValue<D,E>>
+public typealias DateDecoding<D: DateConverter> = AnyBackedDecoding<DateValue<D,D>>
+public typealias DateEncoding<E: DateConverter> = AnyBackedEncoding<DateValue<E,E>>
+
+public typealias DateFormatterCoding<D: DateConverter, E: DateConverter> = DateCoding<D,E>
 
 /// If you want to use it like this: `@DateFormatCoding<Hollow.DateFormat.yyyy_mm_dd>`
-public typealias DateFormatCoding<T: HollowValueProvider>   = AnyBacked<DateValue<T,T>>
-public typealias DateFormatDecoding<D: HollowValueProvider> = AnyBackedDecoding<DateValue<D,D>>
-public typealias DateFormatEncoding<E: HollowValueProvider> = AnyBackedEncoding<DateValue<E,E>>
+public typealias DateFormatCoding<T: DateConverter>   = AnyBacked<DateValue<T,T>>
+public typealias DateFormatDecoding<D: DateConverter> = AnyBackedDecoding<DateValue<D,D>>
+public typealias DateFormatEncoding<E: DateConverter> = AnyBackedEncoding<DateValue<E,E>>
 
-public typealias DateFormatterCoding<D: HollowValueProvider, E: HollowValueProvider> = AnyBacked<DateValue<D,E>>
+/// If you want to use it like this: `@TimestampDateCoding<Hollow.Timestamp.millisecondsSince1970>`
+public typealias TimestampDateCoding<D: DateConverter, E: DateConverter> = AnyBacked<DateValue<D,E>>
+public typealias TimestampDateDecoding<D: DateConverter> = AnyBackedDecoding<DateValue<D,D>>
+public typealias TimestampDateEncoding<E: DateConverter> = AnyBackedEncoding<DateValue<E,E>>
 
-/// If you want to use it like this: `@Since1970DateCoding<Hollow.Since1970.milliseconds>`
-public typealias Since1970DateCoding<D: HollowValueProvider, E: HollowValueProvider> = AnyBacked<DateValue<D,E>>
-public typealias Since1970DateDecoding<D: HollowValueProvider> = AnyBackedDecoding<DateValue<D,D>>
-public typealias Since1970DateEncoding<E: HollowValueProvider> = AnyBackedEncoding<DateValue<E,E>>
+public typealias Since1970DateCoding<T: DateConverter> = TimestampDateCoding<T,T>
 
-public typealias SecondsSince1970DateCoding   = Since1970DateCoding<Hollow.Since1970.seconds,Hollow.Since1970.seconds>
-public typealias SecondsSince1970DateDecoding = Since1970DateDecoding<Hollow.Since1970.seconds>
-public typealias SecondsSince1970DateEncoding = Since1970DateEncoding<Hollow.Since1970.seconds>
+public typealias SecondsSince1970DateCoding   = TimestampDateCoding<Hollow.Timestamp.secondsSince1970, Hollow.Timestamp.secondsSince1970>
+public typealias SecondsSince1970DateDecoding = TimestampDateDecoding<Hollow.Timestamp.secondsSince1970>
+public typealias SecondsSince1970DateEncoding = TimestampDateEncoding<Hollow.Timestamp.secondsSince1970>
 
-public typealias MilliSecondsSince1970DateCoding   = Since1970DateCoding<Hollow.Since1970.milliseconds,Hollow.Since1970.milliseconds>
-public typealias MilliSecondsSince1970DateDecoding = Since1970DateDecoding<Hollow.Since1970.milliseconds>
-public typealias MilliSecondsSince1970DateEncoding = Since1970DateEncoding<Hollow.Since1970.milliseconds>
+public typealias MilliSecondsSince1970DateCoding   = TimestampDateCoding<Hollow.Timestamp.millisecondsSince1970, Hollow.Timestamp.millisecondsSince1970>
+public typealias MilliSecondsSince1970DateDecoding = TimestampDateDecoding<Hollow.Timestamp.millisecondsSince1970>
+public typealias MilliSecondsSince1970DateEncoding = TimestampDateEncoding<Hollow.Timestamp.millisecondsSince1970>
 
 public typealias ISO8601DateCoding  = DateFormatCoding<Hollow.DateFormat.ISO8601Date>
 public typealias ISO8601DateDeoding = DateFormatDecoding<Hollow.DateFormat.ISO8601Date>
 public typealias ISO8601DateEnoding = DateFormatEncoding<Hollow.DateFormat.ISO8601Date>
+
+public typealias RFC2822DateCoding  = DateFormatCoding<Hollow.DateFormat.RFC2822Date>
+public typealias RFC2822DateDeoding = DateFormatDecoding<Hollow.DateFormat.RFC2822Date>
+public typealias RFC2822DateEnoding = DateFormatEncoding<Hollow.DateFormat.RFC2822Date>
+
+public typealias RFC3339DateCoding  = DateFormatCoding<Hollow.DateFormat.RFC3339Date>
+public typealias RFC3339DateDeoding = DateFormatDecoding<Hollow.DateFormat.RFC3339Date>
+public typealias RFC3339DateEnoding = DateFormatEncoding<Hollow.DateFormat.RFC3339Date>
 
 // MARK: - NSDecimalNumber
 
@@ -45,6 +55,11 @@ public typealias DecimalNumberDecoding = AnyBackedDecoding<DecimalNumberValue>
 public typealias DecimalNumberEncoding = AnyBackedEncoding<DecimalNumberValue>
 
 // MARK: - Color
+
+/// When coding the color hex value hasn't alpha.
+public typealias HexColorCoding   = AnyBacked<HexColor<False>>
+public typealias HexColorDecoding = AnyBackedDecoding<HexColor<False>>
+public typealias HexColorEncoding = AnyBackedEncoding<HexColor<False>>
 
 public typealias HexColorHasAlphaCoding   = AnyBacked<HexColor<True>>
 public typealias HexColorHasAlphaDecoding = AnyBackedDecoding<HexColor<True>>
@@ -57,11 +72,6 @@ public typealias RGBColorEncoding = AnyBackedEncoding<RGB>
 public typealias RGBAColorCoding   = AnyBacked<RGBA>
 public typealias RGBAColorDecoding = AnyBackedDecoding<RGBA>
 public typealias RGBAColorEncoding = AnyBackedEncoding<RGBA>
-
-/// When coding the color hex value hasn't alpha.
-public typealias HexColorCoding   = AnyBacked<HexColor<False>>
-public typealias HexColorDecoding = AnyBackedDecoding<HexColor<False>>
-public typealias HexColorEncoding = AnyBackedEncoding<HexColor<False>>
 
 // MARK: - Bool
 
@@ -102,6 +112,6 @@ public typealias HasEnumEncoding<T: RawRepresentable> = DefaultBackedEncoding<En
 
 // MARK: - Data
 
-public typealias Base64Coding   = AnyBacked<Base64Data>
-public typealias Base64Decoding = AnyBackedDecoding<Base64Data>
-public typealias Base64Encoding = AnyBackedEncoding<Base64Data>
+public typealias Base64Coding   = AnyBacked<DataValue<Hollow.Base64Data>>
+public typealias Base64Decoding = AnyBackedDecoding<DataValue<Hollow.Base64Data>>
+public typealias Base64Encoding = AnyBackedEncoding<DataValue<Hollow.Base64Data>>

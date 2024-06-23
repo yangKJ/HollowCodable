@@ -106,10 +106,23 @@ extension String: Transformer {
     public typealias EncodeType = String
 }
 
+extension Bool: Transformer {
+    public typealias DecodeType = Bool
+    public typealias EncodeType = Bool
+}
+
 extension Array: Transformer where Array.Element: HollowCodable {
     public typealias DecodeType = Array
     public typealias EncodeType = Array
     public init?(_ string: String) {
         self = [Array.Element].deserialize(from: string) ?? []
+    }
+}
+
+extension Dictionary: Transformer where Key: Codable, Value: HollowCodable {
+    public typealias DecodeType = Dictionary
+    public typealias EncodeType = Dictionary
+    public init?(_ string: String) {
+        self = [Key: Value].deserialize(from: string) ?? [:]
     }
 }

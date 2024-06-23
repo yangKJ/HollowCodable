@@ -10,12 +10,6 @@
 
 import Foundation
 
-/// Contract for providing a default value of a Type.
-public protocol HollowValueProvider {
-    associatedtype Value
-    static var hasValue: Value { get }
-}
-
 public struct Hollow { }
 
 public struct HollowWrapper<Base> {

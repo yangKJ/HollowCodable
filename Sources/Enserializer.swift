@@ -64,3 +64,35 @@ extension Collection where Element: HollowCodable {
         return string
     }
 }
+
+extension Dictionary where Key: Encodable, Value: HollowCodable {
+    
+    public func toJSON() -> [Key: Value] {
+        var dict = [Key: Value]()
+        for (key, value) in self {
+            dict[key] = value.toJSON() as? Value
+        }
+        return dict
+    }
+    
+    public func toJSONString(prettyPrint: Bool = false) -> String? {
+        try? toJSONString(prettyPrinted: prettyPrint)
+    }
+    
+    public func toJSONString(prettyPrinted: Bool = false) throws -> String {
+        let dict = self.toJSON()
+        let jsonData: Data
+        if prettyPrinted {
+            jsonData = try JSONSerialization.data(withJSONObject: dict, options: [.prettyPrinted])
+        } else {
+            jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
+        }
+        guard let string = String(data: jsonData, encoding: String.Encoding.utf8) else {
+            let userInfo = [
+                NSLocalizedDescriptionKey: "The json string is empty."
+            ]
+            throw NSError(domain: "com.condy.hollow.codable", code: -100013, userInfo: userInfo)
+        }
+        return string
+    }
+}

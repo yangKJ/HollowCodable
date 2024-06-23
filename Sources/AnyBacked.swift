@@ -112,3 +112,71 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
         }
     }
 }
+
+extension AnyBacked: CustomStringConvertible, CustomDebugStringConvertible {
+    public var description: String {
+        switch wrappedValue {
+        case is Void:
+            return String(describing: nil as Any?)
+        case let val as CustomStringConvertible:
+            return val.description
+        default:
+            return String(describing: wrappedValue)
+        }
+    }
+    
+    public var debugDescription: String {
+        switch wrappedValue {
+        case let val as CustomDebugStringConvertible:
+            return "AnyBacked(\(val.debugDescription))"
+        default:
+            return "AnyBacked(\(description))"
+        }
+    }
+}
+
+extension AnyBacked: Equatable where T.DecodeType: Equatable {
+    public static func == (lhs: AnyBacked<T>, rhs: AnyBacked<T>) -> Bool {
+        lhs.wrappedValue == rhs.wrappedValue
+    }
+    
+    public static func == (lhs: T.DecodeType, rhs: AnyBacked<T>) -> Bool {
+        lhs == rhs.wrappedValue
+    }
+    
+    public static func == (lhs: AnyBacked<T>, rhs: T.DecodeType) -> Bool {
+        lhs.wrappedValue == rhs
+    }
+}
+
+extension AnyBacked: Comparable where T.DecodeType: Comparable {
+    public static func < (lhs: AnyBacked<T>, rhs: AnyBacked<T>) -> Bool {
+        guard let rv = rhs.wrappedValue else {
+            return false
+        }
+        guard let lv = lhs.wrappedValue else {
+            return true
+        }
+        return lv < rv
+    }
+    
+    public static func < (lhs: T.DecodeType, rhs: AnyBacked<T>) -> Bool {
+        guard let rs = rhs.wrappedValue else {
+            return false
+        }
+        return lhs < rs
+    }
+    
+    public static func < (lhs: AnyBacked<T>, rhs: T.DecodeType) -> Bool {
+        guard let ls = lhs.wrappedValue else {
+            return true
+        }
+        return ls < rhs
+    }
+}
+
+extension AnyBacked: Hashable where T.DecodeType: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(wrappedValue)
+    }
+}

@@ -36,6 +36,6 @@ Pod::Spec.new do |s|
     "OTHER_SWIFT_FLAGS[config=Debug]" => "-D DEBUG",
   }
   
-  s.source_files = 'Sources/*.swift'
+  s.source_files = 'Sources/**/*.swift'
   
 end
