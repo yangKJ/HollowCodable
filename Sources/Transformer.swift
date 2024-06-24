@@ -79,3 +79,27 @@ extension Transformer where DecodeType == EncodeType {
         value
     }
 }
+
+extension Transformer where Self: FixedWidthInteger, Self == DecodeType {
+    public init?(value: Any) {
+        if let val = value as? DecodeType {
+            self = val
+        } else if let string = Self.transfer2String(with: value) {
+            self.init(string)
+        } else {
+            return nil
+        }
+    }
+}
+
+extension Transformer where Self: LosslessStringConvertible, Self == DecodeType {
+    public init?(value: Any) {
+        if let val = value as? DecodeType {
+            self = val
+        } else if let string = Self.transfer2String(with: value) {
+            self.init(string)
+        } else {
+            return nil
+        }
+    }
+}

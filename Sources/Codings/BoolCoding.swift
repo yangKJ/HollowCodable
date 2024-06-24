@@ -9,7 +9,7 @@ import Foundation
 
 /// String or Int -> Bool converter.
 /// Uses <= 0 as false, and > 0 as true.
-/// Uses lowercase "true"/"yes"/"y"/"t"/"1" and "false"/"no"/"f"/"n"/"0".
+/// Uses lowercase "true"/"yes"/"y"/"t"/"1"/">0" and "false"/"no"/"f"/"n"/"0".
 public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where HasDefault.DefaultType == Bool {
     
     let boolean: Bool

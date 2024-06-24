@@ -10,155 +10,71 @@ import Foundation
 extension Int: Transformer {
     public typealias DecodeType = Int
     public typealias EncodeType = Int
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension Int8: Transformer {
     public typealias DecodeType = Int8
     public typealias EncodeType = Int8
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension Int16: Transformer {
     public typealias DecodeType = Int16
     public typealias EncodeType = Int16
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension Int32: Transformer {
     public typealias DecodeType = Int32
     public typealias EncodeType = Int32
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension Int64: Transformer {
     public typealias DecodeType = Int64
     public typealias EncodeType = Int64
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension UInt: Transformer {
     public typealias DecodeType = UInt
     public typealias EncodeType = UInt
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension UInt8: Transformer {
     public typealias DecodeType = UInt8
     public typealias EncodeType = UInt8
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension UInt16: Transformer {
     public typealias DecodeType = UInt16
     public typealias EncodeType = UInt16
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension UInt32: Transformer {
     public typealias DecodeType = UInt32
     public typealias EncodeType = UInt32
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension UInt64: Transformer {
     public typealias DecodeType = UInt64
     public typealias EncodeType = UInt64
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension Float: Transformer {
     public typealias DecodeType = Float
     public typealias EncodeType = Float
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
+}
+
+extension Float16: Transformer {
+    public typealias DecodeType = Float16
+    public typealias EncodeType = Float16
+}
+
+extension Double: Transformer {
+    public typealias DecodeType = Double
+    public typealias EncodeType = Double
+}
+
+extension String: Transformer {
+    public typealias DecodeType = String
+    public typealias EncodeType = String
 }
 
 extension CGFloat: Transformer {
@@ -167,36 +83,11 @@ extension CGFloat: Transformer {
     public init?(value: Any) {
         if let val = value as? DecodeType {
             self = val
-        } else if let string = Self.transfer2String(with: value), let num = NumberFormatter().number(from: string) {
+        } else if let val = Self.transfer2String(with: value), let num = NumberFormatter().number(from: val) {
             self = CGFloat(truncating: num)
         } else {
             return nil
         }
-    }
-}
-
-extension Double: Transformer {
-    public typealias DecodeType = Double
-    public typealias EncodeType = Double
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Self.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
-}
-
-extension String: Transformer {
-    public typealias DecodeType = String
-    public typealias EncodeType = String
-    public init?(value: Any) {
-        guard let string = Self.transfer2String(with: value) else {
-            return nil
-        }
-        self = string
     }
 }
 
