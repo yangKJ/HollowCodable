@@ -17,7 +17,14 @@ public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where Ha
     public typealias DecodeType = Bool
     public typealias EncodeType = Bool
     
-    public init?(_ string: String) {
+    public init?(value: Any) {
+        if let val = value as? Bool {
+            self.boolean = val
+            return
+        }
+        guard let string = Self.transfer2String(with: value), string.count > 0 else {
+            return nil
+        }
         let value = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         switch value {
         case "1", "y", "t", "yes", "true":

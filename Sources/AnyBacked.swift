@@ -48,38 +48,46 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             loggerDataCorruptedError(container)
             return
         }
+        if T.self == AnyDictionary.self {
+            let value = try container.decode(Dictionary<String,AnyDictionaryValue>.self)
+            self.wrappedValue = try T.init(value: value)?.transform()
+            if self.wrappedValue == nil {
+                loggerDataCorruptedError(container)
+            }
+            return
+        }
         if let value = try? container.decode<T>(T.self) {
             self.wrappedValue = try value.transform()
         } else if let value = try? container.decode(String.self) {
-            self.wrappedValue = try T.init(value)?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(Int.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(UInt.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(Float.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(Double.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(CGFloat.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(Bool.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(Int8.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(Int16.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(Int32.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(Int64.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(UInt8.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(UInt16.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(UInt32.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(UInt64.self) {
-            self.wrappedValue = try T.init(String(describing: value))?.transform()
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else {
             self.wrappedValue = nil
             loggerDataCorruptedError(container)

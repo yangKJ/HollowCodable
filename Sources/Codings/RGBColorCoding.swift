@@ -25,7 +25,7 @@ extension RGB: Transformer {
     public typealias DecodeType = HollowColor
     public typealias EncodeType = RGB
     
-    public init?(_ string: String) { }
+    public init?(value: Any) { }
     
     public func transform() throws -> HollowColor? {
         let r = (red ?? 255.0) / 255.0

@@ -14,8 +14,13 @@ public struct DataValue<T: DataConverter>: Transformer {
     public typealias DecodeType = Data
     public typealias EncodeType = String
     
-    public init?(_ string: String) {
-        self.dataString = string
+    public init?(value: Any) {
+        switch value {
+        case let string as String:
+            self.dataString = string
+        default:
+            return nil
+        }
     }
     
     public func transform() throws -> Data? {

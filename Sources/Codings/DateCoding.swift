@@ -14,7 +14,10 @@ public struct DateValue<D: DateConverter, E: DateConverter>: Transformer {
     public typealias DecodeType = Date
     public typealias EncodeType = String
     
-    public init?(_ string: String) {
+    public init?(value: Any) {
+        guard let string = Self.transfer2String(with: value), string.count > 0 else {
+            return nil
+        }
         self.dateString = string
     }
     

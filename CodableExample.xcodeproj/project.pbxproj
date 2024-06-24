@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		871EE7B82C29462C00E8BE37 /* Transformer+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EE7B72C29462C00E8BE37 /* Transformer+Ext.swift */; };
+		871EE7BC2C29504100E8BE37 /* AnyDictionaryCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871EE7BB2C29504100E8BE37 /* AnyDictionaryCoding.swift */; };
 		87341A2F2C217D4400DF23FF /* IgnoredKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87341A2E2C217D4400DF23FF /* IgnoredKey.swift */; };
 		876D56A32C18333C0006E25E /* AnyBacked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A22C18333C0006E25E /* AnyBacked.swift */; };
 		876D56A52C183D6F0006E25E /* RGBAColorCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A42C183D6F0006E25E /* RGBAColorCoding.swift */; };
@@ -55,6 +57,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		871EE7B72C29462C00E8BE37 /* Transformer+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Transformer+Ext.swift"; sourceTree = "<group>"; };
+		871EE7BB2C29504100E8BE37 /* AnyDictionaryCoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyDictionaryCoding.swift; sourceTree = "<group>"; };
 		87341A2E2C217D4400DF23FF /* IgnoredKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredKey.swift; sourceTree = "<group>"; };
 		876D56A22C18333C0006E25E /* AnyBacked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyBacked.swift; sourceTree = "<group>"; };
 		876D56A42C183D6F0006E25E /* RGBAColorCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAColorCoding.swift; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 				F76AF7A02C16A415005DC327 /* PathCodingKey.swift */,
 				F76AF7B32C16A415005DC327 /* ReplaceKeys.swift */,
 				87EC9BCB2C227C98001DD724 /* Transformer.swift */,
+				871EE7B72C29462C00E8BE37 /* Transformer+Ext.swift */,
 			);
 			path = Sources;
 			sourceTree = SOURCE_ROOT;
@@ -189,6 +194,7 @@
 		F7B997972C2827CE006D1C45 /* Codings */ = {
 			isa = PBXGroup;
 			children = (
+				871EE7BB2C29504100E8BE37 /* AnyDictionaryCoding.swift */,
 				F7B997932C272CF4006D1C45 /* Base64DataCoding.swift */,
 				87EC9BC92C22761A001DD724 /* BoolCoding.swift */,
 				F76AF7A22C16A415005DC327 /* DataCoding.swift */,
@@ -296,7 +302,9 @@
 				876D56A32C18333C0006E25E /* AnyBacked.swift in Sources */,
 				876D56A52C183D6F0006E25E /* RGBAColorCoding.swift in Sources */,
 				F747FFD82C232328001A4680 /* HasDefaultValuable.swift in Sources */,
+				871EE7BC2C29504100E8BE37 /* AnyDictionaryCoding.swift in Sources */,
 				F7EA7B692C205EA40048E264 /* DefaultBacked.swift in Sources */,
+				871EE7B82C29462C00E8BE37 /* Transformer+Ext.swift in Sources */,
 				F7B997962C27467D006D1C45 /* Converter.swift in Sources */,
 				F76AF7902C16A29A005DC327 /* CodableExampleApp.swift in Sources */,
 				F76AF7BF2C16A415005DC327 /* Deserializer.swift in Sources */,

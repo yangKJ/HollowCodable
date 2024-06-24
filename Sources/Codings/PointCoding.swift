@@ -23,7 +23,7 @@ extension PointValue: Transformer {
     public typealias DecodeType = CGPoint
     public typealias EncodeType = PointValue
     
-    public init?(_ string: String) { }
+    public init?(value: Any) { }
     
     public func transform() throws -> CGPoint? {
         .init(x: x ?? 0, y: y ?? 0)

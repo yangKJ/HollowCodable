@@ -11,11 +11,61 @@ public protocol Transformer: Codable {
     associatedtype DecodeType
     associatedtype EncodeType: Encodable
     
-    init?(_ string: String)
+    init?(value: Any)
     
     func transform() throws -> DecodeType?
     
     static func transform(from value: DecodeType) throws -> EncodeType
+}
+
+extension Transformer {
+    public static func transfer2String(with value: Any?) -> String? {
+        guard let value = value else {
+            return nil
+        }
+        switch value {
+        case let val as String:
+            return val
+        case let val as Int:
+            return String(describing: val)
+        case let val as UInt:
+            return String(describing: val)
+        case let val as Float:
+            return String(describing: val)
+        case let val as CGFloat:
+            return String(describing: val)
+        case let val as Double where val <= 9999999999999998:
+            return String(describing: val)
+        case let val as Bool:
+            return val.description
+        case let val as Int8:
+            return String(describing: val)
+        case let val as Int16:
+            return String(describing: val)
+        case let val as Int32:
+            return String(describing: val)
+        case let val as Int64:
+            return String(describing: val)
+        case let val as UInt8:
+            return String(describing: val)
+        case let val as UInt16:
+            return String(describing: val)
+        case let val as UInt32:
+            return String(describing: val)
+        case let val as UInt64:
+            return String(describing: val)
+        case let val as NSNumber:
+            return val.stringValue
+        case let val as Data:
+            return val.description
+        case let val as Date:
+            return val.description
+        case let val as NSDecimalNumber:
+            return val.description
+        default:
+            return nil
+        }
+    }
 }
 
 extension Transformer where Self == DecodeType {
@@ -27,102 +77,5 @@ extension Transformer where Self == DecodeType {
 extension Transformer where DecodeType == EncodeType {
     public static func transform(from value: DecodeType) throws -> EncodeType {
         value
-    }
-}
-
-extension Int: Transformer {
-    public typealias DecodeType = Int
-    public typealias EncodeType = Int
-}
-
-extension Int8: Transformer {
-    public typealias DecodeType = Int8
-    public typealias EncodeType = Int8
-}
-
-extension Int16: Transformer {
-    public typealias DecodeType = Int16
-    public typealias EncodeType = Int16
-}
-
-extension Int32: Transformer {
-    public typealias DecodeType = Int32
-    public typealias EncodeType = Int32
-}
-
-extension Int64: Transformer {
-    public typealias DecodeType = Int64
-    public typealias EncodeType = Int64
-}
-
-extension UInt: Transformer {
-    public typealias DecodeType = UInt
-    public typealias EncodeType = UInt
-}
-
-extension UInt8: Transformer {
-    public typealias DecodeType = UInt8
-    public typealias EncodeType = UInt8
-}
-
-extension UInt16: Transformer {
-    public typealias DecodeType = UInt16
-    public typealias EncodeType = UInt16
-}
-
-extension UInt32: Transformer {
-    public typealias DecodeType = UInt32
-    public typealias EncodeType = UInt32
-}
-
-extension UInt64: Transformer {
-    public typealias DecodeType = UInt64
-    public typealias EncodeType = UInt64
-}
-
-extension Float: Transformer {
-    public typealias DecodeType = Float
-    public typealias EncodeType = Float
-}
-
-extension CGFloat: Transformer {
-    public typealias DecodeType = CGFloat
-    public typealias EncodeType = CGFloat
-    public init?(_ string: String) {
-        guard let num = NumberFormatter().number(from: string) else {
-            return nil
-        }
-        self = CGFloat(truncating: num)
-    }
-}
-
-extension Double: Transformer {
-    public typealias DecodeType = Double
-    public typealias EncodeType = Double
-}
-
-extension String: Transformer {
-    public typealias DecodeType = String
-    public typealias EncodeType = String
-}
-
-extension Bool: Transformer {
-    public typealias DecodeType = Bool
-    public typealias EncodeType = Bool
-}
-
-extension Array: Transformer where Array.Element: HollowCodable {
-    public typealias DecodeType = Array
-    public typealias EncodeType = Array
-    public init?(_ string: String) {
-        self = [Array.Element].deserialize(from: string) ?? []
-    }
-}
-
-extension Dictionary: Transformer where Key: Codable, Value: HollowCodable {
-    public typealias DecodeType = Dictionary
-    public typealias EncodeType = Dictionary
-    public init?(_ string: String) {
-        self = [Key: Value].deserialize(from: string) ?? [:]
     }
 }

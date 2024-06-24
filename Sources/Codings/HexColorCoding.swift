@@ -17,19 +17,21 @@ public typealias HollowColor = NSColor
 /// Support the hex string color with format `#RGB`、`#RGBA`、`#RRGGBB`、`#RRGGBBAA`
 public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha.DefaultType == Bool {
     
-    let hex: String?
+    let hex: String
     
     public typealias DecodeType = HollowColor
     public typealias EncodeType = String
     
-    public init?(_ string: String) {
-        self.hex = string
+    public init?(value: Any) {
+        switch value {
+        case let string as String where string.count > 0:
+            self.hex = string
+        default:
+            return nil
+        }
     }
     
     public func transform() throws -> HollowColor? {
-        guard let hex = hex else {
-            return nil
-        }
         let input = hex.replacingOccurrences(of: "#", with: "").uppercased()
         var a: CGFloat = 1.0, r: CGFloat = 0.0, b: CGFloat = 0.0, g: CGFloat = 0.0
         func colorComponent(from string: String, start: Int, length: Int) -> CGFloat {

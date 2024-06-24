@@ -27,7 +27,7 @@ extension RectValue: Transformer {
     public typealias DecodeType = CGRect
     public typealias EncodeType = RectValue
     
-    public init?(_ string: String) { }
+    public init?(value: Any) { }
     
     public func transform() throws -> CGRect? {
         CGRect(x: x ?? 0, y: y ?? 0, width: width ?? 0, height: height ?? 0)
