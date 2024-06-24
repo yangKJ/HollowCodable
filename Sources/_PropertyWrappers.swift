@@ -115,3 +115,10 @@ public typealias HasEnumEncoding<T: RawRepresentable> = DefaultBackedEncoding<En
 public typealias Base64Coding   = AnyBacked<DataValue<Hollow.Base64Data>>
 public typealias Base64Decoding = AnyBackedDecoding<DataValue<Hollow.Base64Data>>
 public typealias Base64Encoding = AnyBackedEncoding<DataValue<Hollow.Base64Data>>
+
+// MARK: - Dictionary
+
+/// Support any value property wrapper with dictionary.
+public typealias DictionaryCoding   = AnyBacked<AnyDictionary>
+public typealias DictionaryDecoding = AnyBackedDecoding<AnyDictionary>
+public typealias DictionaryEncoding = AnyBackedEncoding<AnyDictionary>

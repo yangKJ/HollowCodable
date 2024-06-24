@@ -43,6 +43,8 @@ public enum AnyDictionaryValue {
     case double(Double)
     case date(Date)
     case data(Data)
+    indirect case array([AnyDictionaryValue])
+    indirect case dictionary([String: AnyDictionaryValue])
 }
 
 extension AnyDictionaryValue: Codable {
@@ -63,6 +65,10 @@ extension AnyDictionaryValue: Codable {
             self = .date(date)
         } else if let data = try? container.decode(Data.self) {
             self = .data(data)
+        } else if let dict = try? container.decode([String:AnyDictionaryValue].self) {
+            self = .dictionary(dict)
+        } else if let array = try? container.decode([AnyDictionaryValue].self) {
+            self = .array(array)
         } else {
             self = .null
         }
@@ -73,6 +79,10 @@ extension AnyDictionaryValue: Codable {
         switch self {
         case .null:
             try container.encodeNil()
+        case .dictionary(let dict):
+            try container.encode(dict)
+        case .array(let array):
+            try container.encode(array)
         case .string(let string):
             try container.encode(string)
         case .int(let int):
@@ -94,6 +104,10 @@ extension AnyDictionaryValue: Codable {
         switch self {
         case .null:
             return nil
+        case .dictionary(let value):
+            return value
+        case .array(let value):
+            return value
         case .string(let value):
             return value
         case .int(let value):
@@ -115,6 +129,10 @@ extension AnyDictionaryValue: Codable {
         switch value {
         case Optional<Any>.none:
             self = .null
+        case let val as [String: AnyDictionaryValue]:
+            self = .dictionary(val)
+        case let val as [AnyDictionaryValue]:
+            self = .array(val)
         case let val as String:
             self = .string(val)
         case let val as Int:

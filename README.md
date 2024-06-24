@@ -58,6 +58,9 @@ struct YourModel: HollowCodable {
     
     var dict: DictAA?
     
+    @AnyBacked<AnyDictionary>
+    var mixDict: [String: Any]?
+    
     struct DictAA: HollowCodable {
         @AnyBacked<Double> var amount: Double?
     }
@@ -109,7 +112,17 @@ let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
             "blue": 128
         },
         "dict": {
-            "amount": "52.9",
+            "amount": "326.0"
+        },
+        "mixDict": {
+            "sub": {
+                "amount": "52.9",
+            }, 
+            "array": [{
+                "val": 718,
+            }, {
+                "val": 911,
+            }]
         },
         "list": [{
            "fruit": "Apple",
@@ -133,6 +146,7 @@ let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
         "anyString": null,
         "background_color": null,
         "dict": null,
+        "mixDict": null,
         "list": null
     }]
 }
