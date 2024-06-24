@@ -122,3 +122,10 @@ public typealias Base64Encoding = AnyBackedEncoding<DataValue<Hollow.Base64Data>
 public typealias DictionaryCoding   = AnyBacked<AnyDictionary>
 public typealias DictionaryDecoding = AnyBackedDecoding<AnyDictionary>
 public typealias DictionaryEncoding = AnyBackedEncoding<AnyDictionary>
+
+// MARK: - Array
+
+/// Support any value dictionary property wrapper with array.
+public typealias ArrayCoding   = AnyBacked<AnyArray>
+public typealias ArrayDecoding = AnyBackedDecoding<AnyArray>
+public typealias ArrayEncoding = AnyBackedEncoding<AnyArray>

@@ -17,7 +17,8 @@ public typealias HollowColor = NSColor
 /// Support the hex string color with format `#RGB`、`#RGBA`、`#RRGGBB`、`#RRGGBBAA`
 public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha.DefaultType == Bool {
     
-    let hex: String
+    var hex: String?
+    var hexInt: Int?
     
     public typealias DecodeType = HollowColor
     public typealias EncodeType = String
@@ -26,13 +27,42 @@ public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha
         switch value {
         case let string as String where string.count > 0:
             self.hex = string
+        case let val as Int where (0x000000 ... 0xFFFFFF) ~= val:
+            self.hexInt = val
         default:
             return nil
         }
     }
     
     public func transform() throws -> HollowColor? {
-        let input = hex.replacingOccurrences(of: "#", with: "").uppercased()
+        if let hex = hex {
+            return hexStringColor(with: hex)
+        }
+        if let hex = hexInt {
+            return hexIntColor(with: hex)
+        }
+        return nil
+    }
+    
+    public static func transform(from value: HollowColor) throws -> String {
+        let comps = value.cgColor.components!
+        let r = Int(comps[0] * 255)
+        let g = Int(comps[1] * 255)
+        let b = Int(comps[2] * 255)
+        let a = Int(comps[3] * 255)
+        var hexString: String = "#"
+        hexString += String(format: "%02X%02X%02X", r, g, b)
+        if HasAlpha.hasDefaultValue {
+            hexString += String(format: "%02X", a)
+        }
+        return hexString
+    }
+    
+    private func hexStringColor(with hex: String) -> HollowColor? {
+        var input = hex.replacingOccurrences(of: "#", with: "").uppercased()
+        if input.hasPrefix("0X") {
+            input = String(input.dropFirst(2))
+        }
         var a: CGFloat = 1.0, r: CGFloat = 0.0, b: CGFloat = 0.0, g: CGFloat = 0.0
         func colorComponent(from string: String, start: Int, length: Int) -> CGFloat {
             let substring = (string as NSString).substring(with: NSRange(location: start, length: length))
@@ -66,18 +96,11 @@ public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha
         return HollowColor.init(red: r, green: g, blue: b, alpha: a)
     }
     
-    public static func transform(from value: HollowColor) throws -> String {
-        let comps = value.cgColor.components!
-        let r = Int(comps[0] * 255)
-        let g = Int(comps[1] * 255)
-        let b = Int(comps[2] * 255)
-        let a = Int(comps[3] * 255)
-        var hexString: String = "#"
-        hexString += String(format: "%02X%02X%02X", r, g, b)
-        if HasAlpha.hasDefaultValue {
-            hexString += String(format: "%02X", a)
-        }
-        return hexString
+    private func hexIntColor(with hex: Int) -> HollowColor? {
+        let r = CGFloat((hex >> 16) & 0xFF) / 255.0
+        let g = CGFloat((hex >> 8) & 0xFF) / 255.0
+        let b = CGFloat((hex) & 0xFF) / 255.0
+        return HollowColor.init(red: r, green: g, blue: b, alpha: 1)
     }
 }
 

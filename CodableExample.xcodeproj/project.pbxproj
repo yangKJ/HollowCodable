@@ -21,6 +21,8 @@
 		87F2AB842C1FCF2B006DF62F /* KeyStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB832C1FCF2B006DF62F /* KeyStrategy.swift */; };
 		87F2AB862C1FCFDE006DF62F /* Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB852C1FCFDE006DF62F /* Ext.swift */; };
 		87F2AB882C200C8A006DF62F /* Enserializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB872C200C8A006DF62F /* Enserializer.swift */; };
+		F70CFD4F2C2998BB0056CB9F /* AnyDictionaryValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70CFD4E2C2998BB0056CB9F /* AnyDictionaryValue.swift */; };
+		F70CFD512C2998DB0056CB9F /* AnyArrayCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70CFD502C2998DB0056CB9F /* AnyArrayCoding.swift */; };
 		F747FFD62C231846001A4680 /* RGBColorCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F747FFD52C231846001A4680 /* RGBColorCoding.swift */; };
 		F747FFD82C232328001A4680 /* HasDefaultValuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F747FFD72C232328001A4680 /* HasDefaultValuable.swift */; };
 		F76AF7902C16A29A005DC327 /* CodableExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF78F2C16A29A005DC327 /* CodableExampleApp.swift */; };
@@ -71,6 +73,8 @@
 		87F2AB832C1FCF2B006DF62F /* KeyStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStrategy.swift; sourceTree = "<group>"; };
 		87F2AB852C1FCFDE006DF62F /* Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext.swift; sourceTree = "<group>"; };
 		87F2AB872C200C8A006DF62F /* Enserializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enserializer.swift; sourceTree = "<group>"; };
+		F70CFD4E2C2998BB0056CB9F /* AnyDictionaryValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyDictionaryValue.swift; sourceTree = "<group>"; };
+		F70CFD502C2998DB0056CB9F /* AnyArrayCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyArrayCoding.swift; sourceTree = "<group>"; };
 		F747FFD52C231846001A4680 /* RGBColorCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBColorCoding.swift; sourceTree = "<group>"; };
 		F747FFD72C232328001A4680 /* HasDefaultValuable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasDefaultValuable.swift; sourceTree = "<group>"; };
 		F76AF78C2C16A29A005DC327 /* CodableExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodableExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +171,7 @@
 				F7B997972C2827CE006D1C45 /* Codings */,
 				87EC9BD12C22AF55001DD724 /* _PropertyWrappers.swift */,
 				876D56A22C18333C0006E25E /* AnyBacked.swift */,
+				F70CFD4E2C2998BB0056CB9F /* AnyDictionaryValue.swift */,
 				F76AF7A12C16A415005DC327 /* ApiResponse.swift */,
 				F7B997952C27467D006D1C45 /* Converter.swift */,
 				F7EA7B682C205EA40048E264 /* DefaultBacked.swift */,
@@ -194,6 +199,7 @@
 		F7B997972C2827CE006D1C45 /* Codings */ = {
 			isa = PBXGroup;
 			children = (
+				F70CFD502C2998DB0056CB9F /* AnyArrayCoding.swift */,
 				871EE7BB2C29504100E8BE37 /* AnyDictionaryCoding.swift */,
 				F7B997932C272CF4006D1C45 /* Base64DataCoding.swift */,
 				87EC9BC92C22761A001DD724 /* BoolCoding.swift */,
@@ -287,7 +293,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F70CFD4F2C2998BB0056CB9F /* AnyDictionaryValue.swift in Sources */,
 				F76AF7C72C16A415005DC327 /* KeyedDecodingContainer+Ext.swift in Sources */,
+				F70CFD512C2998DB0056CB9F /* AnyArrayCoding.swift in Sources */,
 				F76AF7C52C16A415005DC327 /* Immutable.swift in Sources */,
 				F76AF7922C16A29A005DC327 /* ContentView.swift in Sources */,
 				F76AF7CA2C16A415005DC327 /* ReplaceKeys.swift in Sources */,

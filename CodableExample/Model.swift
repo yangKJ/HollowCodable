@@ -57,12 +57,15 @@ struct YourModel: HollowCodable {
     
     var dict: DictAA?
     
-    @AnyBacked<AnyDictionary>
-    var mixDict: [String: Any]?
-    
     struct DictAA: HollowCodable {
         @AnyBacked<Double> var amount: Double?
     }
+    
+    @AnyBacked<AnyDictionary>
+    var mixDict: [String: Any]?
+    
+    @AnyBacked<AnyArray>
+    var mixList: [[String: Any]]?
     
     @DefaultBacked<[FruitAA]>
     var list: [FruitAA]

@@ -6,13 +6,13 @@
         "title": "Harbeth Framework",
         "github": "https://github.com/yangKJ/Harbeth",
         "amount": "23.6",
-        "hex_color": "#FA6D5B",
+        "hex_color": "0xFA6D5B",
         "type": "text1",
         "timestamp" : 590277534,
         "bar": 1,
         "hasDefBool": 2,
         "time": "2024-05-29 23:49:55",
-        "iso8601": null,
+        "iso8601": "2023-05-23T09:43:38Z",
         "anyString": 5,
         "background_color": {
             "red": 255,
@@ -32,6 +32,11 @@
                 "val": 911,
             }]
         },
+        "mixList": [{
+            "benc": ""
+        }, {
+            "po": 5200
+        }],
         "list": [{
            "fruit": "Apple",
            "dream": null
@@ -41,20 +46,21 @@
          }]
     }, {
         "id": 7,
-        "title": "Network Framework",
-        "github": "https://github.com/yangKJ/RxNetworks",
+        "title": null,
+        "github": null,
         "amount": 120.3,
-        "hex_color2": "#1AC756",
+        "hex_color2": "1AC756",
         "type": null,
-        "timestamp" : 590288534,
+        "timestamp" : null,
         "bar": null,
         "hasDefBool": null,
-        "time": "2024-05-29 20:23:46",
-        "iso8601": "2023-05-23T09:43:38Z",
+        "time": null,
+        "iso8601": null,
         "anyString": null,
         "background_color": null,
         "dict": null,
         "mixDict": null,
+        "mixList": null,
         "list": null
     }]
 }
