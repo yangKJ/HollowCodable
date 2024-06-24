@@ -193,7 +193,7 @@ extension String: Transformer {
     public typealias DecodeType = String
     public typealias EncodeType = String
     public init?(value: Any) {
-        guard let string = value as? String else {
+        guard let string = Self.transfer2String(with: value) else {
             return nil
         }
         self = string
