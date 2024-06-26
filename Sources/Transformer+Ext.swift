@@ -62,11 +62,6 @@ extension Float: Transformer {
     public typealias EncodeType = Float
 }
 
-extension Float16: Transformer {
-    public typealias DecodeType = Float16
-    public typealias EncodeType = Float16
-}
-
 extension Double: Transformer {
     public typealias DecodeType = Double
     public typealias EncodeType = Double
