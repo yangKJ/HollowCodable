@@ -56,7 +56,7 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             }
             return
         }
-        if T.self == AnyArray.self {
+        if T.self == AnyDictionaryArray.self {
             let value = try container.decode([AnyDictionaryType].self)
             self.wrappedValue = try T.init(value: value)?.transform()
             if self.wrappedValue == nil {

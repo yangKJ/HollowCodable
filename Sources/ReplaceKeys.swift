@@ -7,6 +7,8 @@
 
 import Foundation
 
+public typealias AlterCodingKeys = ReplaceKeys
+
 public struct ReplaceKeys {
     
     /// You need to replace it with a new coding key.

@@ -126,6 +126,6 @@ public typealias DictionaryEncoding = AnyBackedEncoding<AnyDictionary>
 // MARK: - Array
 
 /// Support any value dictionary property wrapper with array.
-public typealias ArrayCoding   = AnyBacked<AnyArray>
-public typealias ArrayDecoding = AnyBackedDecoding<AnyArray>
-public typealias ArrayEncoding = AnyBackedEncoding<AnyArray>
+public typealias ArrayCoding   = AnyBacked<AnyDictionaryArray>
+public typealias ArrayDecoding = AnyBackedDecoding<AnyDictionaryArray>
+public typealias ArrayEncoding = AnyBackedEncoding<AnyDictionaryArray>
