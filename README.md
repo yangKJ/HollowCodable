@@ -8,88 +8,229 @@
 
 - Make Complex Codable Serializate a breeze with declarative annotations!
 
+- Immutable: Made immutable via property wrapper, It can be used with other Coding.
+
 ```swift
 struct YourModel: HollowCodable {
     @Immutable
     var id: Int
-    var title: String?
     
-    var url: URL?
+    @Immutable @BoolCoding
+    var bar: Bool?
+}
+```
+
+- IgnoredKey: Add this to an Optional Property to not included it when Encoding or Decoding.
+
+```swift
+struct YourModel: HollowCodable {
+    @IgnoredKey
+    var ignorKey: String? = "Condy" // Be equivalent to use `lazy`.
     
+    lazy var ignorKey2: String? = "Coi"
+}
+```
+
+- DefaultBacked: Set different default values for common types.
+  - This library has built-in many default values, such as Int, Bool, String, Array...
+  - if we want to set a different default value for the field.
+  
+```swift
+struct YourModel: HollowCodable {
+    @DefaultBacked<Int>
+    var val: Int // If the field is not an optional, default is 0.
+    
+    @DefaultBacked<Bool>
+    var boo: Bool // If the field is not an optional, default is false.
+    
+    @DefaultBacked<String>
+    var string: String // If the field is not an optional, default is "".
+
+    @DefaultBacked<[FruitAA]>
+    var list: [FruitAA] // If the field is not an optional, default is [].
+}
+```
+
+### UIColor/NSColor
+
+- HexColorCoding: For a Color property that should be serialized to a hex encoded String.
+  - Support the hex string color with format `#RGB`、`#RGBA`、`#RRGGBB`、`#RRGGBBAA`.
+- RGBColorCoding: Decoding a red/green/blue to color.
+- RGBAColorCoding: Decoding a red/green/blue/alpha to color.
+
+```swift
+struct YourModel: HollowCodable {
+    @HexColorCoding
+    var color: HollowColor?
+    
+    @RGBColorCoding
+    var background_color: HollowColor?
+}
+```
+
+### Bool
+
+- BoolCoding: Sometimes an API uses an `Bool`、`Int` or `String` for a booleans.
+  - Uses <= 0 as false, and > 0 as true.
+  - Uses lowercase "true"/"yes"/"y"/"t"/"1"/">0" as true, 
+  - Uses lowercase "false"/"no"/"f"/"n"/"0" as false.
+- FalseBoolCoding: If the field is not an optional type, default false value.
+- TrueBoolCoding: If the field is not an optional type, default true value. 
+
+```swift
+struct YourModel: HollowCodable {
     @Immutable @BoolCoding
     var bar: Bool?
     
     @FalseBoolCoding
-    var hasDefBool: Bool
+    var hasD: Bool
     
-    @SecondsSince1970DateCoding
-    var timestamp: Date?
-    
-    @DateCoding<Hollow.DateFormat.yyyy_mm_dd_hh_mm_ss, Hollow.Timestamp.secondsSince1970>
-    var time: Date?
-    
-    @ISO8601DateCoding
-    var iso8601: Date?
-    
-    @HexColorCoding
-    var color: HollowColor?
-    
-    @EnumCoding<TextEnumType>
-    var type: TextEnumType?
-    
-    enum TextEnumType: String {
-        case text1 = "text1"
-        case text2 = "text2"
-    }
-    
-    @DecimalNumberCoding
-    var amount: NSDecimalNumber?
-    
-    @RGBColorCoding
-    var background_color: HollowColor?
-    
-    @AnyBacked<String>
-    var anyString: String?
-    
-    @IgnoredKey
-    var ignorKey: String? = "1234"
-    
-    lazy var ignorKey2: String? = "123"
-    
-    var dict: DictAA?
-    
-    @AnyBacked<AnyDictionary>
-    var mixDict: [String: Any]?
-    
-    struct DictAA: HollowCodable {
-        @AnyBacked<Double> var amount: Double?
-    }
-    
-    @DefaultBacked<[FruitAA]>
-    var list: [FruitAA]
-    
-    struct FruitAA: HollowCodable {
-        var fruit: String?
-        @DefaultBacked<String>
-        var dream: String
-    }
-    
-    static var codingKeys: [ReplaceKeys] {
-        return [
-            ReplaceKeys(location: CodingKeys.color, keys: "hex_color", "hex_color2"),
-            ReplaceKeys(location: CodingKeys.url, keys: "github"),
-        ]
-    }
+    @TrueBoolCoding
+    var hasT: Bool
 }
 ```
 
-```swift
-/// You can used like:
-let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
-```
-- Like this json:
+### Data
 
+- Base64Coding: For a Data property that should be serialized to a Base64 encoded String.
+
+```swift
+struct YourModel: HollowCodable {
+    @Base64Coding
+    var base64Data: Data?
+}
 ```
+
+And you can customize your own data (de)serialization type with [DataValue](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/DataCoding.swift).
+
+Like: 
+
+```swift
+public enum YourData: DataConverter {
+    
+    public typealias Value = String
+    public typealias FromValue = Data
+    public typealias ToValue = String
+    
+    public static let hasValue: String = ""
+    
+    public static func transformToValue(with value: Data) -> String? {
+        // data to string..
+    }
+    
+    public static func transformFromValue(with value: String) -> Data? {
+        // string to data..
+    }
+}
+
+Used:
+struct YourModel: HollowCodable {
+    AnyBacked<DataValue<YourData>>
+    var data: Data?
+}
+```
+
+### Date
+
+- ISO8601DateCoding: Decodes `String` or `TimeInterval` values as an ISO8601 date.
+- RFC2822DateCoding: Decodes `String` or `TimeInterval` values as an RFC 2822 date.
+- RFC3339DateCoding: Decodes `String` or `TimeInterval` values as an RFC 3339 date.
+
+```swift
+struct YourModel: HollowCodable {
+    @ISO8601DateCoding
+    var iso8601: Date? // Now decodes to ISO8601 date.
+    
+    @RFC2822DateCoding
+    var data1: Date? // Now decodes RFC 2822 date.
+    
+    @RFC3339DateCoding
+    var data2: Date? // Now decodes RFC 3339 date.
+}
+```
+
+- SecondsSince1970DateCoding: For a Date property that should be serialized to SecondsSince1970.
+- MillisecondsSince1970DateCoding: For a Date property that should be serialized to MillisecondsSince1970.
+
+```swift
+struct YourModel: HollowCodable {
+    @SecondsSince1970DateCoding
+    var timestamp: Date // Now encodes to SecondsSince1970
+    
+    @MillisecondsSince1970DateCoding
+    var timestamp2: Date // Now encodes to MillisecondsSince1970
+}
+```
+
+Supports (de)serialization using different formats, like:
+
+```swift
+struct YourModel: HollowCodable {
+    @DateCoding<Hollow.DateFormat.yyyy_mm_dd, Hollow.Timestamp.secondsSince1970>
+    var time: Date? // Decoding use `yyyy-MM-dd` and Encoding use `seconds` timestamp.
+}
+```
+
+### Enum
+
+- EnumCoding: To be convertable, An enum must conform to RawRepresentable protocol. Nothing special need to do now.
+
+```swift
+struct YourModel: HollowCodable {
+    @EnumCoding<AnimalType>
+    var animal: AnimalType? // 
+}
+
+enum AnimalType: String {
+    case Cat = "cat"
+    case Dog = "dog"
+    case Bird = "bird"
+}
+```
+
+### NSDecimalNumber
+
+- NSDecimalNumberCoding: Deserialization the `String`、`Double`、`Float`、`CGFloat`、`Int` or `Int64` to a NSDecimalNumber property.
+
+```swift
+struct YourModel: HollowCodable {
+    @DecimalNumberCoding
+    var amount: NSDecimalNumber?
+}
+```
+
+### AnyDictionary/AnyDictionaryArray
+
+- DictionaryCoding: Support any value property wrapper with dictionary.
+- ArrayCoding: Support any value dictionary property wrapper with array.
+
+```swift
+"mixDict": {
+    "sub": {
+        "amount": "52.9",
+    }, 
+    "array": [{
+        "val": 718,
+    }, {
+        "val": 911,
+    }],
+    "opt": null
+}
+
+struct YourModel: HollowCodable {
+    @AnyBacked<AnyDictionary>
+    var mixDict: [String: Any]? // Nested support.
+    
+    @AnyBacked<AnyDictionaryArray>
+    var mixLiat: [[String: Any]]?
+}
+```
+
+### JSON
+
+- Supports decoding network api response data.
+
+```objc
 {
     "code": 200,
     "message": "test case.",
@@ -150,6 +291,47 @@ let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
         "list": null
     }]
 }
+```
+
+- You can used like:
+
+```swift
+let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
+```
+
+- Convert between Model and JSON.
+
+```objc
+json = """
+{
+     "uid":888888,
+     "name": "Condy",
+     "age": 18
+}
+"""
+
+struct YourModel: HollowCodable {
+    @Immutable
+    var uid: Int?
+    
+    @DefaultBacked<Int>
+    var age: Int // If the field is not an optional, is 0.
+    
+    @AnyBacked<String>
+    var named: String? // Support multiple keys.
+    
+    static var codingKeys: [ReplaceKeys] {
+        return [
+            ReplaceKeys(location: CodingKeys.named, keys: "name", "named"),
+        ]
+    }
+}
+
+// JSON to Model.
+let model = YourModel.deserialize(from: json)
+
+// Model to JSON
+let json = model.toJSONString(prettyPrint: true)
 ```
 
 ### Available Property Wrappers

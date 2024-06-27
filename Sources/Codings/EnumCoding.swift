@@ -22,7 +22,12 @@ extension EnumValue: Transformer {
     public typealias DecodeType = T
     public typealias EncodeType = T.RawValue
     
-    public init?(value: Any) { }
+    public init?(value: Any) {
+        guard let value = value as? T.RawValue else {
+            return nil
+        }
+        self.value = value
+    }
     
     public func transform() throws -> T? {
         guard let value = value else {
