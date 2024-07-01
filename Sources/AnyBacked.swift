@@ -48,16 +48,8 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             loggerDataCorruptedError(container)
             return
         }
-        if T.self == AnyDictionary.self {
-            let value = try container.decode(AnyDictionaryType.self)
-            self.wrappedValue = try T.init(value: value)?.transform()
-            if self.wrappedValue == nil {
-                loggerDataCorruptedError(container)
-            }
-            return
-        }
-        if T.self == AnyDictionaryArray.self {
-            let value = try container.decode([AnyDictionaryType].self)
+        if T.self == AnyX.self || T.self == AnyDictionary.self || T.self == AnyDictionaryArray.self {
+            let value = try container.decode(ValueX.self)
             self.wrappedValue = try T.init(value: value)?.transform()
             if self.wrappedValue == nil {
                 loggerDataCorruptedError(container)

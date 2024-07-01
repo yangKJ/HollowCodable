@@ -1,5 +1,5 @@
 //
-//  AnyDictionaryValue.swift
+//  ValueX.swift
 //  CodableExample
 //
 //  Created by Condy on 2024/6/24.
@@ -7,9 +7,7 @@
 
 import Foundation
 
-public typealias AnyDictionaryType = [String : AnyDictionaryValue]
-
-public indirect enum AnyDictionaryValue {
+public indirect enum ValueX {
     case null
     case string(String)
     case int(Int)
@@ -18,17 +16,17 @@ public indirect enum AnyDictionaryValue {
     case double(Double)
     case date(Date)
     case data(Data)
-    case array([AnyDictionaryValue])
-    case dictionary(AnyDictionaryType)
+    case array([ValueX])
+    case dictionary([String: ValueX])
 }
 
-extension AnyDictionaryValue: Codable {
+extension ValueX: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let dict = try? container.decode(AnyDictionaryType.self) {
+        if let dict = try? container.decode([String: ValueX].self) {
             self = .dictionary(dict)
-        } else if let array = try? container.decode([AnyDictionaryValue].self) {
+        } else if let array = try? container.decode([ValueX].self) {
             self = .array(array)
         } else if let string = try? container.decode(String.self) {
             self = .string(string)
@@ -74,8 +72,25 @@ extension AnyDictionaryValue: Codable {
             try container.encode(data)
         }
     }
+}
+
+extension ValueX {
     
-    var value: Any? {
+    public var dictionaryValue: [String: ValueX]? {
+        if case let .dictionary(dict) = self {
+            return dict
+        }
+        return nil
+    }
+    
+    public var arrayValue: [ValueX]? {
+        if case let .array(array) = self {
+            return array
+        }
+        return nil
+    }
+    
+    public var value: Any? {
         switch self {
         case .null:
             return nil
@@ -100,13 +115,13 @@ extension AnyDictionaryValue: Codable {
         }
     }
     
-    init?(value: Any) {
+    public init?(value: Any) {
         switch value {
         case Optional<Any>.none:
             self = .null
-        case let val as AnyDictionaryType:
+        case let val as [String: ValueX]:
             self = .dictionary(val)
-        case let val as [AnyDictionaryValue]:
+        case let val as [ValueX]:
             self = .array(val)
         case let val as String:
             self = .string(val)

@@ -46,8 +46,8 @@ struct YourModel: HollowCodable {
     @DefaultBacked<String>
     var string: String // If the field is not an optional, default is "".
 
-    @DefaultBacked<[FruitAA]>
-    var list: [FruitAA] // If the field is not an optional, default is [].
+    @DefaultBacked<AnyDictionary>
+    var list: [String: Any] // If the field is not an optional, default is [:].
 }
 ```
 
@@ -112,13 +112,13 @@ public enum YourData: DataConverter {
     public typealias FromValue = Data
     public typealias ToValue = String
     
-    public static let hasValue: String = ""
+    public static let hasValue: Value = ""
     
-    public static func transformToValue(with value: Data) -> String? {
+    public static func transformToValue(with value: FromValue) -> ToValue? {
         // data to string..
     }
     
-    public static func transformFromValue(with value: String) -> Data? {
+    public static func transformFromValue(with value: ToValue) -> FromValue? {
         // string to data..
     }
 }
@@ -226,9 +226,21 @@ struct YourModel: HollowCodable {
 }
 ```
 
+### AnyX
+
+- AnyXCoding: Support for any general type, 
+
+```swift
+struct YourModel: HollowCodable {
+    @AnyBacked<AnyX>
+    var x: Any? // Also nested support.
+}
+```
+
 ### JSON
 
-- Supports decoding network api response data.
+<details>
+  <summary>Supports decoding network api response data.</summary>
 
 ```objc
 {
@@ -299,7 +311,10 @@ struct YourModel: HollowCodable {
 let datas = ApiResponse<[YourModel]>.deserialize(from: json)?.data
 ```
 
-- Convert between Model and JSON.
+</details>
+
+<details>
+  <summary>Convert between Model and JSON.</summary>
 
 ```objc
 json = """
@@ -333,6 +348,8 @@ let model = YourModel.deserialize(from: json)
 // Model to JSON
 let json = model.toJSONString(prettyPrint: true)
 ```
+
+</details>
 
 ### Available Property Wrappers
 - [@Immutable](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Immutable.swift): Becomes an immutable property.
@@ -370,15 +387,6 @@ func request(_ count: Int) -> Observable<[CodableModel]> {
         .compactMap({ $0.data })
         .observe(on: MainScheduler.instance)
         .catchAndReturn([])
-}
-
-public extension Observable where Element: Any {
-    
-    @discardableResult func deserialized<T: HollowCodable>(_ type: T.Type) -> Observable<T> {
-        return self.map { element -> T in
-            return try T.deserialize(element: element)
-        }
-    }
 }
 ```
 

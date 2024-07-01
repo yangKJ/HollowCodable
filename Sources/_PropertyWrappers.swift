@@ -129,3 +129,9 @@ public typealias DictionaryEncoding = AnyBackedEncoding<AnyDictionary>
 public typealias ArrayCoding   = AnyBacked<AnyDictionaryArray>
 public typealias ArrayDecoding = AnyBackedDecoding<AnyDictionaryArray>
 public typealias ArrayEncoding = AnyBackedEncoding<AnyDictionaryArray>
+
+// MARK: - Any
+
+public typealias AnyXCoding   = AnyBacked<AnyX>
+public typealias AnyXDecoding = AnyBackedDecoding<AnyX>
+public typealias AnyXEncoding = AnyBackedEncoding<AnyX>

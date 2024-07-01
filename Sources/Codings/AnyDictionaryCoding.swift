@@ -7,49 +7,70 @@
 
 import Foundation
 
+/// Support any value property wrapper with dictionary(`[String: Any]`).
 public struct AnyDictionary: Transformer, HasDefaultValuable {
     
-    let dict: AnyDictionaryType
+    let dict: [String: ValueX]
     
     public typealias DecodeType = [String: Any]
-    public typealias EncodeType = AnyDictionaryType
+    public typealias EncodeType = [String: ValueX]
     
     public static var hasDefaultValue: [String: Any] {
         [:]
     }
     
     public init?(value: Any) {
-        guard let dict = value as? AnyDictionaryType else {
+        guard let value = value as? ValueX else {
             return nil
         }
-        self.dict = dict
+        switch value {
+        case .dictionary(let res):
+            self.dict = res
+        default:
+            return nil
+        }
     }
     
     public func transform() throws -> [String: Any]? {
         dict.mapValues(\.value) as? [String: Any]
     }
     
-    public static func transform(from value: [String: Any]) throws -> AnyDictionaryType {
-        value.compactMapValues(AnyDictionaryValue.init(value:))
+    public static func transform(from value: [String: Any]) throws -> [String: ValueX] {
+        value.compactMapValues(ValueX.init(value:))
     }
 }
 
+/// Support any value dictionary property wrapper with array(`[[String: Any]]`).
 public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
     
-    let array: [AnyDictionaryType]
+    let array: [[String: ValueX]]
     
     public typealias DecodeType = [[String: Any]]
-    public typealias EncodeType = [AnyDictionaryType]
+    public typealias EncodeType = [[String: ValueX]]
     
     public static var hasDefaultValue: [[String: Any]] {
         []
     }
     
     public init?(value: Any) {
-        guard let array = value as? [AnyDictionaryType] else {
+        guard let value = value as? ValueX else {
             return nil
         }
-        self.array = array
+        switch value {
+        case .array(let res):
+            let array = res.compactMap({
+                if case .dictionary(let dict) = $0 {
+                    return dict
+                }
+                return nil
+            })
+            guard array.count > 0 else {
+                return nil
+            }
+            self.array = array
+        default:
+            return nil
+        }
     }
     
     public func transform() throws -> [[String: Any]]? {
@@ -58,9 +79,39 @@ public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
         }
     }
     
-    public static func transform(from value: [[String: Any]]) throws -> [AnyDictionaryType] {
+    public static func transform(from value: [[String: Any]]) throws -> [[String: ValueX]] {
         value.map {
-            $0.compactMapValues(AnyDictionaryValue.init(value:))
+            $0.compactMapValues(ValueX.init(value:))
         }
+    }
+}
+
+/// Support any value property wrapper with Any.
+public struct AnyX: Transformer {
+    
+    let value: ValueX
+    
+    public typealias DecodeType = Any
+    public typealias EncodeType = ValueX
+    
+    public init?(value: Any) {
+        guard let value = value as? ValueX else {
+            return nil
+        }
+        self.value = value
+    }
+    
+    public func transform() throws -> Any? {
+        value.value
+    }
+    
+    public static func transform(from value: Any) throws -> ValueX {
+        guard let value = ValueX.init(value: value) else {
+            let userInfo = [
+                NSLocalizedDescriptionKey: "The any to routine value is nil."
+            ]
+            throw NSError(domain: "com.condy.hollow.codable", code: -100014, userInfo: userInfo)
+        }
+        return value
     }
 }
