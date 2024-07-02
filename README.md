@@ -8,6 +8,19 @@
 
 - Make Complex Codable Serializate a breeze with declarative annotations!
 
+### Issues with native JSON Codable
+
+1. It does not support the custom coding key of a certain attribute. Once you have this requirement, either implement all coding keys manually to modify the desired coding key, or you have to set Decoder when decode, which is extremely inconvenient.
+2. Some non-Codable attributes cannot be ignored. The coding key needs to be implemented manually.
+3. Decode does not support multiple coding keys mapping to the same property.
+4. The default values of the model cannot be used, and it is obviously unreasonable to throw missing data errors instead of using the default values in the definition when decode data is missing.
+5. There is no support for simple type conversions, such as converting 0/1 to false/true, "123" to Int 123, or vice versa, who can ensure that the server will not accidentally modify the field type and cause the app to fail?
+6. Do not support Any property, many times our home page model will have a lot of submodels, but each submodel data structure is not the same, then need to decoding into Any, and then according to the module to confirm the submodel.
+
+ok, All of these issues can be resolved after you use [HollowCodable](https://github.com/yangKJ/HollowCodable), so you're welcome!
+
+### Usage
+
 - Immutable: Made immutable via property wrapper, It can be used with other Coding.
 
 ```swift
@@ -190,7 +203,7 @@ enum AnimalType: String {
 
 ### NSDecimalNumber
 
-- NSDecimalNumberCoding: Deserialization the `String`、`Double`、`Float`、`CGFloat`、`Int` or `Int64` to a NSDecimalNumber property.
+- NSDecimalNumberCoding: Decoding the `String`、`Double`、`Float`、`CGFloat`、`Int` or `Int64` to a NSDecimalNumber property.
 
 ```swift
 struct YourModel: HollowCodable {
@@ -356,17 +369,18 @@ let json = model.toJSONString(prettyPrint: true)
 - [@IgnoredKey](https://github.com/yangKJ/HollowCodable/blob/master/Sources/IgnoredKey.swift): Optional Property to not included it when Encoding or Decoding.
 - [@AnyBacked](https://github.com/yangKJ/HollowCodable/blob/master/Sources/AnyBacked.swift): Support multiple types when Encoding or Decoding.
 - [@DefaultBacked](https://github.com/yangKJ/HollowCodable/blob/master/Sources/DefaultBacked.swift): When Decoding fails, the default value will be set.
-- [@BoolCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/BoolCoding.swift): Bool Encoding or Decoding and can set default value.
-- [@Base64DataCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Base64DataCoding.swift): For a Data property that should be serialized to a Base64 encoded String.
-- [@DateFormatterCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/DateFormatterCoding.swift): Date property that should be serialized using the customized DataFormat.
-- [@ISO8601DateCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/ISO8601DateCoding.swift): Date property that should be serialized using the ISO8601DateFormatter.
-- [@TimestampDateCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/TimestampDateCoding.swift): Date property that should be serialized to Since1970.
-- [@DecimalNumberCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/DecimalNumberCoding.swift): Deserialization to a NSDecimalNumber property.
-- [@EnumCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/EnumCoding.swift): Serialization to enumeration with RawRepresentable.
-- [@HexColorCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/HexColorCoding.swift): UIColor/NSColor property that should be serialized to hex string.
-- [@RGBAColorCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/RGBAColorCoding.swift): RGBA color Encoding or Decoding.
-- [@PointCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/PointCoding.swift): CGPoint Encoding or Decoding.
-- [@RectCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/RectCoding.swift): CGRect Encoding or Decoding.
+- [@BoolCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/BoolCoding.swift): Bool Encoding or Decoding and can set default value.
+- [@Base64DataCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/Base64DataCoding.swift): For a Data property that should be serialized to a Base64 encoded String.
+- [@DateFormatterCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/DateFormatterCoding.swift): Date property that should be serialized using the customized DataFormat.
+- [@ISO8601DateCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/ISO8601DateCoding.swift): Date property that should be serialized using the ISO8601DateFormatter.
+- [@TimestampDateCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/TimestampDateCoding.swift): Date property that should be serialized to Since1970.
+- [@DecimalNumberCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/DecimalNumberCoding.swift): Decoding to a NSDecimalNumber property.
+- [@EnumCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/EnumCoding.swift): Decoding to a enumeration with RawRepresentable.
+- [@HexColorCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/HexColorCoding.swift): UIColor/NSColor property that should be serialized to hex string.
+- [@RGBAColorCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/RGBAColorCoding.swift): RGBA color Encoding or Decoding.
+- [@PointCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/PointCoding.swift): CGPoint Encoding or Decoding.
+- [@RectCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/RectCoding.swift): CGRect Encoding or Decoding.
+- [@DictionaryCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/AnyDictionaryCoding.swift): Any dictionary([String: Any]) Encoding or Decoding.
 
 And support customization, you only need to implement the [Transformer](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transformer.swift) protocol.
 
@@ -379,7 +393,7 @@ This module is serialize and deserialize the data, Replace HandyJSON.
 
 🎷 Example of use in conjunction with the network part:
 
-```
+```swift
 func request(_ count: Int) -> Observable<[CodableModel]> {
     CodableAPI.cache(count)
         .request(callbackQueue: DispatchQueue(label: "request.codable"))
@@ -387,6 +401,37 @@ func request(_ count: Int) -> Observable<[CodableModel]> {
         .compactMap({ $0.data })
         .observe(on: MainScheduler.instance)
         .catchAndReturn([])
+}
+```
+
+- RxSwift deserialized extension.
+
+```swift
+public extension Observable where Element: Any {
+    
+    @discardableResult func deserialized<T>(_ type: T.Type) -> Observable<T> where T: HollowCodable {
+        return self.map { element -> T in
+            return try T.deserialize(element: element)
+        }
+    }
+    
+    @discardableResult func deserialized<T>(_ type: [T].Type) -> Observable<[T]> where T: HollowCodable {
+        return self.map { element -> [T] in
+            return try [T].deserialize(element: element)
+        }
+    }
+    
+    @discardableResult func deserialized<T>(_ type: T.Type) -> Observable<ApiResponse<T.DataType>> where T: HasResponsable, T.DataType: HollowCodable {
+        return self.map { element -> ApiResponse<T.DataType> in
+            return try T.deserialize(element: element)
+        }
+    }
+    
+    @discardableResult func deserialized<T>(_ type: T.Type) -> Observable<ApiResponse<[T.DataType.Element]>> where T: HasResponsable, T.DataType: Collection, T.DataType.Element: HollowCodable {
+        return self.map { element -> ApiResponse<[T.DataType.Element]> in
+            return try T.deserialize(element: element)
+        }
+    }
 }
 ```
 
