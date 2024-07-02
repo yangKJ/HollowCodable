@@ -64,7 +64,7 @@ public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
                 }
                 return nil
             })
-            guard array.count > 0 else {
+            guard !array.isEmpty else {
                 return nil
             }
             self.array = array

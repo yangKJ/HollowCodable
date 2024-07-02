@@ -22,7 +22,7 @@ public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where Ha
             self.boolean = val
             return
         }
-        guard let string = Self.transfer2String(with: value), string.count > 0 else {
+        guard let string = Self.transfer2String(with: value), !string.isEmpty else {
             return nil
         }
         let value = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
