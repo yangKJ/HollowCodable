@@ -15,7 +15,7 @@ public struct DecimalNumberValue: Transformer {
     public typealias EncodeType = String
     
     public init?(value: Any) {
-        guard let string = Self.transfer2String(with: value), string.count > 0 else {
+        guard let string = Self.transfer2String(with: value), !string.isEmpty else {
             return nil
         }
         self.decimalString = string
@@ -23,10 +23,10 @@ public struct DecimalNumberValue: Transformer {
     
     public func transform() throws -> NSDecimalNumber? {
         let decimal = NSDecimalNumber(string: decimalString)
-        if decimal != .notANumber {
-            return decimal
+        if decimal.isEqual(to: NSDecimalNumber.notANumber) {
+            return nil
         }
-        return nil
+        return decimal
     }
     
     public static func transform(from value: NSDecimalNumber) throws -> String {

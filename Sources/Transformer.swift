@@ -35,7 +35,7 @@ extension Transformer {
         case let val as CGFloat:
             return String(describing: val)
         case let val as Double where val <= 9999999999999998:
-            return String(describing: val)
+            return val.string(minPrecision: 2, maxPrecision: 16)
         case let val as Bool:
             return val.description
         case let val as Int8:

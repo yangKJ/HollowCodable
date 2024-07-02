@@ -126,3 +126,37 @@ extension Collection {
         return Array(self.prefix(endIndex))
     }
 }
+
+extension Double {
+    
+    func string(minPrecision: Int16 = 2, maxPrecision: Int16 = 2) -> String? {
+        let string = String(describing: self)
+        let array = string.components(separatedBy: ".") // fix bug: 35623.56 loss of precision at ios 14.
+        let decimal: NSDecimalNumber
+        if array.count == 2 && (array.last?.count ?? 0) <= 2 {
+            decimal = NSDecimalNumber(string: string)
+        } else {
+            decimal = NSDecimalNumber(value: self)
+        }
+        return decimal.string(minPrecision: minPrecision, maxPrecision: maxPrecision)
+    }
+}
+
+extension NSDecimalNumber {
+    
+    func string(minPrecision: Int16 = 2, maxPrecision: Int16 = 2) -> String? {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "zh-Hans")
+        formatter.numberStyle = .none
+        formatter.minimumIntegerDigits = 1
+        formatter.maximumFractionDigits = Int(maxPrecision)
+        formatter.minimumFractionDigits = Int(minPrecision)
+        let rounding = NSDecimalNumberHandler(roundingMode: NSDecimalNumber.RoundingMode.plain,
+                                              scale: maxPrecision,
+                                              raiseOnExactness: false,
+                                              raiseOnOverflow: false,
+                                              raiseOnUnderflow: false,
+                                              raiseOnDivideByZero: false)
+        return formatter.string(from: self.rounding(accordingToBehavior: rounding))
+    }
+}
