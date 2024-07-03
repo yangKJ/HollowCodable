@@ -29,3 +29,7 @@ extension HollowCompatible {
         HollowWrapper<Self>.self
     }
 }
+
+extension String: HollowCompatible { }
+extension Double: HollowCompatible { }
+extension NSDecimalNumber: HollowCompatible { }

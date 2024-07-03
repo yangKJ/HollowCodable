@@ -31,35 +31,65 @@ extension Dictionary {
     }
 }
 
-extension String {
+extension Collection {
     
-    func toJSONObject() -> Any? {
-        guard starts(with: "{") || starts(with: "[") else {
+    func filterDuplicates<E: Equatable>(_ filter: (Element) -> E) -> [Element] {
+        var result = [Element]()
+        for value in self {
+            let key = filter(value)
+            if !result.map({ filter($0) }).contains(key) {
+                result.append(value)
+            }
+        }
+        return result
+    }
+    
+    func removeFromEnd(_ count: Int) -> [Element]? {
+        guard count >= 0 else {
             return nil
         }
-        return data(using: .utf8).flatMap {
+        let endIndex = self.count - count
+        guard endIndex >= 0 else {
+            return nil
+        }
+        return Array(self.prefix(endIndex))
+    }
+}
+
+extension HollowWrapper where Base == String {
+    
+    /// Whether the string is empty after excluding white space and line feed string.
+    var isEmpty2: Bool {
+        base.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
+    func toJSONObject() -> Any? {
+        guard base.starts(with: "{") || base.starts(with: "[") else {
+            return nil
+        }
+        return base.data(using: .utf8).flatMap {
             try? JSONSerialization.jsonObject(with: $0)
         }
     }
     
     func snakeCamelConvert() -> String? {
         let result: String
-        if contains("_") {
+        if base.contains("_") {
             result = snakeToCamel()
         } else {
             result = camelToSnake()
         }
-        if self == result {
+        if base == result {
             return nil
         }
         return result
     }
     
     private func snakeToCamel() -> String {
-        guard !isEmpty, let firstNonUnderscore = firstIndex(where: { $0 != "_" }) else {
-            return self
+        guard !base.isEmpty, let firstNonUnderscore = base.firstIndex(where: { $0 != "_" }) else {
+            return base
         }
-        let stringKey = self
+        let stringKey = base
         var lastNonUnderscore = stringKey.index(before: stringKey.endIndex)
         while lastNonUnderscore > firstNonUnderscore, stringKey[lastNonUnderscore] == "_" {
             stringKey.formIndex(before: &lastNonUnderscore)
@@ -89,7 +119,7 @@ extension String {
     }
     
     private func camelToSnake() -> String {
-        var chars = Array(self)
+        var chars = Array(base)
         for (i, char) in chars.enumerated().reversed() {
             if char.isUppercase {
                 chars[i] = String.Element(char.lowercased())
@@ -102,47 +132,22 @@ extension String {
     }
 }
 
-extension Collection {
-    
-    func filterDuplicates<E: Equatable>(_ filter: (Element) -> E) -> [Element] {
-        var result = [Element]()
-        for value in self {
-            let key = filter(value)
-            if !result.map({ filter($0) }).contains(key) {
-                result.append(value)
-            }
-        }
-        return result
-    }
-    
-    func removeFromEnd(_ count: Int) -> [Element]? {
-        guard count >= 0 else {
-            return nil
-        }
-        let endIndex = self.count - count
-        guard endIndex >= 0 else {
-            return nil
-        }
-        return Array(self.prefix(endIndex))
-    }
-}
-
-extension Double {
+extension HollowWrapper where Base == Double {
     
     func string(minPrecision: Int16 = 2, maxPrecision: Int16 = 2) -> String? {
-        let string = String(describing: self)
+        let string = String(describing: base)
         let array = string.components(separatedBy: ".") // fix bug: 35623.56 loss of precision at ios 14.
         let decimal: NSDecimalNumber
         if array.count == 2 && (array.last?.count ?? 0) <= 2 {
             decimal = NSDecimalNumber(string: string)
         } else {
-            decimal = NSDecimalNumber(value: self)
+            decimal = NSDecimalNumber(value: base)
         }
-        return decimal.string(minPrecision: minPrecision, maxPrecision: maxPrecision)
+        return decimal.hc.string(minPrecision: minPrecision, maxPrecision: maxPrecision)
     }
 }
 
-extension NSDecimalNumber {
+extension HollowWrapper where Base: NSDecimalNumber {
     
     func string(minPrecision: Int16 = 2, maxPrecision: Int16 = 2) -> String? {
         let formatter = NumberFormatter()
@@ -157,6 +162,6 @@ extension NSDecimalNumber {
                                               raiseOnOverflow: false,
                                               raiseOnUnderflow: false,
                                               raiseOnDivideByZero: false)
-        return formatter.string(from: self.rounding(accordingToBehavior: rounding))
+        return formatter.string(from: base.rounding(accordingToBehavior: rounding))
     }
 }

@@ -16,7 +16,7 @@ public struct DataValue<T: DataConverter>: Transformer {
     
     public init?(value: Any) {
         switch value {
-        case let string as String:
+        case let string as String where !string.hc.isEmpty2:
             self.dataString = string
         default:
             return nil

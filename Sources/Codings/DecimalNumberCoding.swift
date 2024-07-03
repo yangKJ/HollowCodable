@@ -15,7 +15,7 @@ public struct DecimalNumberValue: Transformer {
     public typealias EncodeType = String
     
     public init?(value: Any) {
-        guard let string = Self.transfer2String(with: value), !string.isEmpty else {
+        guard let string = Self.transfer2String(with: value), !string.hc.isEmpty2 else {
             return nil
         }
         self.decimalString = string

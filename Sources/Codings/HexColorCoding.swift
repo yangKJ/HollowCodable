@@ -25,7 +25,7 @@ public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha
     
     public init?(value: Any) {
         switch value {
-        case let string as String where !string.isEmpty:
+        case let string as String where !string.hc.isEmpty2:
             self.hex = string
         case let val as Int where (0x000000 ... 0xFFFFFF) ~= val:
             self.hexInt = val

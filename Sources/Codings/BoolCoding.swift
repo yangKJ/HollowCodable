@@ -22,10 +22,10 @@ public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where Ha
             self.boolean = val
             return
         }
-        guard let string = Self.transfer2String(with: value), !string.isEmpty else {
+        guard let string = Self.transfer2String(with: value), !string.hc.isEmpty2 else {
             return nil
         }
-        let value = string.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let value = string.lowercased()
         switch value {
         case "1", "y", "t", "yes", "true":
             self.boolean = true
