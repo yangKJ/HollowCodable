@@ -18,15 +18,7 @@ extension HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> Self {
-        let decoder = JSONDecoder()
-        decoder.setupKeyStrategy(Self.self)
-        let data: Data
-        if let data_ = element as? Data {
-            data = data_
-        } else {
-            data = try JSONSerialization.data(withJSONObject: element)
-        }
-        return try decoder.decode(Self.self, from: data)
+        try Hollow.decode(Self.self, element: element, mappedType: Self.self)
     }
 }
 
@@ -41,15 +33,7 @@ extension Collection where Element: HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> [Element] {
-        let decoder = JSONDecoder()
-        decoder.setupKeyStrategy(Element.self)
-        let data: Data
-        if let data_ = element as? Data {
-            data = data_
-        } else {
-            data = try JSONSerialization.data(withJSONObject: element)
-        }
-        return try decoder.decode([Element].self, from: data)
+        try Hollow.decode([Element].self, element: element, mappedType: Element.self)
     }
 }
 
@@ -64,14 +48,21 @@ extension Dictionary where Key: Decodable, Value: HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> Dictionary<Key, Value> {
+        try Hollow.decode([Key: Value].self, element: element, mappedType: Value.self)
+    }
+}
+
+extension Hollow {
+    
+    static func decode<T: Decodable>(_ type: T.Type, element: Any, mappedType: HollowCodable.Type) throws -> T {
         let decoder = JSONDecoder()
-        decoder.setupKeyStrategy(Value.self)
+        decoder.setupKeyStrategy(mappedType)
         let data: Data
         if let data_ = element as? Data {
             data = data_
         } else {
             data = try JSONSerialization.data(withJSONObject: element)
         }
-        return try decoder.decode(Dictionary<Key, Value>.self, from: data)
+        return try decoder.decode(type, from: data)
     }
 }

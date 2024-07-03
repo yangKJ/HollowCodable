@@ -44,15 +44,7 @@ extension ApiResponse where T: HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> Self {
-        let decoder = JSONDecoder()
-        decoder.setupKeyStrategy(T.self)
-        let data: Data
-        if let data_ = element as? Data {
-            data = data_
-        } else {
-            data = try JSONSerialization.data(withJSONObject: element)
-        }
-        return try decoder.decode(ApiResponse<T>.self, from: data)
+        try Hollow.decode(ApiResponse<T>.self, element: element, mappedType: T.self)
     }
 }
 
@@ -67,15 +59,7 @@ extension ApiResponse where T: Collection, T.Element: HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> Self {
-        let decoder = JSONDecoder()
-        decoder.setupKeyStrategy(T.Element.self)
-        let data: Data
-        if let data_ = element as? Data {
-            data = data_
-        } else {
-            data = try JSONSerialization.data(withJSONObject: element)
-        }
-        return try decoder.decode(ApiResponse<T>.self, from: data)
+        try Hollow.decode(ApiResponse<T>.self, element: element, mappedType: T.Element.self)
     }
 }
 
@@ -90,15 +74,7 @@ extension HollowCodable where Self: HasResponsable, DataType: HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> ApiResponse<DataType> {
-        let decoder = JSONDecoder()
-        decoder.setupKeyStrategy(DataType.self)
-        let data: Data
-        if let data_ = element as? Data {
-            data = data_
-        } else {
-            data = try JSONSerialization.data(withJSONObject: element)
-        }
-        return try decoder.decode(ApiResponse<DataType>.self, from: data)
+        try Hollow.decode(ApiResponse<DataType>.self, element: element, mappedType: DataType.self)
     }
 }
 
@@ -113,14 +89,6 @@ extension HollowCodable where Self: HasResponsable, DataType: Collection, DataTy
     }
     
     public static func deserialize(element: Any) throws -> ApiResponse<[DataType.Element]> {
-        let decoder = JSONDecoder()
-        decoder.setupKeyStrategy(DataType.Element.self)
-        let data: Data
-        if let data_ = element as? Data {
-            data = data_
-        } else {
-            data = try JSONSerialization.data(withJSONObject: element)
-        }
-        return try decoder.decode(ApiResponse<[DataType.Element]>.self, from: data)
+        try Hollow.decode(ApiResponse<[DataType.Element]>.self, element: element, mappedType: DataType.Element.self)
     }
 }
