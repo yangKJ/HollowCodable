@@ -21,13 +21,14 @@ struct YourModel: HollowCodable {
     @FalseBoolCoding
     var hasDefBool: Bool
     
-    @SecondsSince1970DateCoding
+    @Immutable
+    //@SecondsSince1970DateCoding
     var timestamp: Date?
     
     @DateCoding<Hollow.DateFormat.yyyy_mm_dd_hh_mm_ss, Hollow.Timestamp.secondsSince1970>
     var time: Date?
     
-    @ISO8601DateCoding
+    //@ISO8601DateCoding
     var iso8601: Date?
     
     @HexColorCoding
@@ -76,10 +77,14 @@ struct YourModel: HollowCodable {
         var dream: String
     }
     
-    static var codingKeys: [ReplaceKeys] {
+    static var codingKeys: [CodingKeyMapping] {
         return [
             ReplaceKeys(location: CodingKeys.color, keys: "hex_color", "hex_color2"),
-            ReplaceKeys(location: CodingKeys.url, keys: "github"),
+            CodingKeys.url <-- "github",
+            //ReplaceKeys(location: CodingKeys.url, keys: "github"),
+            TransformKeys(location: CodingKeys.timestamp, tranformer: TimestampDateTransform()),
+            //TransformKeys(location: CodingKeys.iso8601, tranformer: ISO8601DateTransform()),
+            CodingKeys.iso8601 <-- ISO8601DateTransform(),
         ]
     }
 }

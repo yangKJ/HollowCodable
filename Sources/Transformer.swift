@@ -20,51 +20,7 @@ public protocol Transformer: Codable {
 
 extension Transformer {
     public static func transfer2String(with value: Any?) -> String? {
-        guard let value = value else {
-            return nil
-        }
-        switch value {
-        case let val as String:
-            return val
-        case let val as Int:
-            return String(describing: val)
-        case let val as Double where val <= 9999999999999998:
-            return val.string(minPrecision: 2, maxPrecision: 16)
-        case let val as Float:
-            return String(describing: val)
-        case let val as CGFloat:
-            return String(describing: val)
-        case let val as Bool:
-            return val.description
-        case let val as Int8:
-            return String(describing: val)
-        case let val as Int16:
-            return String(describing: val)
-        case let val as Int32:
-            return String(describing: val)
-        case let val as Int64:
-            return String(describing: val)
-        case let val as UInt:
-            return String(describing: val)
-        case let val as UInt8:
-            return String(describing: val)
-        case let val as UInt16:
-            return String(describing: val)
-        case let val as UInt32:
-            return String(describing: val)
-        case let val as UInt64:
-            return String(describing: val)
-        case let val as NSNumber:
-            return val.stringValue
-        case let val as Data:
-            return val.description
-        case let val as Date:
-            return val.description
-        case let val as NSDecimalNumber:
-            return val.description
-        default:
-            return nil
-        }
+        Hollow.transfer2String(with: value)
     }
 }
 
@@ -99,6 +55,56 @@ extension Transformer where Self: LosslessStringConvertible, Self == DecodeType 
         } else if let string = Self.transfer2String(with: value) {
             self.init(string)
         } else {
+            return nil
+        }
+    }
+}
+
+extension Hollow {
+    public static func transfer2String(with value: Any?) -> String? {
+        guard let value = value else {
+            return nil
+        }
+        switch value {
+        case let val as String:
+            return val
+        case let val as Int:
+            return String(describing: val)
+        case let val as Double where val <= 9999999999999998:
+            return val.hc.string(minPrecision: 2, maxPrecision: 16)
+        case let val as Float:
+            return String(describing: val)
+        case let val as CGFloat:
+            return String(describing: val)
+        case let val as Bool:
+            return val.description
+        case let val as Int8:
+            return String(describing: val)
+        case let val as Int16:
+            return String(describing: val)
+        case let val as Int32:
+            return String(describing: val)
+        case let val as Int64:
+            return String(describing: val)
+        case let val as UInt:
+            return String(describing: val)
+        case let val as UInt8:
+            return String(describing: val)
+        case let val as UInt16:
+            return String(describing: val)
+        case let val as UInt32:
+            return String(describing: val)
+        case let val as UInt64:
+            return String(describing: val)
+        case let val as NSNumber:
+            return val.stringValue
+        case let val as Data:
+            return val.description
+        case let val as Date:
+            return val.description
+        case let val as NSDecimalNumber:
+            return val.description
+        default:
             return nil
         }
     }
