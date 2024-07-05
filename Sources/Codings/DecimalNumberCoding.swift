@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// `@DecimalNumberCoding` decoding the `String`、`Double`、`Float`、`CGFloat`、`Int` or `Int64` to a NSDecimalNumber property.
 public struct DecimalNumberValue: Transformer {
     
     let decimalString: String
@@ -15,7 +16,7 @@ public struct DecimalNumberValue: Transformer {
     public typealias EncodeType = String
     
     public init?(value: Any) {
-        guard let string = Self.transfer2String(with: value), !string.hc.isEmpty2 else {
+        guard let string = Hollow.transfer2String(with: value), !string.hc.isEmpty2 else {
             return nil
         }
         self.decimalString = string

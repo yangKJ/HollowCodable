@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// `@CGRectCoding`: For a `CGRect` property that should be serialized to a x,y,width,height encoded dict.
 public struct RectValue {
     
     var x: CGFloat?

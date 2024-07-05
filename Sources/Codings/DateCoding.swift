@@ -15,7 +15,7 @@ public struct DateValue<D: DateConverter, E: DateConverter>: Transformer {
     public typealias EncodeType = String
     
     public init?(value: Any) {
-        guard let string = Self.transfer2String(with: value), !string.hc.isEmpty2 else {
+        guard let string = Hollow.transfer2String(with: value), !string.hc.isEmpty2 else {
             return nil
         }
         self.dateString = string

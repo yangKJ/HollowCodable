@@ -10,6 +10,7 @@ import Foundation
 /// String or Int -> Bool converter.
 /// Uses <= 0 as false, and > 0 as true.
 /// Uses lowercase "true"/"yes"/"y"/"t"/"1"/">0" and "false"/"no"/"f"/"n"/"0".
+/// `@BoolCoding` decodes int/string/bool value json into `Bool`.
 public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where HasDefault.DefaultType == Bool {
     
     let boolean: Bool
@@ -22,7 +23,7 @@ public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where Ha
             self.boolean = val
             return
         }
-        guard let string = Self.transfer2String(with: value), !string.hc.isEmpty2 else {
+        guard let string = Hollow.transfer2String(with: value), !string.hc.isEmpty2 else {
             return nil
         }
         let value = string.lowercased()

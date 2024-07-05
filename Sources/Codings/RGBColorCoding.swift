@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// `@RGBColorCoding`: Decoding a red,green,blue to color.
 public struct RGB {
     
     var red: CGFloat?

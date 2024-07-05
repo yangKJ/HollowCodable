@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol CodingKeyMapping {
+    /// You need to replace it with a new coding key.
     var keyString: String { get set }
 }
 

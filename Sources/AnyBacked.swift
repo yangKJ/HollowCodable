@@ -49,7 +49,7 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             return
         }
         if T.self == AnyX.self || T.self == AnyDictionary.self || T.self == AnyDictionaryArray.self {
-            let value = try container.decode(ValueX.self)
+            let value = try container.decode(JSONValue.self)
             self.wrappedValue = try T.init(value: value)?.transform()
             if self.wrappedValue == nil {
                 loggerDataCorruptedError(container)

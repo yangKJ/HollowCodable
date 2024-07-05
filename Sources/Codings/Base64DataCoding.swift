@@ -12,7 +12,7 @@ extension Hollow {
 }
 
 /// Uses Base64 for (de)serailization of `Data`.
-/// `@Base64Coding` decodes base64 data strings into `Data`s.
+/// `@Base64Coding` decodes base64 data strings into `Data`.
 /// Decodes strictly valid Base64. This does not handle b64url encoding, invalid padding, or unknown characters.
 extension Hollow.Base64Data {
     

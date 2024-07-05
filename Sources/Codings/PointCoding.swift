@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// `@PointCoding`: For a `CGPoint` property that should be serialized to a x,y encoded dict.
 public struct PointValue {
     
     var x: CGFloat?
