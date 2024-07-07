@@ -7,6 +7,8 @@
 
 import Foundation
 
+public typealias DateValue2<T: DateConverter> = DateValue<T,T>
+
 public struct DateValue<D: DateConverter, E: DateConverter>: Transformer {
     
     var dateString: String?

@@ -48,6 +48,13 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             loggerDataCorruptedError(container)
             return
         }
+        if T.hasLossyValue(T.self) {
+            self.wrappedValue = try T.init(value: decoder)?.transform()
+            if self.wrappedValue == nil {
+                loggerDataCorruptedError(container)
+            }
+            return
+        }
         if T.self == AnyX.self || T.self == AnyDictionary.self || T.self == AnyDictionaryArray.self {
             let value = try container.decode(JSONValue.self)
             self.wrappedValue = try T.init(value: value)?.transform()
@@ -109,7 +116,13 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
     
     @inline(__always) public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        if let value = self.wrappedValue {
+        if T.hasLossyValue(T.self) {
+            if let wrappedValue = self.wrappedValue as? Encodable {
+                try wrappedValue.encode(to: encoder)
+            } else {
+                try container.encodeNil()
+            }
+        } else if let value = self.wrappedValue {
             if let value = try? T.transform(from: value) {
                 try container.encode(value)
             } else {

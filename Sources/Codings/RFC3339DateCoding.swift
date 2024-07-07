@@ -11,7 +11,7 @@ extension Hollow.DateFormat {
     public enum RFC3339Date: DateConverter { }
 }
 
-/// Decodes `String` or `TimeInterval` values as an RFC 3339 `Date`.
+/// Decodes String values as an RFC 3339 `Date`.
 /// `@RFC3339DateCoding` decodes RFC 3339 date strings into `Date`s. 
 /// Encoding the `Date` will encode the value back into the original string value.
 extension Hollow.DateFormat.RFC3339Date {

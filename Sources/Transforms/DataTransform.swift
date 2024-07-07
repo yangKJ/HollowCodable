@@ -14,10 +14,10 @@ open class DataTransform<T: DataConverter>: TransformType {
     public init() { }
     
     open func transformFromJSON(_ value: Any) -> Data? {
-        guard let dataString = Hollow.transfer2String(with: value), !dataString.hc.isEmpty2 else {
+        guard let string = Hollow.transfer2String(with: value), !string.hc.isEmpty2 else {
             return nil
         }
-        return T.transformFromValue(with: dataString)
+        return T.transformFromValue(with: string)
     }
     
     open func transformToJSON(_ value: Data) -> String? {

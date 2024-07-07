@@ -60,6 +60,8 @@ extension Hollow {
         let data: Data
         if let data_ = element as? Data {
             data = data_
+        } else if let string = element as? String {
+            data = string.data(using: .utf8, allowLossyConversion: false) ?? Data()
         } else {
             data = try JSONSerialization.data(withJSONObject: element)
         }

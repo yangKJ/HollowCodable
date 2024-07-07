@@ -18,6 +18,18 @@ public protocol Transformer: Codable {
     static func transform(from value: DecodeType) throws -> EncodeType
 }
 
+extension Transformer {
+    static func hasLossyValue(_ type: Self.Type) -> Bool {
+        let string = String(describing: type)
+        return [
+            "LossyArrayValue",
+            "LossyDictionaryValue",
+        ].contains(where: {
+            string.starts(with: $0)
+        })
+    }
+}
+
 extension Transformer where Self == DecodeType {
     public func transform() throws -> DecodeType? {
         self

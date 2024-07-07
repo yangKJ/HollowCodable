@@ -14,10 +14,12 @@ public struct PathCodingKey: CodingKey, ExpressibleByStringLiteral, Comparable, 
     
     public init(stringLiteral value: StaticString) {
         self.stringValue = value.description
+        self.intValue = Int(stringValue)
     }
     
     public init(stringValue: String) {
         self.stringValue = stringValue
+        self.intValue = Int(stringValue)
     }
     
     public init(intValue: Int) {

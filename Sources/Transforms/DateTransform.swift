@@ -15,10 +15,10 @@ open class DateTransform<Decoding: DateConverter, Encoding: DateConverter>: Tran
     public init() { }
     
     open func transformFromJSON(_ value: Any) -> Date? {
-        guard let dateString = Hollow.transfer2String(with: value), !dateString.hc.isEmpty2 else {
+        guard let string = Hollow.transfer2String(with: value), !string.hc.isEmpty2 else {
             return nil
         }
-        return Decoding.transformFromValue(with: dateString)
+        return Decoding.transformFromValue(with: string)
     }
     
     open func transformToJSON(_ value: Date) -> String? {

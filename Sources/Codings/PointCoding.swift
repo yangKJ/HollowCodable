@@ -13,7 +13,7 @@ public struct PointValue {
     var x: CGFloat?
     var y: CGFloat?
     
-    init(x: CGFloat? = nil, y: CGFloat? = nil) {
+    init(x: CGFloat, y: CGFloat) {
         self.x = x
         self.y = y
     }

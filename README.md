@@ -64,45 +64,6 @@ struct YourModel: HollowCodable {
 }
 ```
 
-### UIColor/NSColor
-
-- HexColorCoding: For a Color property that should be serialized to a hex encoded String.
-  - Support the hex string color with format `#RGB`、`#RGBA`、`#RRGGBB`、`#RRGGBBAA`.
-- RGBColorCoding: Decoding a red/green/blue to color.
-- RGBAColorCoding: Decoding a red/green/blue/alpha to color.
-
-```swift
-struct YourModel: HollowCodable {
-    @HexColorCoding
-    var color: HollowColor?
-    
-    @RGBColorCoding
-    var background_color: HollowColor?
-}
-```
-
-### Bool
-
-- BoolCoding: Sometimes an API uses an `Bool`、`Int` or `String` for a booleans.
-  - Uses <= 0 as false, and > 0 as true.
-  - Uses lowercase "true"/"yes"/"y"/"t"/"1"/">0" as true, 
-  - Uses lowercase "false"/"no"/"f"/"n"/"0" as false.
-- FalseBoolCoding: If the field is not an optional type, default false value.
-- TrueBoolCoding: If the field is not an optional type, default true value. 
-
-```swift
-struct YourModel: HollowCodable {
-    @Immutable @BoolCoding
-    var bar: Bool?
-    
-    @FalseBoolCoding
-    var hasD: Bool
-    
-    @TrueBoolCoding
-    var hasT: Bool
-}
-```
-
 ### Data
 
 - Base64Coding: For a Data property that should be serialized to a Base64 encoded String.
@@ -114,8 +75,25 @@ struct YourModel: HollowCodable {
 }
 ```
 
-And you can customize your own data (de)serialization type with [DataValue](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/DataCoding.swift).
+- [Base64DataTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/Base64DataTransform.swift): Serialized to a base 64 Data encoded String.
 
+```swift
+struct YourModel: HollowCodable {
+    
+    var base64Data: Data?
+    
+    static var codingKeys: [CodingKeyMapping] {
+        return [
+            CodingKeys.base64Data <-- "base64_data",
+            CodingKeys.base64Data <-- Base64DataTransform(),
+        ]
+    }
+}
+```
+
+<details>
+  <summary>And you can customize your own data (de)serialization type with DataValue.</summary>
+  
 Like: 
 
 ```swift
@@ -138,10 +116,12 @@ public enum YourData: DataConverter {
 
 Used:
 struct YourModel: HollowCodable {
-    AnyBacked<DataValue<YourData>>
+    @AnyBacked<DataValue<YourData>>
     var data: Data?
 }
 ```
+
+</details>
 
 ### Date
 
@@ -184,6 +164,74 @@ struct YourModel: HollowCodable {
 }
 ```
 
+- [CustomDateFormatTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/CustomDateFormatTransform.swift): Serialized to a custom Date encoded String.
+- [DateFormatterTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DateFormatterTransform.swift): Serialized to a custom Date encoded String.
+- [ISO8601DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/ISO8601DateTransform.swift): Serialized to a iso8601 time format Date encoded String.
+- [RFC3339DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/RFC3339DateTransform.swift): Serialized to a RFC 3339 time format Date encoded String.
+- [RFC2822DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/RFC2822DateTransform.swift): Serialized to a RFC 2822 time format Date encoded String.
+- [TimestampDateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/TimestampDateTransform.swift): Serialized to a timestamp Since1970 time format Date encoded String/TimeInterval.
+
+```swift
+struct YourModel: HollowCodable {
+    
+    var iso8601: Date? // Now decodes to ISO8601 date.
+    
+    var data1: Date? // Now decodes RFC 2822 date.
+    
+    var data2: Date? // Now decodes RFC 3339 date.
+    
+    var timestampDate: Date? // Now decodes seconds Since1970 date.
+    
+    static var codingKeys: [CodingKeyMapping] {
+        return [
+            TransformKeys(location: CodingKeys.iso8601, tranformer: ISO8601DateTransform()),
+            CodingKeys.data1 <-- RFC2822DateTransform(),
+            CodingKeys.data2 <-- RFC3339DateTransform(),
+            CodingKeys.timestampDate <-- TimestampDateTransform(type: .seconds),
+        ]
+    }
+}
+```
+
+### UIColor/NSColor
+
+- HexColorCoding: For a Color property that should be serialized to a hex encoded String.
+  - Support the hex string color with format `#RGB`、`#RGBA`、`#RRGGBB`、`#RRGGBBAA`.
+- RGBColorCoding: Decoding a red/green/blue to color.
+- RGBAColorCoding: Decoding a red/green/blue/alpha to color.
+
+```swift
+struct YourModel: HollowCodable {
+    @HexColorCoding
+    var color: HollowColor?
+    
+    @RGBColorCoding
+    var background_color: HollowColor?
+}
+```
+
+### Bool
+
+- BoolCoding: Sometimes an API uses an `Bool`、`Int` or `String` for a booleans.
+  - Uses <= 0 as false, and > 0 as true.
+  - Uses lowercase "true"/"yes"/"y"/"t"/"1"/">0" as true, 
+  - Uses lowercase "false"/"no"/"f"/"n"/"0" as false.
+- FalseBoolCoding: If the field is not an optional type, default false value.
+- TrueBoolCoding: If the field is not an optional type, default true value. 
+
+```swift
+struct YourModel: HollowCodable {
+    @Immutable @BoolCoding
+    var bar: Bool?
+    
+    @FalseBoolCoding
+    var hasD: Bool
+    
+    @TrueBoolCoding
+    var hasT: Bool
+}
+```
+
 ### Enum
 
 - EnumCoding: To be convertable, An enum must conform to RawRepresentable protocol. Nothing special need to do now.
@@ -212,10 +260,11 @@ struct YourModel: HollowCodable {
 }
 ```
 
-### AnyDictionary/AnyDictionaryArray
+### Any
 
 - DictionaryCoding: Support any value property wrapper with dictionary.
 - ArrayCoding: Support any value dictionary property wrapper with array.
+- AnyXCoding: Support for any general type, 
 
 ```swift
 "mixDict": {
@@ -236,15 +285,7 @@ struct YourModel: HollowCodable {
     
     @AnyBacked<AnyDictionaryArray>
     var mixLiat: [[String: Any]]?
-}
-```
-
-### AnyX
-
-- AnyXCoding: Support for any general type, 
-
-```swift
-struct YourModel: HollowCodable {
+    
     @AnyBacked<AnyX>
     var x: Any? // Also nested support.
 }
@@ -334,7 +375,8 @@ json = """
 {
      "uid":888888,
      "name": "Condy",
-     "age": 18
+     "age": 18,
+     "time": 590277534
 }
 """
 
@@ -348,9 +390,14 @@ struct YourModel: HollowCodable {
     @AnyBacked<String>
     var named: String? // Support multiple keys.
     
-    static var codingKeys: [ReplaceKeys] {
+    var time: Date? // Like to HandyJSON mode `TransformType`.
+    
+    static var codingKeys: [CodingKeyMapping] {
         return [
+            //CodingKeys.named <-- ["name", "named"],
             ReplaceKeys(location: CodingKeys.named, keys: "name", "named"),
+            //CodingKeys.time <-- TimestampDateTransform(),
+            TransformKeys(location: CodingKeys.time, tranformer: TimestampDateTransform()),
         ]
     }
 }
@@ -386,6 +433,21 @@ And support customization, you only need to implement the [Transformer](https://
 
 It also supports the attribute wrapper that can set the default value, and you need to implement the [HasDefaultValuable](https://github.com/yangKJ/HollowCodable/blob/master/Sources/HasDefaultValuable.swift) protocol.
 
+### Available Transforms
+- [Base64DataTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/Base64DataTransform.swift): Serialized to a base 64 Data encoded String.
+- [DataTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DataTransform.swift): Serialized to a custom Data encoded String.
+- [DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DateTransform.swift): Serialized to a custom Data encoded String.
+- [CustomDateFormatTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/CustomDateFormatTransform.swift): Serialized to a custom Date encoded String.
+- [DateFormatterTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DateFormatterTransform.swift): Serialized to a custom Date encoded String.
+- [ISO8601DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/ISO8601DateTransform.swift): Serialized to a iso8601 time format Date encoded String.
+- [RFC3339DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/RFC3339DateTransform.swift): Serialized to a RFC 3339 time format Date encoded String.
+- [RFC2822DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/RFC2822DateTransform.swift): Serialized to a RFC 2822 time format Date encoded String.
+- [TimestampDateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/TimestampDateTransform.swift): Serialized to a timestamp Since1970 time format Date encoded String/TimeInterval.
+
+And support customization, you only need to implement the [TransformType](https://github.com/yangKJ/HollowCodable/blob/master/Sources/TransformType.swift) protocol.
+
+⚠️ Note: At present, the converter only supports `Data` and `Date`, in order to be as compatible with HandyJSON as possible.
+
 ### Booming
 **[Booming](https://github.com/yangKJ/RxNetworks)** is a base network library for Swift. Developed for Swift 5, it aims to make use of the latest language features. The framework's ultimate goal is to enable easy networking that makes it easy to write well-maintainable code.
 
@@ -404,7 +466,8 @@ func request(_ count: Int) -> Observable<[CodableModel]> {
 }
 ```
 
-- RxSwift deserialized extension.
+<details>
+  <summary>RxSwift deserialized extension.</summary>
 
 ```swift
 public extension Observable where Element: Any {
@@ -434,6 +497,7 @@ public extension Observable where Element: Any {
     }
 }
 ```
+</details>
 
 ### CocoaPods
 

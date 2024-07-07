@@ -11,8 +11,8 @@ extension Hollow.DateFormat {
     public enum ISO8601Date: DateConverter { }
 }
 
-/// Decodes `String` or `TimeInterval` values as an ISO8601 `Date`.
-/// `@ISO8601DateCoding` relies on an `ISO8601DateFormatter` in order to decode `String` values into `Date`s. 
+/// Decodes String values as an ISO8601 `Date`.
+/// `@ISO8601DateCoding` relies on an `ISO8601DateFormatter` in order to decode `String` values into `Date`s.
 /// Encoding the `Date` will encode the value into the original string value.
 extension Hollow.DateFormat.ISO8601Date {
     public static let hasValue: ISO8601DateFormatter = {

@@ -123,12 +123,20 @@ public typealias DictionaryCoding   = AnyBacked<AnyDictionary>
 public typealias DictionaryDecoding = AnyBackedDecoding<AnyDictionary>
 public typealias DictionaryEncoding = AnyBackedEncoding<AnyDictionary>
 
+public typealias LossyDictionaryCoding<K,V>   = AnyBacked<LossyDictionaryValue<K, V>> where K: Hashable & Codable, V: Codable
+public typealias LossyDictionaryDecoding<K,V> = AnyBackedDecoding<LossyDictionaryValue<K,V>> where K: Hashable & Codable, V: Codable
+public typealias LossyDictionaryEncoding<K,V> = AnyBackedEncoding<LossyDictionaryValue<K,V>> where K: Hashable & Codable, V: Codable
+
 // MARK: - Array
 
 /// Support any value dictionary property wrapper with array.
 public typealias ArrayCoding   = AnyBacked<AnyDictionaryArray>
 public typealias ArrayDecoding = AnyBackedDecoding<AnyDictionaryArray>
 public typealias ArrayEncoding = AnyBackedEncoding<AnyDictionaryArray>
+
+public typealias LossyArrayCoding<T: Codable>   = AnyBacked<LossyArrayValue<T>>
+public typealias LossyArrayDecoding<T: Codable> = AnyBackedDecoding<LossyArrayValue<T>>
+public typealias LossyArrayEncoding<T: Codable> = AnyBackedEncoding<LossyArrayValue<T>>
 
 // MARK: - Any
 

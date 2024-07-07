@@ -14,6 +14,8 @@ import AppKit
 public typealias HollowColor = NSColor
 #endif
 
+public typealias HexColor_ = HexColor<False>
+
 /// Support the hex string color with format `#RGB`、`#RGBA`、`#RRGGBB`、`#RRGGBBAA`
 /// `@HexColorCoding`: For a Color property that should be serialized to a hex encoded String.
 public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha.DefaultType == Bool {

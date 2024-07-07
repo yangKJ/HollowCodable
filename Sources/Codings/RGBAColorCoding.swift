@@ -15,7 +15,7 @@ public struct RGBA {
     var blue: CGFloat?
     var alpha: CGFloat?
     
-    init(red: CGFloat? = nil, green: CGFloat? = nil, blue: CGFloat? = nil, alpha: CGFloat? = nil) {
+    init(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
         self.red = red
         self.green = green
         self.blue = blue

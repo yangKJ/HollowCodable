@@ -35,6 +35,10 @@
 		87F2AB862C1FCFDE006DF62F /* Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB852C1FCFDE006DF62F /* Ext.swift */; };
 		87F2AB882C200C8A006DF62F /* Enserializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB872C200C8A006DF62F /* Enserializer.swift */; };
 		F70CFD4F2C2998BB0056CB9F /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70CFD4E2C2998BB0056CB9F /* JSONValue.swift */; };
+		F71C68532C38155A0071EC9E /* HomeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68522C38155A0071EC9E /* HomeListView.swift */; };
+		F71C68552C3815F90071EC9E /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68542C3815F90071EC9E /* TestCase.swift */; };
+		F71C68572C3A4D0B0071EC9E /* LossyArrayCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68562C3A4D0B0071EC9E /* LossyArrayCoding.swift */; };
+		F71C68592C3A4D220071EC9E /* LossyDictionaryCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68582C3A4D220071EC9E /* LossyDictionaryCoding.swift */; };
 		F747FFD62C231846001A4680 /* RGBColorCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F747FFD52C231846001A4680 /* RGBColorCoding.swift */; };
 		F747FFD82C232328001A4680 /* HasDefaultValuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F747FFD72C232328001A4680 /* HasDefaultValuable.swift */; };
 		F76AF7902C16A29A005DC327 /* CodableExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF78F2C16A29A005DC327 /* CodableExampleApp.swift */; };
@@ -57,7 +61,7 @@
 		F76AF7CA2C16A415005DC327 /* ReplaceKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7B32C16A415005DC327 /* ReplaceKeys.swift */; };
 		F76AF7CB2C16A415005DC327 /* TimestampDateCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7B42C16A415005DC327 /* TimestampDateCoding.swift */; };
 		F76AF7CE2C16A599005DC327 /* Res.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7CD2C16A599005DC327 /* Res.swift */; };
-		F76AF7D02C16A604005DC327 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7CF2C16A604005DC327 /* Model.swift */; };
+		F76AF7D02C16A604005DC327 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7CF2C16A604005DC327 /* Models.swift */; };
 		F76AF7D22C16B1C5005DC327 /* HollowCodable.podspec in Resources */ = {isa = PBXBuildFile; fileRef = F76AF7D12C16B1C5005DC327 /* HollowCodable.podspec */; };
 		F76AF7D42C16B201005DC327 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F76AF7D32C16B201005DC327 /* README.md */; };
 		F7B9978E2C2723C9006D1C45 /* RFC2822DateCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B9978D2C2723C9006D1C45 /* RFC2822DateCoding.swift */; };
@@ -97,6 +101,10 @@
 		87F2AB852C1FCFDE006DF62F /* Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext.swift; sourceTree = "<group>"; };
 		87F2AB872C200C8A006DF62F /* Enserializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enserializer.swift; sourceTree = "<group>"; };
 		F70CFD4E2C2998BB0056CB9F /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
+		F71C68522C38155A0071EC9E /* HomeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeListView.swift; sourceTree = "<group>"; };
+		F71C68542C3815F90071EC9E /* TestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
+		F71C68562C3A4D0B0071EC9E /* LossyArrayCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LossyArrayCoding.swift; sourceTree = "<group>"; };
+		F71C68582C3A4D220071EC9E /* LossyDictionaryCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LossyDictionaryCoding.swift; sourceTree = "<group>"; };
 		F747FFD52C231846001A4680 /* RGBColorCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBColorCoding.swift; sourceTree = "<group>"; };
 		F747FFD72C232328001A4680 /* HasDefaultValuable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasDefaultValuable.swift; sourceTree = "<group>"; };
 		F76AF78C2C16A29A005DC327 /* CodableExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodableExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,7 +129,7 @@
 		F76AF7B32C16A415005DC327 /* ReplaceKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceKeys.swift; sourceTree = "<group>"; };
 		F76AF7B42C16A415005DC327 /* TimestampDateCoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimestampDateCoding.swift; sourceTree = "<group>"; };
 		F76AF7CD2C16A599005DC327 /* Res.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Res.swift; sourceTree = "<group>"; };
-		F76AF7CF2C16A604005DC327 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		F76AF7CF2C16A604005DC327 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		F76AF7D12C16B1C5005DC327 /* HollowCodable.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HollowCodable.podspec; sourceTree = SOURCE_ROOT; };
 		F76AF7D32C16B201005DC327 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		F7B9978D2C2723C9006D1C45 /* RFC2822DateCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC2822DateCoding.swift; sourceTree = "<group>"; };
@@ -181,7 +189,9 @@
 				F76AF7B62C16A415005DC327 /* Sources */,
 				F76AF78F2C16A29A005DC327 /* CodableExampleApp.swift */,
 				F76AF7912C16A29A005DC327 /* ContentView.swift */,
-				F76AF7CF2C16A604005DC327 /* Model.swift */,
+				F71C68522C38155A0071EC9E /* HomeListView.swift */,
+				F71C68542C3815F90071EC9E /* TestCase.swift */,
+				F76AF7CF2C16A604005DC327 /* Models.swift */,
 				F76AF7CD2C16A599005DC327 /* Res.swift */,
 				F76AF7D32C16B201005DC327 /* README.md */,
 				F76AF7D12C16B1C5005DC327 /* HollowCodable.podspec */,
@@ -247,6 +257,8 @@
 				F76AF7AA2C16A415005DC327 /* EnumCoding.swift */,
 				F76AF7AC2C16A415005DC327 /* HexColorCoding.swift */,
 				F76AF7AF2C16A415005DC327 /* ISO8601DateCoding.swift */,
+				F71C68562C3A4D0B0071EC9E /* LossyArrayCoding.swift */,
+				F71C68582C3A4D220071EC9E /* LossyDictionaryCoding.swift */,
 				87EC9BCD2C22820C001DD724 /* PointCoding.swift */,
 				876D56A62C1845470006E25E /* RectCoding.swift */,
 				F7B9978D2C2723C9006D1C45 /* RFC2822DateCoding.swift */,
@@ -337,6 +349,7 @@
 				87199B3C2C34FDB1008FFF19 /* TransformType.swift in Sources */,
 				877482A92C36393E0056B778 /* ISO8601DateTransform.swift in Sources */,
 				877482A52C36342B0056B778 /* DateFormatterTransform.swift in Sources */,
+				F71C68552C3815F90071EC9E /* TestCase.swift in Sources */,
 				F76AF7CA2C16A415005DC327 /* ReplaceKeys.swift in Sources */,
 				F76AF7BE2C16A415005DC327 /* DecimalNumberCoding.swift in Sources */,
 				F76AF7B82C16A415005DC327 /* ApiResponse.swift in Sources */,
@@ -364,8 +377,9 @@
 				F76AF7B72C16A415005DC327 /* PathCodingKey.swift in Sources */,
 				F76AF7C32C16A415005DC327 /* HexColorCoding.swift in Sources */,
 				87EC9BD22C22AF55001DD724 /* _PropertyWrappers.swift in Sources */,
+				F71C68592C3A4D220071EC9E /* LossyDictionaryCoding.swift in Sources */,
 				F7B9978E2C2723C9006D1C45 /* RFC2822DateCoding.swift in Sources */,
-				F76AF7D02C16A604005DC327 /* Model.swift in Sources */,
+				F76AF7D02C16A604005DC327 /* Models.swift in Sources */,
 				87EC9BCC2C227C98001DD724 /* Transformer.swift in Sources */,
 				F7EA7B6B2C20712A0048E264 /* Logger.swift in Sources */,
 				87EC9BD02C22AD2D001DD724 /* DateCoding.swift in Sources */,
@@ -378,11 +392,13 @@
 				F76AF7C12C16A415005DC327 /* EnumCoding.swift in Sources */,
 				877482AF2C364CB10056B778 /* DataTransform.swift in Sources */,
 				87EC9BCE2C22820C001DD724 /* PointCoding.swift in Sources */,
+				F71C68572C3A4D0B0071EC9E /* LossyArrayCoding.swift in Sources */,
 				F7B997902C2723E7006D1C45 /* RFC3339DateCoding.swift in Sources */,
 				F76AF7C92C16A415005DC327 /* HollowCodable.swift in Sources */,
 				877482A72C36355C0056B778 /* CustomDateFormatTransform.swift in Sources */,
 				F76AF7B92C16A415005DC327 /* DataCoding.swift in Sources */,
 				877482B32C3677CB0056B778 /* DateTransform.swift in Sources */,
+				F71C68532C38155A0071EC9E /* HomeListView.swift in Sources */,
 				F76AF7CE2C16A599005DC327 /* Res.swift in Sources */,
 				87199B3E2C34FE6D008FFF19 /* TransformKeys.swift in Sources */,
 			);

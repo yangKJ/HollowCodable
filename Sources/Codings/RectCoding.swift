@@ -15,11 +15,11 @@ public struct RectValue {
     var width: CGFloat?
     var height: CGFloat?
     
-    init(x: CGFloat? = nil, y: CGFloat? = nil, width: CGFloat? = nil, height: CGFloat? = nil) {
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+    init(rect: CGRect) {
+        self.x = rect.origin.x
+        self.y = rect.origin.y
+        self.width = rect.size.width
+        self.height = rect.size.height
     }
 }
 
@@ -35,7 +35,7 @@ extension RectValue: Transformer {
     }
     
     public static func transform(from value: CGRect) throws -> RectValue {
-        RectValue.init(x: value.origin.x, y: value.origin.y, width: value.size.width, height: value.size.height)
+        RectValue.init(rect: value)
     }
 }
 

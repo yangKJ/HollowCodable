@@ -9,33 +9,46 @@ import SwiftUI
 
 struct ContentView: View {
     
-    static let datas = {
-        let data = Res.jsonData("Codable")!
-        let datas = ApiResponse<[YourModel]>.deserialize(from: data)?.data ?? []
-        return datas
-    }()
+    @State var title: String
+    @State var longText: String
+    @State var color: HollowColor?
     
-    @State var longText: String = (Self.datas.toJSONString(prettyPrint: true)) ?? "hellow word!"
-    
-    var color = Color(Self.datas.randomElement()?.color ?? .blue)
-    var backgroundColor = Color(Self.datas.randomElement()?.background_color ?? .blue)
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
-            Text("Test Codable")
-                .font(.body)
-                .italic()
-                .background(backgroundColor)
             TextEditor(text: $longText)
-                .foregroundColor(color)
+                .foregroundColor(color?.toColor ?? Color("textColor"))
                 .font(.custom("HelveticaNeue", size: 18))
         }
         .padding()
+        .navigationBarTitle(title, displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button(action: {
+            self.presentationMode.wrappedValue.dismiss()
+        }, label: {
+            Text("BACK")
+                .font(.custom("HelveticaNeue", size: 16))
+                .foregroundColor(Color("textColor"))
+                .padding(.leading, 5)
+        }))
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(title: "Test Codable", longText: "  Hollow Word!")
+    }
+}
+
+extension HollowColor {
+    var toColor: Color? {
+        #if canImport(AppKit)
+        return Color(nsColor: self)
+        #elseif canImport(UIKit)
+        return Color(uiColor: self)
+        #else
+        return nil
+        #endif
     }
 }

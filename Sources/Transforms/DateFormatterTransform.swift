@@ -18,13 +18,10 @@ open class DateFormatterTransform: TransformType {
     }
     
     open func transformFromJSON(_ value: Any) -> Date? {
-        guard let dateString = Hollow.transfer2String(with: value), !dateString.hc.isEmpty2 else {
+        guard let string = Hollow.transfer2String(with: value), !string.hc.isEmpty2 else {
             return nil
         }
-        //        if dateString.range(of: #":\d{2}[+-]"#, options: .regularExpression) != nil {
-        //            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ" //dateFormatter for date_UTC
-        //        }
-        return dateFormatter.date(from: dateString)
+        return dateFormatter.date(from: string)
     }
     
     open func transformToJSON(_ value: Date) -> String? {

@@ -9,16 +9,9 @@ import Foundation
 
 /// 枚举系列
 /// `@EnumCoding`: To be convertable, An enum must conform to RawRepresentable protocol. Nothing special need to do now.
-public struct EnumValue<T: RawRepresentable> where T.RawValue: Codable {
+public struct EnumValue<T: RawRepresentable>: Transformer where T.RawValue: Codable {
     
-    var value: T.RawValue?
-    
-    init(value: T.RawValue? = nil) {
-        self.value = value
-    }
-}
-
-extension EnumValue: Transformer {
+    let value: T.RawValue
     
     public typealias DecodeType = T
     public typealias EncodeType = T.RawValue
@@ -31,10 +24,7 @@ extension EnumValue: Transformer {
     }
     
     public func transform() throws -> T? {
-        guard let value = value else {
-            return nil
-        }
-        return T.init(rawValue: value)
+        T.init(rawValue: value)
     }
     
     public static func transform(from value: T) throws -> T.RawValue {

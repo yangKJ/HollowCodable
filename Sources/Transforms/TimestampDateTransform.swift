@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Decodes String or TimeInterval values as an Since1970 time `Date`.
 open class TimestampDateTransform: TransformType {
     
     public enum TimestampSince1970Type: TimeInterval {

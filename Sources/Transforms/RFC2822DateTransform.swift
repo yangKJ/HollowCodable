@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Decodes `String` or `TimeInterval` values as an RFC 2822 `Date`.
+/// Decodes String values as an RFC 2822 `Date`.
 /// Encoding the `Date` will encode the value back into the original string value.
 public final class RFC2822DateTransform: DateFormatterTransform {
     
