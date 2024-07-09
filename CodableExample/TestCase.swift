@@ -8,7 +8,6 @@
 import Foundation
 
 enum TestCase: String, CaseIterable {
-    case mix = "Mixed test"
     case enumTests = "Enum test"
     case composition = "Nesting test"
     case subclass = "Inheritance object test"
@@ -18,10 +17,14 @@ enum TestCase: String, CaseIterable {
     case iso8601DeteTests = "ISO8601 date formatter test"
     case base64DataTests = "Base 64 string to data"
     case gzipDataTests = "Custom gzip string to data"
-    case lossyDictionary = "Lossy dict or any value dict"
+    case lossyDictionaryTests = "Lossy dictionary test"
     case lossyArrayTests = "Lossy array and any value dict array"
+    case anyValueDictionaryTests = "Any value dictionary test"
+    case anyValueDictionaryArrayTests = "Any value dictionary array test"
     case boolTests = "Bool as int/string test"
     case decimalNumberTests = "NSDecimalNumber as int/double/string"
+    case pointTests = "CGPoint tests"
+    case mix = "Mixed test"
 }
 
 extension TestCase {
@@ -30,7 +33,7 @@ extension TestCase {
         switch self {
         case .mix:
             let data = Res.jsonData("Codable")!
-            return ApiResponse<[YourModel]>.deserialize(from: data)
+            return ApiResponse<[MixedTests]>.deserialize(from: data)
         case .enumTests:
             let jsonString = "{\"name\":\"Tesla\",\"vehicleType\":\"motorcycle\",\"hasDefType\":null}"
             return EnumTests.deserialize(from: jsonString)
@@ -41,8 +44,13 @@ extension TestCase {
             let jsonString = "{\"id\":12345,\"color\":\"0xFA6D5B\",\"name\":\"cat\",\"birthday\":\"1688342324\"}"
             return Cat.deserialize(from: jsonString)
         case .hexColor:
-            let jsonString = "{\"hex\":\"0xFA6D5B\"}"
-            return HexTypes.deserialize(from: jsonString)
+            let jsonString = """
+            {
+                "defalutColor": null,
+                "hex": "0xFA6D5B"
+            }
+            """
+            return HexColorTests.deserialize(from: jsonString)
         case .rgbColor:
             let jsonString = """
             {
@@ -59,7 +67,7 @@ extension TestCase {
                 }
             }
             """
-            return RGBColorTypes.deserialize(from: jsonString)
+            return RGBColorTests.deserialize(from: jsonString)
         case .deteFormat:
             let jsonString = """
             {
@@ -70,7 +78,7 @@ extension TestCase {
                 "time": "2024-05-29 23:49:55"
             }
             """
-            return DateValueTypes.deserialize(from: jsonString)
+            return DateValueTests.deserialize(from: jsonString)
         case .iso8601DeteTests:
             let jsonString = """
             {
@@ -86,22 +94,9 @@ extension TestCase {
         case .gzipDataTests:
             let jsonString = "{\"gzip\":\"H4sIAAAAAAAAAzOocHM2c7RwAQBIoAw7CAAAAA==\"}"
             return GZIPDataTests.deserialize(from: jsonString)
-        case .lossyDictionary:
+        case .lossyDictionaryTests:
             let jsonString = """
             {
-                "defDict": null,
-                "anyDict": {
-                    "sub": {
-                        "amount": "52.9",
-                    },
-                    "array": [{
-                        "val": 718,
-                    }, {
-                        "val": 911,
-                    }],
-                    "three": null,
-                    "val": 28
-                },
                 "stringToInt": {
                     "one": 1,
                     "two": 2,
@@ -119,15 +114,46 @@ extension TestCase {
             let jsonString = """
             {
                 "values": [1, null, "3", false, 4],
-                "nonPrimitiveValues": ["7", 8, null],
+                "nonPrimitiveValues": ["7", 8, null]
+            }
+            """
+            return LossyArrayTests.deserialize(from: jsonString)
+        case .anyValueDictionaryTests:
+            let jsonString = """
+            {
+                "defaultDict": null,
+                "anyDict": {
+                    "sub": {
+                        "amount": "52.9",
+                    },
+                    "array": [{
+                        "val": 718,
+                    }, {
+                        "val": 911,
+                    }],
+                    "three": null,
+                    "val": 28
+                }
+            }
+            """
+            return AnyValueDictionaryTests.deserialize(from: jsonString)
+        case .anyValueDictionaryArrayTests:
+            let jsonString = """
+            {
+                "defaultList": null,
                 "mixList": [{
                     "benc": "Condy"
                 }, {
                     "po": 5200
+                }, {
+                    "dict": {
+                        "val": 718
+                    },
+                    "named": "Yuan"
                 }]
             }
             """
-            return LossyArrayTests.deserialize(from: jsonString)
+            return AnyValueDictionaryArrayTests.deserialize(from: jsonString)
         case .boolTests:
             let jsonString = """
             {
@@ -149,13 +175,24 @@ extension TestCase {
             }
             """
             return DecimalNumberTests.deserialize(from: jsonString)
+        case .pointTests:
+            let jsonString = """
+            {
+                "defaultPoint": null,
+                "point": {
+                    "x": 3,
+                    "y": 220
+                }
+            }
+            """
+            return PointTests.deserialize(from: jsonString)
         }
     }
     
     var jsonString: String? {
         switch self {
         case .mix:
-            return (model as? ApiResponse<[YourModel]>)?.data?.toJSONString(prettyPrint: true)
+            return (model as? ApiResponse<[MixedTests]>)?.data?.toJSONString(prettyPrint: true)
         default:
             return model?.toJSONString(prettyPrint: true)
         }
@@ -164,11 +201,11 @@ extension TestCase {
     var color: HollowColor? {
         switch self {
         case .mix:
-            return (model as? ApiResponse<[YourModel]>)?.data?.first?.color
+            return (model as? ApiResponse<[MixedTests]>)?.data?.first?.color
         case .hexColor:
-            return (model as? HexTypes)?.hex
+            return (model as? HexColorTests)?.hex
         case .rgbColor:
-            return (model as? RGBColorTypes)?.rgb
+            return (model as? RGBColorTests)?.rgb
         case .base64DataTests:
             guard let data = (model as? Base64DataTests)?.color else {
                 return nil

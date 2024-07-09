@@ -37,9 +37,9 @@ extension RGB: Transformer {
     
     public static func transform(from value: HollowColor) throws -> RGB {
         let comps = value.cgColor.components!
-        let r = comps[0] * 255.0
-        let g = comps[1] * 255.0
-        let b = comps[2] * 255.0
+        let r = (comps[safe: 0] ?? 1.0 * 255)
+        let g = (comps[safe: 1] ?? 1.0 * 255)
+        let b = (comps[safe: 2] ?? 1.0 * 255)
         return RGB.init(red: r, green: g, blue: b)
     }
 }

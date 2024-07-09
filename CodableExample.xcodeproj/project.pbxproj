@@ -26,6 +26,7 @@
 		877482B72C3681870056B778 /* RFC2822DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482B62C3681870056B778 /* RFC2822DateTransform.swift */; };
 		877482B92C3681910056B778 /* RFC3339DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482B82C3681910056B778 /* RFC3339DateTransform.swift */; };
 		8797BFC22C37802000B4F488 /* Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8797BFC12C37802000B4F488 /* Wrapper.swift */; };
+		879E77A02C3D37D80047AA6E /* Mixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879E779F2C3D37D80047AA6E /* Mixed.swift */; };
 		87EC9BCA2C22761A001DD724 /* BoolCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BC92C22761A001DD724 /* BoolCoding.swift */; };
 		87EC9BCC2C227C98001DD724 /* Transformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BCB2C227C98001DD724 /* Transformer.swift */; };
 		87EC9BCE2C22820C001DD724 /* PointCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BCD2C22820C001DD724 /* PointCoding.swift */; };
@@ -92,6 +93,7 @@
 		877482B62C3681870056B778 /* RFC2822DateTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC2822DateTransform.swift; sourceTree = "<group>"; };
 		877482B82C3681910056B778 /* RFC3339DateTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateTransform.swift; sourceTree = "<group>"; };
 		8797BFC12C37802000B4F488 /* Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapper.swift; sourceTree = "<group>"; };
+		879E779F2C3D37D80047AA6E /* Mixed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mixed.swift; sourceTree = "<group>"; };
 		87EC9BC92C22761A001DD724 /* BoolCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolCoding.swift; sourceTree = "<group>"; };
 		87EC9BCB2C227C98001DD724 /* Transformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformer.swift; sourceTree = "<group>"; };
 		87EC9BCD2C22820C001DD724 /* PointCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointCoding.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				F71C68522C38155A0071EC9E /* HomeListView.swift */,
 				F71C68542C3815F90071EC9E /* TestCase.swift */,
 				F76AF7CF2C16A604005DC327 /* Models.swift */,
+				879E779F2C3D37D80047AA6E /* Mixed.swift */,
 				F76AF7CD2C16A599005DC327 /* Res.swift */,
 				F76AF7D32C16B201005DC327 /* README.md */,
 				F76AF7D12C16B1C5005DC327 /* HollowCodable.podspec */,
@@ -365,6 +368,7 @@
 				876D56A32C18333C0006E25E /* AnyBacked.swift in Sources */,
 				876D56A52C183D6F0006E25E /* RGBAColorCoding.swift in Sources */,
 				F747FFD82C232328001A4680 /* HasDefaultValuable.swift in Sources */,
+				879E77A02C3D37D80047AA6E /* Mixed.swift in Sources */,
 				871EE7BC2C29504100E8BE37 /* AnyValueCoding.swift in Sources */,
 				F7EA7B692C205EA40048E264 /* DefaultBacked.swift in Sources */,
 				F7B997962C27467D006D1C45 /* Converter.swift in Sources */,

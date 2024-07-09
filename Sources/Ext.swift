@@ -33,6 +33,11 @@ extension Dictionary {
 
 extension Collection {
     
+    /// Safe protects the array from out of bounds by use of optional.
+    subscript(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+    
     func filterDuplicates<E: Equatable>(_ filter: (Element) -> E) -> [Element] {
         var result = [Element]()
         for value in self {

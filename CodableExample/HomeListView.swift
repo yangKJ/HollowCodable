@@ -15,10 +15,7 @@ struct HomeListView: View {
         NavigationStack(path: $path) {
             List {
                 ForEach(TestCase.allCases, id:\.self) { item in
-                    Button {
-                        path.append(item)
-                        print(item.model ?? "")
-                    } label: {
+                    NavigationLink(value: item) {
                         Text(item.rawValue)
                             .foregroundColor(Color("textColor"))
                     }
@@ -28,6 +25,14 @@ struct HomeListView: View {
                 ContentView(title: $0.rawValue, longText: $0.jsonString ?? "Convert JSON Failed.", color: $0.color)
             }
             .navigationTitle("HollowCodable")
+            .navigationBarItems(trailing: Button(action: {
+                path.append(TestCase.mix)
+            }, label: {
+                Text("mix test")
+                    .font(.bold(.system(size: 24))())
+                    .foregroundColor(.red)
+                    .padding(.trailing, 5)
+            }))
         }
     }
 }
