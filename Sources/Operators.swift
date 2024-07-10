@@ -33,3 +33,13 @@ public func <-- (key: String, tranformer: any TransformType) -> CodingKeyMapping
 public func <-- (location: CodingKey, tranformer: any TransformType) -> CodingKeyMapping {
     TransformKeys(location: location, tranformer: tranformer)
 }
+
+infix operator <<< : AssignmentPrecedence
+
+public func <<< (mapper: HelpingMapper, mapping: CodingKeyMapping) {
+    mapper.codingKeys.append(mapping)
+}
+
+public func <<< (mapper: HelpingMapper, mappings: [CodingKeyMapping]) {
+    mapper.codingKeys += mappings
+}

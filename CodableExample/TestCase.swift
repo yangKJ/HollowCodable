@@ -8,11 +8,12 @@
 import Foundation
 
 enum TestCase: String, CaseIterable {
+    case compatiblesHandyJSONValueTests = "Compatibles HandyJSON test"
+    
     case enumTests = "Enum test"
     case hexColor = "Hex to color test"
     case rgbColor = "RGB to color test"
     case deteFormat = "Date format test"
-    case multiDateFormat = "Multi date format test"
     case iso8601DeteTests = "ISO8601 date formatter test"
     case base64DataTests = "Base 64 string to data"
     case gzipDataTests = "Custom gzip string to data"
@@ -38,6 +39,23 @@ extension TestCase {
         case .mix:
             let data = Res.jsonData("Codable")!
             return ApiResponse<[MixedTests]>.deserialize(from: data)
+        case .compatiblesHandyJSONValueTests:
+            let jsonString = """
+            {
+                "name": "Condy",
+                "date": "2020.05.27",
+                "dateFormat": "2020.05.20 20:20:20",
+                "iso8601Date": "2008-05-27T17:26:59+0000",
+                "rfc3339Date": "2022-12-20T16:39:57-08:00",
+                "rfc2822Date": "Fri, 27 Dec 2020 22:43:52 -0000",
+                "timestamp": 1558978068,
+                "timestampMilliseconds": 1558978141863,
+                "timestamp_string": "1558978068",
+                "base64_data": "SG9sbG93Q29kYWJsZQ==",
+                "backgroud": "MHhGQTZENUI="
+            }
+            """
+            return CompatiblesValueTests.deserialize(from: jsonString)
         case .enumTests:
             let jsonString = "{\"name\":\"Tesla\",\"vehicleType\":\"motorcycle\",\"hasDefType\":null}"
             return EnumTests.deserialize(from: jsonString)
@@ -83,20 +101,6 @@ extension TestCase {
             }
             """
             return DateValueTests.deserialize(from: jsonString)
-        case .multiDateFormat:
-            let jsonString = """
-            {
-                "date": "2020.05.27",
-                "dateFormat": "2020.05.20 20:20:20",
-                "iso8601Date": "2008-05-27T17:26:59+0000",
-                "rfc3339Date": "2022-12-20T16:39:57-08:00",
-                "rfc2822Date": "Fri, 27 Dec 2020 22:43:52 -0000",
-                "timestamp": 1558978068,
-                "timestampMilliseconds": 1558978141863,
-                "timestamp_string": "1558978068"
-            }
-            """
-            return MultiDateValueTests.deserialize(from: jsonString)
         case .iso8601DeteTests:
             let jsonString = """
             {
@@ -241,6 +245,12 @@ extension TestCase {
         switch self {
         case .mix:
             return (model as? ApiResponse<[MixedTests]>)?.data?.first?.color
+        case .compatiblesHandyJSONValueTests:
+            guard let data = (model as? CompatiblesValueTests)?.backgroud else {
+                return nil
+            }
+            let string = String(data: data, encoding: .utf8)
+            return try? HexColor_.init(value: string ?? "")?.transform()
         case .hexColor:
             return (model as? HexColorTests)?.hex
         case .rgbColor:

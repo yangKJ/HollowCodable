@@ -10,43 +10,24 @@ import Foundation
 extension JSONEncoder {
     
     func setupKeyStrategy<T: HollowCodable>(_ type: T.Type) {
-        var replaceKeys = [ReplaceKeys]()
-        var dateKeys = [TransformKeys]()
-        var dataKeys = [TransformKeys]()
-        for key in T.codingKeys {
-            switch key {
-            case let k as ReplaceKeys:
-                replaceKeys.append(k)
-            case let k as TransformKeys:
-                switch k.tranformer.objectClassName {
-                case "Date":
-                    dateKeys.append(k)
-                case "Data":
-                    dataKeys.append(k)
-                default:
-                    break
-                }
-            default:
-                break
-            }
-        }
-        if !replaceKeys.isEmpty {
-            let keys = replaceKeys.toEncoderingMappingKeys
+        let mapper = T.setupCodingKeyMappingKeys()
+        if !mapper.replaceKeys.isEmpty {
+            let keys = mapper.replaceKeys.toEncoderingMappingKeys
             self.keyEncodingStrategy = .custom({ codingPath in
                 let key = codingPath.last!.stringValue
                 return PathCodingKey(stringValue: keys[key] ?? key)
             })
         }
-        if !dateKeys.isEmpty {
+        if !mapper.dateKeys.isEmpty {
             self.dateEncodingStrategy = .custom({ date, encoder in
-                try dateKeys.first(where: {
+                try mapper.dateKeys.first(where: {
                     $0.keyString == encoder.codingPath.last!.stringValue
                 })?.encodingStrategy(with: encoder, value: date)
             })
         }
-        if !dataKeys.isEmpty {
+        if !mapper.dataKeys.isEmpty {
             self.dataEncodingStrategy = .custom({ data, encoder in
-                try dataKeys.first(where: {
+                try mapper.dataKeys.first(where: {
                     $0.keyString == encoder.codingPath.last!.stringValue
                 })?.encodingStrategy(with: encoder, value: data)
             })
@@ -57,36 +38,17 @@ extension JSONEncoder {
 extension JSONDecoder {
     
     func setupKeyStrategy<T: HollowCodable>(_ type: T.Type) {
-        var replaceKeys = [ReplaceKeys]()
-        var dateKeys = [TransformKeys]()
-        var dataKeys = [TransformKeys]()
-        for key in T.codingKeys {
-            switch key {
-            case let k as ReplaceKeys:
-                replaceKeys.append(k)
-            case let k as TransformKeys:
-                switch k.tranformer.objectClassName {
-                case "Date":
-                    dateKeys.append(k)
-                case "Data":
-                    dataKeys.append(k)
-                default:
-                    break
-                }
-            default:
-                break
-            }
-        }
-        if !replaceKeys.isEmpty {
-            let keys = replaceKeys.toDecoderingMappingKeys
+        let mapper = T.setupCodingKeyMappingKeys()
+        if !mapper.replaceKeys.isEmpty {
+            let keys = mapper.replaceKeys.toDecoderingMappingKeys
             self.keyDecodingStrategy = .custom({ codingPath in
                 let key = codingPath.last!.stringValue
                 return PathCodingKey(stringValue: keys[key] ?? key)
             })
         }
-        if !dateKeys.isEmpty {
+        if !mapper.dateKeys.isEmpty {
             self.dateDecodingStrategy = .custom({ decoder in
-                if let date = dateKeys.first(where: {
+                if let date = mapper.dateKeys.first(where: {
                     $0.keyString == decoder.codingPath.last!.stringValue
                 })?.decodingStrategyDate(with: decoder) {
                     return date
@@ -100,9 +62,9 @@ extension JSONDecoder {
                 throw decodingError
             })
         }
-        if !dataKeys.isEmpty {
+        if !mapper.dataKeys.isEmpty {
             self.dataDecodingStrategy = .custom({ decoder in
-                if let data = dataKeys.first(where: {
+                if let data = mapper.dataKeys.first(where: {
                     $0.keyString == decoder.codingPath.last!.stringValue
                 })?.decodingStrategyData(with: decoder) {
                     return data
