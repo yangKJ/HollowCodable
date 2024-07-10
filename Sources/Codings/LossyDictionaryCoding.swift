@@ -65,7 +65,7 @@ public struct LossyDictionaryValue<Key: Hashable & Codable, Value: Codable>: Tra
     ) throws -> [(PathCodingKey, String)] {
         // Decode a dictionary ignoring the values to decode the original keys
         // without using the `JSONDecoder.KeyDecodingStrategy`.
-        let keys = try decoder.singleValueContainer().decode([String: JSONValue].self).keys
+        let keys = try decoder.singleValueContainer().decode([String: CodableAnyValue].self).keys
         return zip(
             container.allKeys.sorted(by: { $0.stringValue < $1.stringValue }),
             keys.sorted()

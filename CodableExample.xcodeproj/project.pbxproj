@@ -27,15 +27,19 @@
 		877482B92C3681910056B778 /* RFC3339DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482B82C3681910056B778 /* RFC3339DateTransform.swift */; };
 		8797BFC22C37802000B4F488 /* Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8797BFC12C37802000B4F488 /* Wrapper.swift */; };
 		879E77A02C3D37D80047AA6E /* Mixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879E779F2C3D37D80047AA6E /* Mixed.swift */; };
+		87E349062C3E609A00DF781C /* Compatibles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E349052C3E609A00DF781C /* Compatibles.swift */; };
+		87E349082C3E6C3D00DF781C /* CustomStringCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E349072C3E6C3D00DF781C /* CustomStringCoding.swift */; };
 		87EC9BCA2C22761A001DD724 /* BoolCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BC92C22761A001DD724 /* BoolCoding.swift */; };
 		87EC9BCC2C227C98001DD724 /* Transformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BCB2C227C98001DD724 /* Transformer.swift */; };
 		87EC9BCE2C22820C001DD724 /* PointCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BCD2C22820C001DD724 /* PointCoding.swift */; };
 		87EC9BD02C22AD2D001DD724 /* DateCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BCF2C22AD2D001DD724 /* DateCoding.swift */; };
 		87EC9BD22C22AF55001DD724 /* _PropertyWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BD12C22AF55001DD724 /* _PropertyWrappers.swift */; };
+		87F066D52C3E19EA006EB2F0 /* LosslessStringCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F066D42C3E19EA006EB2F0 /* LosslessStringCoding.swift */; };
+		87F066D72C3E2283006EB2F0 /* Merger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F066D62C3E2283006EB2F0 /* Merger.swift */; };
 		87F2AB842C1FCF2B006DF62F /* KeyStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB832C1FCF2B006DF62F /* KeyStrategy.swift */; };
 		87F2AB862C1FCFDE006DF62F /* Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB852C1FCFDE006DF62F /* Ext.swift */; };
 		87F2AB882C200C8A006DF62F /* Enserializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB872C200C8A006DF62F /* Enserializer.swift */; };
-		F70CFD4F2C2998BB0056CB9F /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70CFD4E2C2998BB0056CB9F /* JSONValue.swift */; };
+		F70CFD4F2C2998BB0056CB9F /* CodableAnyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70CFD4E2C2998BB0056CB9F /* CodableAnyValue.swift */; };
 		F71C68532C38155A0071EC9E /* HomeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68522C38155A0071EC9E /* HomeListView.swift */; };
 		F71C68552C3815F90071EC9E /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68542C3815F90071EC9E /* TestCase.swift */; };
 		F71C68572C3A4D0B0071EC9E /* LossyArrayCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68562C3A4D0B0071EC9E /* LossyArrayCoding.swift */; };
@@ -94,15 +98,19 @@
 		877482B82C3681910056B778 /* RFC3339DateTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateTransform.swift; sourceTree = "<group>"; };
 		8797BFC12C37802000B4F488 /* Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapper.swift; sourceTree = "<group>"; };
 		879E779F2C3D37D80047AA6E /* Mixed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mixed.swift; sourceTree = "<group>"; };
+		87E349052C3E609A00DF781C /* Compatibles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compatibles.swift; sourceTree = "<group>"; };
+		87E349072C3E6C3D00DF781C /* CustomStringCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStringCoding.swift; sourceTree = "<group>"; };
 		87EC9BC92C22761A001DD724 /* BoolCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolCoding.swift; sourceTree = "<group>"; };
 		87EC9BCB2C227C98001DD724 /* Transformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformer.swift; sourceTree = "<group>"; };
 		87EC9BCD2C22820C001DD724 /* PointCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointCoding.swift; sourceTree = "<group>"; };
 		87EC9BCF2C22AD2D001DD724 /* DateCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCoding.swift; sourceTree = "<group>"; };
 		87EC9BD12C22AF55001DD724 /* _PropertyWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _PropertyWrappers.swift; sourceTree = "<group>"; };
+		87F066D42C3E19EA006EB2F0 /* LosslessStringCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LosslessStringCoding.swift; sourceTree = "<group>"; };
+		87F066D62C3E2283006EB2F0 /* Merger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merger.swift; sourceTree = "<group>"; };
 		87F2AB832C1FCF2B006DF62F /* KeyStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStrategy.swift; sourceTree = "<group>"; };
 		87F2AB852C1FCFDE006DF62F /* Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext.swift; sourceTree = "<group>"; };
 		87F2AB872C200C8A006DF62F /* Enserializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enserializer.swift; sourceTree = "<group>"; };
-		F70CFD4E2C2998BB0056CB9F /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
+		F70CFD4E2C2998BB0056CB9F /* CodableAnyValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableAnyValue.swift; sourceTree = "<group>"; };
 		F71C68522C38155A0071EC9E /* HomeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeListView.swift; sourceTree = "<group>"; };
 		F71C68542C3815F90071EC9E /* TestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		F71C68562C3A4D0B0071EC9E /* LossyArrayCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LossyArrayCoding.swift; sourceTree = "<group>"; };
@@ -194,6 +202,7 @@
 				F71C68522C38155A0071EC9E /* HomeListView.swift */,
 				F71C68542C3815F90071EC9E /* TestCase.swift */,
 				F76AF7CF2C16A604005DC327 /* Models.swift */,
+				87E349052C3E609A00DF781C /* Compatibles.swift */,
 				879E779F2C3D37D80047AA6E /* Mixed.swift */,
 				F76AF7CD2C16A599005DC327 /* Res.swift */,
 				F76AF7D32C16B201005DC327 /* README.md */,
@@ -222,6 +231,7 @@
 				87EC9BD12C22AF55001DD724 /* _PropertyWrappers.swift */,
 				876D56A22C18333C0006E25E /* AnyBacked.swift */,
 				F76AF7A12C16A415005DC327 /* ApiResponse.swift */,
+				F70CFD4E2C2998BB0056CB9F /* CodableAnyValue.swift */,
 				877482A22C3632990056B778 /* CodingKeyMapping.swift */,
 				F7B997952C27467D006D1C45 /* Converter.swift */,
 				F7EA7B682C205EA40048E264 /* DefaultBacked.swift */,
@@ -233,9 +243,9 @@
 				F76AF7B22C16A415005DC327 /* HollowCodable.swift */,
 				87341A2E2C217D4400DF23FF /* IgnoredKey.swift */,
 				F76AF7AE2C16A415005DC327 /* Immutable.swift */,
-				F70CFD4E2C2998BB0056CB9F /* JSONValue.swift */,
 				87F2AB832C1FCF2B006DF62F /* KeyStrategy.swift */,
 				F7EA7B6A2C20712A0048E264 /* Logger.swift */,
+				87F066D62C3E2283006EB2F0 /* Merger.swift */,
 				877482B42C367A060056B778 /* Operators.swift */,
 				F76AF7A02C16A415005DC327 /* PathCodingKey.swift */,
 				F76AF7B32C16A415005DC327 /* ReplaceKeys.swift */,
@@ -253,6 +263,7 @@
 				871EE7BB2C29504100E8BE37 /* AnyValueCoding.swift */,
 				F7B997932C272CF4006D1C45 /* Base64DataCoding.swift */,
 				87EC9BC92C22761A001DD724 /* BoolCoding.swift */,
+				87E349072C3E6C3D00DF781C /* CustomStringCoding.swift */,
 				F76AF7A22C16A415005DC327 /* DataCoding.swift */,
 				87EC9BCF2C22AD2D001DD724 /* DateCoding.swift */,
 				F76AF7A62C16A415005DC327 /* DateFormatterCoding.swift */,
@@ -260,6 +271,7 @@
 				F76AF7AA2C16A415005DC327 /* EnumCoding.swift */,
 				F76AF7AC2C16A415005DC327 /* HexColorCoding.swift */,
 				F76AF7AF2C16A415005DC327 /* ISO8601DateCoding.swift */,
+				87F066D42C3E19EA006EB2F0 /* LosslessStringCoding.swift */,
 				F71C68562C3A4D0B0071EC9E /* LossyArrayCoding.swift */,
 				F71C68582C3A4D220071EC9E /* LossyDictionaryCoding.swift */,
 				87EC9BCD2C22820C001DD724 /* PointCoding.swift */,
@@ -346,7 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F70CFD4F2C2998BB0056CB9F /* JSONValue.swift in Sources */,
+				F70CFD4F2C2998BB0056CB9F /* CodableAnyValue.swift in Sources */,
 				F76AF7C52C16A415005DC327 /* Immutable.swift in Sources */,
 				F76AF7922C16A29A005DC327 /* ContentView.swift in Sources */,
 				87199B3C2C34FDB1008FFF19 /* TransformType.swift in Sources */,
@@ -356,6 +368,8 @@
 				F76AF7CA2C16A415005DC327 /* ReplaceKeys.swift in Sources */,
 				F76AF7BE2C16A415005DC327 /* DecimalNumberCoding.swift in Sources */,
 				F76AF7B82C16A415005DC327 /* ApiResponse.swift in Sources */,
+				87E349082C3E6C3D00DF781C /* CustomStringCoding.swift in Sources */,
+				87F066D72C3E2283006EB2F0 /* Merger.swift in Sources */,
 				F76AF7C62C16A415005DC327 /* ISO8601DateCoding.swift in Sources */,
 				87F2AB842C1FCF2B006DF62F /* KeyStrategy.swift in Sources */,
 				F747FFD62C231846001A4680 /* RGBColorCoding.swift in Sources */,
@@ -365,6 +379,7 @@
 				87F2AB882C200C8A006DF62F /* Enserializer.swift in Sources */,
 				877482B52C367A060056B778 /* Operators.swift in Sources */,
 				877482A12C3631FD0056B778 /* TimestampDateTransform.swift in Sources */,
+				87F066D52C3E19EA006EB2F0 /* LosslessStringCoding.swift in Sources */,
 				876D56A32C18333C0006E25E /* AnyBacked.swift in Sources */,
 				876D56A52C183D6F0006E25E /* RGBAColorCoding.swift in Sources */,
 				F747FFD82C232328001A4680 /* HasDefaultValuable.swift in Sources */,
@@ -378,6 +393,7 @@
 				877482A32C3632990056B778 /* CodingKeyMapping.swift in Sources */,
 				F7B997942C272CF4006D1C45 /* Base64DataCoding.swift in Sources */,
 				F76AF7BD2C16A415005DC327 /* DateFormatterCoding.swift in Sources */,
+				87E349062C3E609A00DF781C /* Compatibles.swift in Sources */,
 				F76AF7B72C16A415005DC327 /* PathCodingKey.swift in Sources */,
 				F76AF7C32C16A415005DC327 /* HexColorCoding.swift in Sources */,
 				87EC9BD22C22AF55001DD724 /* _PropertyWrappers.swift in Sources */,

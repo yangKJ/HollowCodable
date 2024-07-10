@@ -134,3 +134,25 @@ struct DecimalNumberTests: HollowCodable {
     @DecimalNumberCoding var decimalNumberAsDouble: NSDecimalNumber?
     @DecimalNumberCoding var decimalNumberAsString: NSDecimalNumber?
 }
+
+struct StringToTests: HollowCodable {
+    @StringToCoding<Int> var int: Int?
+    @LosslessStringCoding<ArticleId> var articleId: ArticleId?
+    
+    struct ArticleId: LosslessStringConvertible, Codable {
+        var description: String
+        init?(_ description: String) {
+            self.description = description
+        }
+    }
+}
+
+struct AutoConversionTests: HollowCodable {
+    @AnyBacked<CustomStringValue> var named: String?
+    @BackedCoding var intToString: String?
+    @BackedCoding var stringToInt: Int?
+    @BackedCoding var doubleToString: String?
+    @CustomStringCoding var doubleToInt: Int?
+    @CustomStringCoding var boolToString: String?
+    @CustomStringCoding var boolToInt: Int?
+}

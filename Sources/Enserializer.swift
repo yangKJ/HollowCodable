@@ -27,6 +27,18 @@ extension Encodable where Self: HollowCodable {
         }
     }
     
+    public func toDictionary() throws -> [String: Any] {
+        let data = try toData()
+        let value = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+        guard let dict = value as? [String: Any] else {
+            let userInfo = [
+                NSLocalizedDescriptionKey: "Description Failed to convert to dictionary."
+            ]
+            throw NSError(domain: "com.condy.hollow.codable", code: -100018, userInfo: userInfo)
+        }
+        return dict
+    }
+    
     public func toJSONString(prettyPrint: Bool = false) -> String? {
         try? toJSONString(prettyPrinted: prettyPrint)
     }

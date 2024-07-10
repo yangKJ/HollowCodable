@@ -27,7 +27,7 @@ public struct LossyArrayValue<T: Codable>: Transformer {
                 let value = try container.decode(T.self)
                 elements.append(value)
             } catch {
-                _ = try? container.decode(JSONValue.self)
+                _ = try? container.decode(CodableAnyValue.self)
             }
         }
         self.value = elements

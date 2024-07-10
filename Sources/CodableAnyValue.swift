@@ -1,5 +1,5 @@
 //
-//  JSONValue.swift
+//  CodableAnyValue.swift
 //  CodableExample
 //
 //  Created by Condy on 2024/6/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public indirect enum JSONValue: Codable {
+public indirect enum CodableAnyValue: Codable {
     case null
     case string(String)
     case int(Int)
@@ -16,17 +16,17 @@ public indirect enum JSONValue: Codable {
     case double(Double)
     case date(Date)
     case data(Data)
-    case array([JSONValue])
-    case dictionary([String: JSONValue])
+    case array([CodableAnyValue])
+    case dictionary([String: CodableAnyValue])
 }
 
-public extension JSONValue {
+public extension CodableAnyValue {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let dict = try? container.decode([String: JSONValue].self) {
+        if let dict = try? container.decode([String: CodableAnyValue].self) {
             self = .dictionary(dict)
-        } else if let array = try? container.decode([JSONValue].self) {
+        } else if let array = try? container.decode([CodableAnyValue].self) {
             self = .array(array)
         } else if let string = try? container.decode(String.self) {
             self = .string(string)
@@ -102,9 +102,9 @@ public extension JSONValue {
         switch value {
         case Optional<Any>.none:
             self = .null
-        case let val as [String: JSONValue]:
+        case let val as [String: CodableAnyValue]:
             self = .dictionary(val)
-        case let val as [JSONValue]:
+        case let val as [CodableAnyValue]:
             self = .array(val)
         case let val as String:
             self = .string(val)

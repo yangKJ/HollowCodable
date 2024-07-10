@@ -42,21 +42,22 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             let err = DecodingError.dataCorruptedError(in: container, debugDescription: "Failed to convert an instance of \(T.DecodeType.self)")
             Hollow.Logger.logDebug(err)
         }
+        if T.hasLossyValue(T.self) {
+            self.wrappedValue = try T.init(value: decoder)?.transform()
+            if self.wrappedValue == nil {
+                let container = try decoder.singleValueContainer()
+                loggerDataCorruptedError(container)
+            }
+            return
+        }
         let container = try decoder.singleValueContainer()
         if container.decodeNil() {
             self.wrappedValue = nil
             loggerDataCorruptedError(container)
             return
         }
-        if T.hasLossyValue(T.self) {
-            self.wrappedValue = try T.init(value: decoder)?.transform()
-            if self.wrappedValue == nil {
-                loggerDataCorruptedError(container)
-            }
-            return
-        }
         if T.self == AnyX.self || T.self == AnyDictionary.self || T.self == AnyDictionaryArray.self {
-            let value = try container.decode(JSONValue.self)
+            let value = try container.decode(CodableAnyValue.self)
             self.wrappedValue = try T.init(value: value)?.transform()
             if self.wrappedValue == nil {
                 loggerDataCorruptedError(container)
@@ -118,7 +119,8 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
         var container = encoder.singleValueContainer()
         if T.hasLossyValue(T.self) {
             if let wrappedValue = self.wrappedValue as? Encodable {
-                try wrappedValue.encode(to: encoder)
+                //try wrappedValue.encode(to: encoder)
+                try container.encode(wrappedValue)
             } else {
                 try container.encodeNil()
             }

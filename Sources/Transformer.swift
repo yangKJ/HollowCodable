@@ -24,6 +24,7 @@ extension Transformer {
         return [
             "LossyArrayValue",
             "LossyDictionaryValue",
+            "CustomStringValue",
         ].contains(where: {
             string.starts(with: $0)
         })

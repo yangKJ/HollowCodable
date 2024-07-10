@@ -143,3 +143,17 @@ public typealias LossyArrayEncoding<T: Codable> = AnyBackedEncoding<LossyArrayVa
 public typealias AnyXCoding   = AnyBacked<AnyX>
 public typealias AnyXDecoding = AnyBackedDecoding<AnyX>
 public typealias AnyXEncoding = AnyBackedEncoding<AnyX>
+
+// MARK: - String
+
+public typealias StringToCoding<T>   = AnyBacked<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
+public typealias StringToDecoding<T> = AnyBackedDecoding<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
+public typealias StringToEncoding<T> = AnyBackedEncoding<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
+
+public typealias LosslessStringCoding<T>   = AnyBacked<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
+public typealias LosslessStringDecoding<T> = AnyBackedDecoding<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
+public typealias LosslessStringEncoding<T> = AnyBackedEncoding<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
+
+public typealias CustomStringCoding<T>   = AnyBacked<CustomStringValue<T>> where T: Codable & CustomStringConvertible
+public typealias CustomStringDecoding<T> = AnyBackedDecoding<CustomStringValue<T>> where T: Codable & CustomStringConvertible
+public typealias CustomStringEncoding<T> = AnyBackedEncoding<CustomStringValue<T>> where T: Codable & CustomStringConvertible

@@ -9,11 +9,10 @@ import Foundation
 
 enum TestCase: String, CaseIterable {
     case enumTests = "Enum test"
-    case composition = "Nesting test"
-    case subclass = "Inheritance object test"
     case hexColor = "Hex to color test"
     case rgbColor = "RGB to color test"
     case deteFormat = "Date format test"
+    case multiDateFormat = "Multi date format test"
     case iso8601DeteTests = "ISO8601 date formatter test"
     case base64DataTests = "Base 64 string to data"
     case gzipDataTests = "Custom gzip string to data"
@@ -24,6 +23,11 @@ enum TestCase: String, CaseIterable {
     case boolTests = "Bool as int/string test"
     case decimalNumberTests = "NSDecimalNumber as int/double/string"
     case pointTests = "CGPoint tests"
+    case stringToTests = "Lossless string value"
+    case autoConversionTests = "Automatic type conversion test"
+    
+    case composition = "Nesting test"
+    case subclass = "Inheritance object test"
     case mix = "Mixed test"
 }
 
@@ -79,12 +83,26 @@ extension TestCase {
             }
             """
             return DateValueTests.deserialize(from: jsonString)
+        case .multiDateFormat:
+            let jsonString = """
+            {
+                "date": "2020.05.27",
+                "dateFormat": "2020.05.20 20:20:20",
+                "iso8601Date": "2008-05-27T17:26:59+0000",
+                "rfc3339Date": "2022-12-20T16:39:57-08:00",
+                "rfc2822Date": "Fri, 27 Dec 2020 22:43:52 -0000",
+                "timestamp": 1558978068,
+                "timestampMilliseconds": 1558978141863,
+                "timestamp_string": "1558978068"
+            }
+            """
+            return MultiDateValueTests.deserialize(from: jsonString)
         case .iso8601DeteTests:
             let jsonString = """
             {
                 "iso8601": "2023-05-23T09:43:38Z",
-                "iso8601Date": "1996-12-19T16:39:57.123456Z",
-                "iso8601Short": "1996-12-19T16:39:57.000Z-08:00",
+                "iso8601Date": "2008-12-19T16:39:57.123456Z",
+                "iso8601Short": "2020-12-19T16:39:57.000Z-08:00",
             }
             """
             return ISO8601DateTests.deserialize(from: jsonString)
@@ -186,6 +204,27 @@ extension TestCase {
             }
             """
             return PointTests.deserialize(from: jsonString)
+        case .stringToTests:
+            let jsonString = """
+            {
+                "int": "100",
+                "articleId": "abc"
+            }
+            """
+            return StringToTests.deserialize(from: jsonString)
+        case .autoConversionTests:
+            let jsonString = """
+            {
+                "named": "Condy",
+                "intToString": 80,
+                "doubleToString": 23.62,
+                "boolToString": true,
+                "stringToInt": "82",
+                "doubleToInt": 20.22,
+                "boolToInt": true
+            }
+            """
+            return AutoConversionTests.deserialize(from: jsonString)
         }
     }
     

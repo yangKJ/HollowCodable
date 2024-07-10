@@ -11,17 +11,17 @@ import Foundation
 /// `@DictionaryCoding` decodes any value json into `[String: Any]`.
 public struct AnyDictionary: Transformer, HasDefaultValuable {
     
-    let dict: [String: JSONValue]
+    let dict: [String: CodableAnyValue]
     
     public typealias DecodeType = [String: Any]
-    public typealias EncodeType = [String: JSONValue]
+    public typealias EncodeType = [String: CodableAnyValue]
     
     public static var hasDefaultValue: [String: Any] {
         [:]
     }
     
     public init?(value: Any) {
-        guard let value = value as? JSONValue else {
+        guard let value = value as? CodableAnyValue else {
             return nil
         }
         switch value {
@@ -36,8 +36,8 @@ public struct AnyDictionary: Transformer, HasDefaultValuable {
         dict.mapValues(\.value) as? [String: Any]
     }
     
-    public static func transform(from value: [String: Any]) throws -> [String: JSONValue] {
-        value.compactMapValues(JSONValue.init(value:))
+    public static func transform(from value: [String: Any]) throws -> [String: CodableAnyValue] {
+        value.compactMapValues(CodableAnyValue.init(value:))
     }
 }
 
@@ -45,17 +45,17 @@ public struct AnyDictionary: Transformer, HasDefaultValuable {
 /// `@ArrayCoding` decodes any value json into `[[String: Any]]`.
 public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
     
-    let array: [[String: JSONValue]]
+    let array: [[String: CodableAnyValue]]
     
     public typealias DecodeType = [[String: Any]]
-    public typealias EncodeType = [[String: JSONValue]]
+    public typealias EncodeType = [[String: CodableAnyValue]]
     
     public static var hasDefaultValue: [[String: Any]] {
         []
     }
     
     public init?(value: Any) {
-        guard let value = value as? JSONValue else {
+        guard let value = value as? CodableAnyValue else {
             return nil
         }
         switch value {
@@ -81,9 +81,9 @@ public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
         }
     }
     
-    public static func transform(from value: [[String: Any]]) throws -> [[String: JSONValue]] {
+    public static func transform(from value: [[String: Any]]) throws -> [[String: CodableAnyValue]] {
         value.map {
-            $0.compactMapValues(JSONValue.init(value:))
+            $0.compactMapValues(CodableAnyValue.init(value:))
         }
     }
 }
@@ -92,13 +92,13 @@ public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
 /// `@AnyXCoding` decodes any value json into `Any`.
 public struct AnyX: Transformer {
     
-    let value: JSONValue
+    let value: CodableAnyValue
     
     public typealias DecodeType = Any
-    public typealias EncodeType = JSONValue
+    public typealias EncodeType = CodableAnyValue
     
     public init?(value: Any) {
-        guard let value = value as? JSONValue else {
+        guard let value = value as? CodableAnyValue else {
             return nil
         }
         self.value = value
@@ -108,8 +108,8 @@ public struct AnyX: Transformer {
         value.value
     }
     
-    public static func transform(from value: Any) throws -> JSONValue {
-        guard let value = JSONValue.init(value: value) else {
+    public static func transform(from value: Any) throws -> CodableAnyValue {
+        guard let value = CodableAnyValue.init(value: value) else {
             let userInfo = [
                 NSLocalizedDescriptionKey: "The any to routine value is nil."
             ]
