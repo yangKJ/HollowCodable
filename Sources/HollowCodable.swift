@@ -15,8 +15,8 @@ public protocol HollowCodable: Codable {
     /// `codingKeys` is recommended for configuring `CodingKeyMapping`.
     static func mapping(mapper: HelpingMapper)
     
-    /// 
-    func didFinishMapping()
+    /// The callback for when mapping is complete.
+    mutating func didFinishMapping()
 }
 
 extension HollowCodable {
@@ -24,7 +24,7 @@ extension HollowCodable {
     
     public static func mapping(mapper: HelpingMapper) { }
     
-    public func didFinishMapping() { }
+    public mutating func didFinishMapping() { }
 }
 
 extension HollowCodable {
@@ -49,6 +49,12 @@ extension HollowCodable {
             }
         }
         return mapper
+    }
+    
+    func mutating(_ block: (inout HollowCodable) -> Void) -> HollowCodable {
+        var options: any HollowCodable = self
+        block(&options)
+        return options
     }
 }
 

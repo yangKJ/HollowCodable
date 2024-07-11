@@ -225,7 +225,8 @@ extension TestCase {
                 "boolToString": true,
                 "stringToInt": "82",
                 "doubleToInt": 20.22,
-                "boolToInt": true
+                "boolToInt": true,
+                "mapping": null
             }
             """
             return AutoConversionTests.deserialize(from: jsonString)

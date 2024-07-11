@@ -155,4 +155,12 @@ struct AutoConversionTests: HollowCodable {
     @CustomStringCoding var doubleToInt: Int?
     @CustomStringCoding var boolToString: String?
     @CustomStringCoding var boolToInt: Int?
+    
+    @BackedCoding var mapping: String?
+    
+    mutating func didFinishMapping() {
+        if mapping == nil {
+            mapping = "mapping"
+        }
+    }
 }

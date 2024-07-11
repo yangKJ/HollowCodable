@@ -87,6 +87,18 @@ struct MixedTests: HollowCodable {
             CodingKeys.iso8601 <-- ISO8601DateTransform(),
         ]
     }
+    
+    mutating func didFinishMapping() {
+        if title == nil {
+            title = "123"
+        }
+        if color == nil {
+            color = .green
+        }
+        if anyString == nil {
+            anyString = "anyString"
+        }
+    }
 }
 
 class Component: HollowCodable {
