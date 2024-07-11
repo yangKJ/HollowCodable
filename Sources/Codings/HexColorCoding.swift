@@ -49,13 +49,15 @@ public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha
     
     public static func transform(from value: HollowColor) throws -> String {
         let comps = value.cgColor.components!
-        let r = Int(comps[safe: 0] ?? 1.0 * 255)
-        let g = Int(comps[safe: 1] ?? 1.0 * 255)
-        let b = Int(comps[safe: 2] ?? 1.0 * 255)
-        let a = Int(comps[safe: 3] ?? 1.0 * 255)
+        let r = Int((comps[safe: 0] ?? 1.0) * 255.0)
+        let g = Int((comps[safe: 1] ?? 1.0) * 255.0)
+        let b = Int((comps[safe: 2] ?? 1.0) * 255.0)
+        //let rgb = ((r) << 16) | (Int(g) << 8) | Int(b)
+        //hexString += String(format: "%06X", rgb)
         var hexString: String = "#"
         hexString += String(format: "%02X%02X%02X", r, g, b)
         if HasAlpha.hasDefaultValue {
+            let a = Int((comps[safe: 3] ?? 1.0) * 255.0)
             hexString += String(format: "%02X", a)
         }
         return hexString
