@@ -40,10 +40,10 @@ extension RGBA: Transformer {
     
     public static func transform(from value: HollowColor) throws -> RGBA {
         let comps = value.cgColor.components!
-        let r = Int((comps[safe: 0] ?? 1.0) * 255.0)
-        let g = Int((comps[safe: 1] ?? 1.0) * 255.0)
-        let b = Int((comps[safe: 2] ?? 1.0) * 255.0)
-        let a = Int((comps[safe: 3] ?? 1.0) * 255.0)
+        let r = ((comps[safe: 0] ?? 1.0) * 255.0)
+        let g = ((comps[safe: 1] ?? 1.0) * 255.0)
+        let b = ((comps[safe: 2] ?? 1.0) * 255.0)
+        let a = ((comps[safe: 3] ?? 1.0) * 255.0)
         return RGBA.init(red: r, green: g, blue: b, alpha: a)
     }
 }

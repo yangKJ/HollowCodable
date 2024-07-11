@@ -63,7 +63,7 @@ extension TestCase {
             let jsonString = "{\"num\":12345,\"comp1\":{\"aInt\":1,\"aString\":\"aaaaa\"}}"
             return Composition.deserialize(from: jsonString)
         case .subclass:
-            let jsonString = "{\"id\":12345,\"color\":\"0xFA6D5B\",\"name\":\"cat\",\"birthday\":\"1688342324\"}"
+            let jsonString = "{\"id\":12345,\"color\":\"0xF5A45C\",\"name\":\"cat\",\"birthday\":\"1688342324\"}"
             return Cat.deserialize(from: jsonString)
         case .hexColor:
             let jsonString = """
