@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Support any value property wrapper with dictionary(`[String: Any]`).
+/// Support any value property wrapper with dictionary.
 /// `@DictionaryCoding` decodes any value json into `[String: Any]`.
 public struct AnyDictionary: Transformer, HasDefaultValuable {
     
@@ -41,11 +41,11 @@ public struct AnyDictionary: Transformer, HasDefaultValuable {
     }
 }
 
-/// Support any value dictionary property wrapper with array(`[[String: Any]]`).
-/// `@ArrayCoding` decodes any value json into `[[String: Any]]`.
+/// Support any value dictionary property wrapper with array.
+/// `@ArrayDictionaryCoding` decodes any value json into `[[String: Any]]`.
 public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
     
-    let array: [[String: CodableAnyValue]]
+    let dictArray: [[String: CodableAnyValue]]
     
     public typealias DecodeType = [[String: Any]]
     public typealias EncodeType = [[String: CodableAnyValue]]
@@ -66,17 +66,14 @@ public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
                 }
                 return nil
             })
-            guard !array.isEmpty else {
-                return nil
-            }
-            self.array = array
+            self.dictArray = array
         default:
             return nil
         }
     }
     
     public func transform() throws -> [[String: Any]]? {
-        array.compactMap {
+        dictArray.compactMap {
             $0.mapValues(\.value) as? [String: Any]
         }
     }
@@ -84,6 +81,44 @@ public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
     public static func transform(from value: [[String: Any]]) throws -> [[String: CodableAnyValue]] {
         value.map {
             $0.compactMapValues(CodableAnyValue.init(value:))
+        }
+    }
+}
+
+/// Support any value property wrapper with array.
+/// `@ArrayCoding` decodes any value json into `[Any]`.
+public struct AnyArray: Transformer, HasDefaultValuable {
+    
+    let array: [CodableAnyValue]
+    
+    public typealias DecodeType = [Any]
+    public typealias EncodeType = [CodableAnyValue]
+    
+    public static var hasDefaultValue: [Any] {
+        []
+    }
+    
+    public init?(value: Any) {
+        guard let value = value as? CodableAnyValue else {
+            return nil
+        }
+        switch value {
+        case .array(let res):
+            self.array = res
+        default:
+            return nil
+        }
+    }
+    
+    public func transform() throws -> [Any]? {
+        array.compactMap {
+            $0.value
+        }
+    }
+    
+    public static func transform(from value: [Any]) throws -> [CodableAnyValue] {
+        value.compactMap {
+            CodableAnyValue.init(value: $0)
         }
     }
 }

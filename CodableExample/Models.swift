@@ -115,7 +115,7 @@ struct AnyValueDictionaryTests: HollowCodable {
 struct AnyValueDictionaryArrayTests: HollowCodable {
     @DefaultBacked<AnyDictionaryArray> var defaultList: [[String: Any]]
     //@AnyBacked<AnyDictionaryArray>
-    @ArrayCoding var mixList: [[String: Any]]?
+    @ArrayDictionaryCoding var mixList: [[String: Any]]?
 }
 
 struct BoolTests: HollowCodable {

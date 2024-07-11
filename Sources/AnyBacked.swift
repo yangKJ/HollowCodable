@@ -56,7 +56,7 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             loggerDataCorruptedError(container)
             return
         }
-        if T.self == AnyX.self || T.self == AnyDictionary.self || T.self == AnyDictionaryArray.self {
+        if T.hasAnyValue(T.self) {
             let value = try container.decode(CodableAnyValue.self)
             self.wrappedValue = try T.init(value: value)?.transform()
             if self.wrappedValue == nil {

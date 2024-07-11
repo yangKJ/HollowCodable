@@ -24,3 +24,9 @@ open class DataTransform<T: DataConverter>: TransformType {
         T.transformToValue(with: value)
     }
 }
+
+/// Uses Base64 for (de)serailization of `Data`.
+/// Decodes strictly valid Base64. This does not handle b64url encoding, invalid padding, or unknown characters.
+public final class Base64DataTransform: DataTransform<Hollow.Base64Data> {
+    
+}

@@ -14,17 +14,20 @@ public protocol HollowCodable: Codable {
     /// In order to change the code less compatible HandyJSON.
     /// `codingKeys` is recommended for configuring `CodingKeyMapping`.
     static func mapping(mapper: HelpingMapper)
+    
+    /// 
+    func didFinishMapping()
 }
 
 extension HollowCodable {
-    public static var codingKeys: [CodingKeyMapping] {
-        []
-    }
+    public static var codingKeys: [CodingKeyMapping] { [] }
     
-    public static func mapping(mapper: HelpingMapper) {
-        
-    }
+    public static func mapping(mapper: HelpingMapper) { }
     
+    public func didFinishMapping() { }
+}
+
+extension HollowCodable {
     static func setupCodingKeyMappingKeys() -> HelpingMapper {
         let mapper = HelpingMapper()
         mapping(mapper: mapper)
@@ -50,8 +53,7 @@ extension HollowCodable {
 }
 
 public class HelpingMapper {
-    var codingKeys: [CodingKeyMapping] = []
-    
+    var codingKeys = [CodingKeyMapping]()
     var replaceKeys = [ReplaceKeys]()
     var dateKeys = [TransformKeys]()
     var dataKeys = [TransformKeys]()

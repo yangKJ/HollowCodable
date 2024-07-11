@@ -17,14 +17,11 @@
 		877482A12C3631FD0056B778 /* TimestampDateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482A02C3631FD0056B778 /* TimestampDateTransform.swift */; };
 		877482A32C3632990056B778 /* CodingKeyMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482A22C3632990056B778 /* CodingKeyMapping.swift */; };
 		877482A52C36342B0056B778 /* DateFormatterTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482A42C36342B0056B778 /* DateFormatterTransform.swift */; };
-		877482A72C36355C0056B778 /* CustomDateFormatTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482A62C36355C0056B778 /* CustomDateFormatTransform.swift */; };
+		877482A72C36355C0056B778 /* DateFormatTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482A62C36355C0056B778 /* DateFormatTransform.swift */; };
 		877482A92C36393E0056B778 /* ISO8601DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482A82C36393E0056B778 /* ISO8601DateTransform.swift */; };
 		877482AF2C364CB10056B778 /* DataTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482AE2C364CB10056B778 /* DataTransform.swift */; };
-		877482B12C364DF70056B778 /* Base64DataTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482B02C364DF70056B778 /* Base64DataTransform.swift */; };
 		877482B32C3677CB0056B778 /* DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482B22C3677CB0056B778 /* DateTransform.swift */; };
 		877482B52C367A060056B778 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482B42C367A060056B778 /* Operators.swift */; };
-		877482B72C3681870056B778 /* RFC2822DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482B62C3681870056B778 /* RFC2822DateTransform.swift */; };
-		877482B92C3681910056B778 /* RFC3339DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482B82C3681910056B778 /* RFC3339DateTransform.swift */; };
 		8797BFC22C37802000B4F488 /* Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8797BFC12C37802000B4F488 /* Wrapper.swift */; };
 		879E77A02C3D37D80047AA6E /* Mixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879E779F2C3D37D80047AA6E /* Mixed.swift */; };
 		87E349062C3E609A00DF781C /* HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E349052C3E609A00DF781C /* HandyJSON.swift */; };
@@ -88,14 +85,11 @@
 		877482A02C3631FD0056B778 /* TimestampDateTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimestampDateTransform.swift; sourceTree = "<group>"; };
 		877482A22C3632990056B778 /* CodingKeyMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodingKeyMapping.swift; sourceTree = "<group>"; };
 		877482A42C36342B0056B778 /* DateFormatterTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTransform.swift; sourceTree = "<group>"; };
-		877482A62C36355C0056B778 /* CustomDateFormatTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatTransform.swift; sourceTree = "<group>"; };
+		877482A62C36355C0056B778 /* DateFormatTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatTransform.swift; sourceTree = "<group>"; };
 		877482A82C36393E0056B778 /* ISO8601DateTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ISO8601DateTransform.swift; sourceTree = "<group>"; };
 		877482AE2C364CB10056B778 /* DataTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTransform.swift; sourceTree = "<group>"; };
-		877482B02C364DF70056B778 /* Base64DataTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64DataTransform.swift; sourceTree = "<group>"; };
 		877482B22C3677CB0056B778 /* DateTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTransform.swift; sourceTree = "<group>"; };
 		877482B42C367A060056B778 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
-		877482B62C3681870056B778 /* RFC2822DateTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC2822DateTransform.swift; sourceTree = "<group>"; };
-		877482B82C3681910056B778 /* RFC3339DateTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateTransform.swift; sourceTree = "<group>"; };
 		8797BFC12C37802000B4F488 /* Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapper.swift; sourceTree = "<group>"; };
 		879E779F2C3D37D80047AA6E /* Mixed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mixed.swift; sourceTree = "<group>"; };
 		87E349052C3E609A00DF781C /* HandyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandyJSON.swift; sourceTree = "<group>"; };
@@ -164,14 +158,11 @@
 		8774829F2C3631EE0056B778 /* Transforms */ = {
 			isa = PBXGroup;
 			children = (
-				877482B02C364DF70056B778 /* Base64DataTransform.swift */,
-				877482A62C36355C0056B778 /* CustomDateFormatTransform.swift */,
 				877482AE2C364CB10056B778 /* DataTransform.swift */,
 				877482A42C36342B0056B778 /* DateFormatterTransform.swift */,
+				877482A62C36355C0056B778 /* DateFormatTransform.swift */,
 				877482B22C3677CB0056B778 /* DateTransform.swift */,
 				877482A82C36393E0056B778 /* ISO8601DateTransform.swift */,
-				877482B62C3681870056B778 /* RFC2822DateTransform.swift */,
-				877482B82C3681910056B778 /* RFC3339DateTransform.swift */,
 				877482A02C3631FD0056B778 /* TimestampDateTransform.swift */,
 			);
 			path = Transforms;
@@ -373,9 +364,7 @@
 				F76AF7C62C16A415005DC327 /* ISO8601DateCoding.swift in Sources */,
 				87F2AB842C1FCF2B006DF62F /* KeyStrategy.swift in Sources */,
 				F747FFD62C231846001A4680 /* RGBColorCoding.swift in Sources */,
-				877482B72C3681870056B778 /* RFC2822DateTransform.swift in Sources */,
 				F76AF7CB2C16A415005DC327 /* TimestampDateCoding.swift in Sources */,
-				877482B12C364DF70056B778 /* Base64DataTransform.swift in Sources */,
 				87F2AB882C200C8A006DF62F /* Enserializer.swift in Sources */,
 				877482B52C367A060056B778 /* Operators.swift in Sources */,
 				877482A12C3631FD0056B778 /* TimestampDateTransform.swift in Sources */,
@@ -407,7 +396,6 @@
 				87341A2F2C217D4400DF23FF /* IgnoredKey.swift in Sources */,
 				8797BFC22C37802000B4F488 /* Wrapper.swift in Sources */,
 				F76AF7C42C16A415005DC327 /* Hollow.swift in Sources */,
-				877482B92C3681910056B778 /* RFC3339DateTransform.swift in Sources */,
 				87EC9BCA2C22761A001DD724 /* BoolCoding.swift in Sources */,
 				F76AF7C12C16A415005DC327 /* EnumCoding.swift in Sources */,
 				877482AF2C364CB10056B778 /* DataTransform.swift in Sources */,
@@ -415,7 +403,7 @@
 				F71C68572C3A4D0B0071EC9E /* LossyArrayCoding.swift in Sources */,
 				F7B997902C2723E7006D1C45 /* RFC3339DateCoding.swift in Sources */,
 				F76AF7C92C16A415005DC327 /* HollowCodable.swift in Sources */,
-				877482A72C36355C0056B778 /* CustomDateFormatTransform.swift in Sources */,
+				877482A72C36355C0056B778 /* DateFormatTransform.swift in Sources */,
 				F76AF7B92C16A415005DC327 /* DataCoding.swift in Sources */,
 				877482B32C3677CB0056B778 /* DateTransform.swift in Sources */,
 				F71C68532C38155A0071EC9E /* HomeListView.swift in Sources */,

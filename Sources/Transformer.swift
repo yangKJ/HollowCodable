@@ -29,6 +29,13 @@ extension Transformer {
             string.starts(with: $0)
         })
     }
+    
+    static func hasAnyValue(_ type: Self.Type) -> Bool {
+        return type == AnyX.self
+        || type == AnyArray.self
+        || type == AnyDictionary.self
+        || type == AnyDictionaryArray.self
+    }
 }
 
 extension Transformer where Self == DecodeType {

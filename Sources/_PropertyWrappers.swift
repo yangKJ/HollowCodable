@@ -110,6 +110,10 @@ public typealias HasEnumCoding<T: RawRepresentable>   = DefaultBacked<EnumValue<
 public typealias HasEnumDecoding<T: RawRepresentable> = DefaultBackedDecoding<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
 public typealias HasEnumEncoding<T: RawRepresentable> = DefaultBackedEncoding<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
 
+public typealias DefaultEnumCoding<T: RawRepresentable>   = DefaultBacked<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
+public typealias DefaultEnumDecoding<T: RawRepresentable> = DefaultBackedDecoding<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
+public typealias DefaultEnumEncoding<T: RawRepresentable> = DefaultBackedEncoding<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
+
 // MARK: - Data
 
 public typealias Base64Coding   = AnyBacked<DataValue<Hollow.Base64Data>>
@@ -129,10 +133,14 @@ public typealias LossyDictionaryEncoding<K,V> = AnyBackedEncoding<LossyDictionar
 
 // MARK: - Array
 
+public typealias ArrayCoding   = AnyBacked<AnyArray>
+public typealias ArrayDecoding = AnyBackedDecoding<AnyArray>
+public typealias ArrayEncoding = AnyBackedEncoding<AnyArray>
+
 /// Support any value dictionary property wrapper with array.
-public typealias ArrayCoding   = AnyBacked<AnyDictionaryArray>
-public typealias ArrayDecoding = AnyBackedDecoding<AnyDictionaryArray>
-public typealias ArrayEncoding = AnyBackedEncoding<AnyDictionaryArray>
+public typealias ArrayDictionaryCoding   = AnyBacked<AnyDictionaryArray>
+public typealias ArrayDictionaryDecoding = AnyBackedDecoding<AnyDictionaryArray>
+public typealias ArrayDictionaryEncoding = AnyBackedEncoding<AnyDictionaryArray>
 
 public typealias LossyArrayCoding<T: Codable>   = AnyBacked<LossyArrayValue<T>>
 public typealias LossyArrayDecoding<T: Codable> = AnyBackedDecoding<LossyArrayValue<T>>
