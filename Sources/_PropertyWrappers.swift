@@ -7,6 +7,24 @@
 
 import Foundation
 
+// MARK: - Float
+
+/// Use the values in `T` when (en/de)coding this immutable Property with non-conforming numbers, also known as IEEE 754 exceptional values.
+public typealias NonConformingFloatCoding<T: NonConformingDecimalValueProvider> = AnyBacked<NonConformingFloatValue<T>>
+/// Use the values in `T` when decoding this immutable Property with non-conforming numbers, also known as IEEE 754 exceptional values.
+public typealias NonConformingFloatDecoding<T: NonConformingDecimalValueProvider> = AnyBackedDecoding<NonConformingFloatValue<T>>
+/// Use the values in `T` when encoding this immutable Property with non-conforming numbers, also known as IEEE 754 exceptional values.
+public typealias NonConformingFloatEncoding<T: NonConformingDecimalValueProvider> = AnyBackedEncoding<NonConformingFloatValue<T>>
+
+// MARK: - Double
+
+/// Use the values in `T` when (en/de)coding this immutable Property with non-conforming numbers, also known as IEEE 754 exceptional values.
+public typealias NonConformingDoubleCoding<T: NonConformingDecimalValueProvider> = AnyBacked<NonConformingDoubleValue<T>>
+/// Use the values in `T` when decoding this immutable Property with non-conforming numbers, also known as IEEE 754 exceptional values.
+public typealias NonConformingDoubleDecoding<T: NonConformingDecimalValueProvider> = AnyBackedDecoding<NonConformingDoubleValue<T>>
+/// Use the values in `T` when encoding this immutable Property with non-conforming numbers, also known as IEEE 754 exceptional values.
+public typealias NonConformingDoubleEncoding<T: NonConformingDecimalValueProvider> = AnyBackedEncoding<NonConformingDoubleValue<T>>
+
 // MARK: - Date
 
 /// If you want to use it like this: `@DateCoding<Hollow.DateFormat.yyyy, Hollow.Timestamp.secondsSince1970>`
@@ -50,6 +68,7 @@ public typealias RFC3339DateEnoding = DateFormatEncoding<Hollow.DateFormat.RFC33
 
 // MARK: - NSDecimalNumber
 
+/// Decoding the `String`、`Double`、`Float`、`CGFloat`、`Int` or `Int64` to a NSDecimalNumber property.
 public typealias DecimalNumberCoding   = AnyBacked<DecimalNumberValue>
 public typealias DecimalNumberDecoding = AnyBackedDecoding<DecimalNumberValue>
 public typealias DecimalNumberEncoding = AnyBackedEncoding<DecimalNumberValue>
@@ -127,6 +146,7 @@ public typealias DictionaryCoding   = AnyBacked<AnyDictionary>
 public typealias DictionaryDecoding = AnyBackedDecoding<AnyDictionary>
 public typealias DictionaryEncoding = AnyBackedEncoding<AnyDictionary>
 
+/// Filters any nil values when decoding
 public typealias LossyDictionaryCoding<K: Hashable & Codable, V: Codable>   = AnyBacked<LossyDictionaryValue<K, V>>
 public typealias LossyDictionaryDecoding<K: Hashable & Codable, V: Codable> = AnyBackedDecoding<LossyDictionaryValue<K,V>>
 public typealias LossyDictionaryEncoding<K: Hashable & Codable, V: Codable> = AnyBackedEncoding<LossyDictionaryValue<K,V>>
@@ -142,6 +162,7 @@ public typealias ArrayDictionaryCoding   = AnyBacked<AnyDictionaryArray>
 public typealias ArrayDictionaryDecoding = AnyBackedDecoding<AnyDictionaryArray>
 public typealias ArrayDictionaryEncoding = AnyBackedEncoding<AnyDictionaryArray>
 
+/// Filters any nil values when decoding.
 public typealias LossyArrayCoding<T: Codable>   = AnyBacked<LossyArrayValue<T>>
 public typealias LossyArrayDecoding<T: Codable> = AnyBackedDecoding<LossyArrayValue<T>>
 public typealias LossyArrayEncoding<T: Codable> = AnyBackedEncoding<LossyArrayValue<T>>
@@ -158,6 +179,7 @@ public typealias StringToCoding<T: Codable & LosslessStringConvertible>   = AnyB
 public typealias StringToDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessStringValue<T>>
 public typealias StringToEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessStringValue<T>>
 
+/// Filters any nil values when decoding.
 public typealias LosslessStringCoding<T: Codable & LosslessStringConvertible>   = AnyBacked<LosslessStringValue<T>>
 public typealias LosslessStringDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessStringValue<T>>
 public typealias LosslessStringEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessStringValue<T>>

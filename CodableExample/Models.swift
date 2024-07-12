@@ -164,3 +164,29 @@ struct AutoConversionTests: HollowCodable {
         }
     }
 }
+
+class NonConformingTests: HollowCodable {
+    @NonConformingFloatCoding<NonConformingValueProvider>
+    var regular: Float?
+    @NonConformingFloatCoding<NonConformingValueProvider>
+    var infinity: Float?
+    @NonConformingFloatCoding<NonConformingValueProvider>
+    var negativeInfinity: Float?
+    @NonConformingFloatCoding<NonConformingValueProvider>
+    var nan: Float?
+    
+    @NonConformingDoubleCoding<NonConformingValueProvider>
+    var regular2: Double?
+    @NonConformingDoubleCoding<NonConformingValueProvider>
+    var infinity2: Double?
+    @NonConformingDoubleCoding<NonConformingValueProvider>
+    var negativeInfinity2: Double?
+    @NonConformingDoubleCoding<NonConformingValueProvider>
+    var nan2: Double?
+    
+    struct NonConformingValueProvider: NonConformingDecimalValueProvider {
+        static var positiveInfinity: String = "100"
+        static var negativeInfinity: String = "-100"
+        static var nan: String = "-1"
+    }
+}

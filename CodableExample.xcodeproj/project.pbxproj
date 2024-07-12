@@ -22,6 +22,7 @@
 		877482AF2C364CB10056B778 /* DataTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482AE2C364CB10056B778 /* DataTransform.swift */; };
 		877482B32C3677CB0056B778 /* DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482B22C3677CB0056B778 /* DateTransform.swift */; };
 		877482B52C367A060056B778 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877482B42C367A060056B778 /* Operators.swift */; };
+		8795AF4A2C4106D200C022A4 /* NonConformingCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8795AF492C4106D200C022A4 /* NonConformingCoding.swift */; };
 		8797BFC22C37802000B4F488 /* Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8797BFC12C37802000B4F488 /* Wrapper.swift */; };
 		879E77A02C3D37D80047AA6E /* Mixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879E779F2C3D37D80047AA6E /* Mixed.swift */; };
 		87E349062C3E609A00DF781C /* HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E349052C3E609A00DF781C /* HandyJSON.swift */; };
@@ -90,6 +91,7 @@
 		877482AE2C364CB10056B778 /* DataTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTransform.swift; sourceTree = "<group>"; };
 		877482B22C3677CB0056B778 /* DateTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTransform.swift; sourceTree = "<group>"; };
 		877482B42C367A060056B778 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		8795AF492C4106D200C022A4 /* NonConformingCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonConformingCoding.swift; sourceTree = "<group>"; };
 		8797BFC12C37802000B4F488 /* Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapper.swift; sourceTree = "<group>"; };
 		879E779F2C3D37D80047AA6E /* Mixed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mixed.swift; sourceTree = "<group>"; };
 		87E349052C3E609A00DF781C /* HandyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandyJSON.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				87F066D42C3E19EA006EB2F0 /* LosslessStringCoding.swift */,
 				F71C68562C3A4D0B0071EC9E /* LossyArrayCoding.swift */,
 				F71C68582C3A4D220071EC9E /* LossyDictionaryCoding.swift */,
+				8795AF492C4106D200C022A4 /* NonConformingCoding.swift */,
 				87EC9BCD2C22820C001DD724 /* PointCoding.swift */,
 				876D56A62C1845470006E25E /* RectCoding.swift */,
 				F7B9978D2C2723C9006D1C45 /* RFC2822DateCoding.swift */,
@@ -400,6 +403,7 @@
 				F76AF7C12C16A415005DC327 /* EnumCoding.swift in Sources */,
 				877482AF2C364CB10056B778 /* DataTransform.swift in Sources */,
 				87EC9BCE2C22820C001DD724 /* PointCoding.swift in Sources */,
+				8795AF4A2C4106D200C022A4 /* NonConformingCoding.swift in Sources */,
 				F71C68572C3A4D0B0071EC9E /* LossyArrayCoding.swift in Sources */,
 				F7B997902C2723E7006D1C45 /* RFC3339DateCoding.swift in Sources */,
 				F76AF7C92C16A415005DC327 /* HollowCodable.swift in Sources */,

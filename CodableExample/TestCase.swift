@@ -26,6 +26,7 @@ enum TestCase: String, CaseIterable {
     case pointTests = "CGPoint tests"
     case stringToTests = "Lossless string value"
     case autoConversionTests = "Automatic type conversion test"
+    case nonConformingTests = "Non conforming float/double value"
     
     case composition = "Nesting test"
     case subclass = "Inheritance object test"
@@ -230,6 +231,20 @@ extension TestCase {
             }
             """
             return AutoConversionTests.deserialize(from: jsonString)
+        case .nonConformingTests:
+            let jsonString = """
+            {
+                "infinity" : "infinity",
+                "nan" : "nan",
+                "negativeInfinity" : "-infinity",
+                "regular" : 5,
+                "infinity2" : "infinity",
+                "nan2" : "NaN",
+                "negativeInfinity2" : "-infinity",
+                "regular2" : 7
+            }
+            """
+            return NonConformingTests.deserialize(from: jsonString)
         }
     }
     
