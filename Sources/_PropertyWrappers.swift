@@ -127,9 +127,9 @@ public typealias DictionaryCoding   = AnyBacked<AnyDictionary>
 public typealias DictionaryDecoding = AnyBackedDecoding<AnyDictionary>
 public typealias DictionaryEncoding = AnyBackedEncoding<AnyDictionary>
 
-public typealias LossyDictionaryCoding<K,V>   = AnyBacked<LossyDictionaryValue<K, V>> where K: Hashable & Codable, V: Codable
-public typealias LossyDictionaryDecoding<K,V> = AnyBackedDecoding<LossyDictionaryValue<K,V>> where K: Hashable & Codable, V: Codable
-public typealias LossyDictionaryEncoding<K,V> = AnyBackedEncoding<LossyDictionaryValue<K,V>> where K: Hashable & Codable, V: Codable
+public typealias LossyDictionaryCoding<K: Hashable & Codable, V: Codable>   = AnyBacked<LossyDictionaryValue<K, V>>
+public typealias LossyDictionaryDecoding<K: Hashable & Codable, V: Codable> = AnyBackedDecoding<LossyDictionaryValue<K,V>>
+public typealias LossyDictionaryEncoding<K: Hashable & Codable, V: Codable> = AnyBackedEncoding<LossyDictionaryValue<K,V>>
 
 // MARK: - Array
 
@@ -154,14 +154,14 @@ public typealias AnyXEncoding = AnyBackedEncoding<AnyX>
 
 // MARK: - String
 
-public typealias StringToCoding<T>   = AnyBacked<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
-public typealias StringToDecoding<T> = AnyBackedDecoding<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
-public typealias StringToEncoding<T> = AnyBackedEncoding<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
+public typealias StringToCoding<T: Codable & LosslessStringConvertible>   = AnyBacked<LosslessStringValue<T>>
+public typealias StringToDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessStringValue<T>>
+public typealias StringToEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessStringValue<T>>
 
-public typealias LosslessStringCoding<T>   = AnyBacked<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
-public typealias LosslessStringDecoding<T> = AnyBackedDecoding<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
-public typealias LosslessStringEncoding<T> = AnyBackedEncoding<LosslessStringValue<T>> where T: Codable & LosslessStringConvertible
+public typealias LosslessStringCoding<T: Codable & LosslessStringConvertible>   = AnyBacked<LosslessStringValue<T>>
+public typealias LosslessStringDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessStringValue<T>>
+public typealias LosslessStringEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessStringValue<T>>
 
-public typealias CustomStringCoding<T>   = AnyBacked<CustomStringValue<T>> where T: Codable & CustomStringConvertible
-public typealias CustomStringDecoding<T> = AnyBackedDecoding<CustomStringValue<T>> where T: Codable & CustomStringConvertible
-public typealias CustomStringEncoding<T> = AnyBackedEncoding<CustomStringValue<T>> where T: Codable & CustomStringConvertible
+public typealias CustomStringCoding<T: Codable & CustomStringConvertible>   = AnyBacked<CustomStringValue<T>>
+public typealias CustomStringDecoding<T: Codable & CustomStringConvertible> = AnyBackedDecoding<CustomStringValue<T>>
+public typealias CustomStringEncoding<T: Codable & CustomStringConvertible> = AnyBackedEncoding<CustomStringValue<T>>

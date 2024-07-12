@@ -63,13 +63,13 @@ extension ApiResponse where T: Collection, T.Element: HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> Self {
-        var result = try Hollow.decode(Self.self, element: element, subType: T.Element.self)
-        result.data = result.data?.map {
+        var response = try Hollow.decode(Self.self, element: element, subType: T.Element.self)
+        response.data = response.data?.map {
             $0.mutating {
                 $0.didFinishMapping()
             }
         } as? T
-        return result
+        return response
     }
 }
 
@@ -84,7 +84,11 @@ extension HollowCodable where Self: HasResponsable, DataType: HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> ApiResponse<DataType> {
-        try Hollow.decode(element: element, subType: DataType.self)
+        var response = try Hollow.decode(ApiResponse<DataType>.self, element: element, subType: DataType.self)
+        response.data = response.data?.mutating({
+            $0.didFinishMapping()
+        }) as? DataType
+        return response
     }
 }
 
@@ -99,6 +103,12 @@ extension HollowCodable where Self: HasResponsable, DataType: Collection, DataTy
     }
     
     public static func deserialize(element: Any) throws -> ApiResponse<[DataType.Element]> {
-        try Hollow.decode(element: element, subType: DataType.Element.self)
+        var response = try Hollow.decode(ApiResponse<[DataType.Element]>.self, element: element, subType: DataType.Element.self)
+        response.data = response.data?.map {
+            $0.mutating {
+                $0.didFinishMapping()
+            }
+        } as? [DataType.Element]
+        return response
     }
 }

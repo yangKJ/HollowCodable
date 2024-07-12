@@ -7,12 +7,19 @@
 
 import Foundation
 
+public class HelpingMapper {
+    var codingKeys = [CodingKeyMapping]()
+    var replaceKeys = [ReplaceKeys]()
+    var dateKeys = [TransformKeys]()
+    var dataKeys = [TransformKeys]()
+}
+
 public protocol HollowCodable: Codable {
+    
     /// Setup the coding key that needs to be replaced.
     static var codingKeys: [CodingKeyMapping] { get }
     
-    /// In order to change the code less compatible HandyJSON.
-    /// `codingKeys` is recommended for configuring `CodingKeyMapping`.
+    /// For compatibility `HandyJSON`, modify existing code as little as possible.
     static func mapping(mapper: HelpingMapper)
     
     /// The callback for when mapping is complete.
@@ -51,16 +58,9 @@ extension HollowCodable {
         return mapper
     }
     
-    func mutating(_ block: (inout HollowCodable) -> Void) -> HollowCodable {
-        var options: any HollowCodable = self
+    func mutating(_ block: (inout Self) -> Void) -> Self {
+        var options = self
         block(&options)
         return options
     }
-}
-
-public class HelpingMapper {
-    var codingKeys = [CodingKeyMapping]()
-    var replaceKeys = [ReplaceKeys]()
-    var dateKeys = [TransformKeys]()
-    var dataKeys = [TransformKeys]()
 }
