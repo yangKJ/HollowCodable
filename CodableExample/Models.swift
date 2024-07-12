@@ -190,3 +190,46 @@ class NonConformingTests: HollowCodable {
         static var nan: String = "-1"
     }
 }
+
+struct EmptyDefaultsTests: HollowCodable {
+    @DefaultBacked<BoolFalse>
+    var boolFalse: Bool
+    @DefaultBacked<BoolTrue>
+    var boolTrue: Bool
+    @DefaultBacked<String>
+    var string: String
+    
+    @DefaultBacked<Int>
+    var int: Int
+    @DefaultBacked<Int16>
+    var int16: Int16
+    @DefaultBacked<Int32>
+    var int32: Int32
+    @DefaultBacked<Int64>
+    var int64: Int64
+    @DefaultBacked<Int8>
+    var Int8: Int8
+    @DefaultBacked<UInt>
+    var uInt: UInt
+    @DefaultBacked<UInt16>
+    var uInt16: UInt16
+    @DefaultBacked<UInt32>
+    var uInt32: UInt32
+    @DefaultBacked<UInt64>
+    var uInt64: UInt64
+    @DefaultBacked<UInt8>
+    var uInt8: UInt8
+    
+    @DefaultBacked<CGFloat>
+    var cgFloat: CGFloat
+    
+    @DefaultBacked<Double>
+    var double: Double
+    @DefaultBacked<Float>
+    var float: Float
+    
+//    @DefaultBacked<[Int]>
+//    var array: [Int]
+//    @DefaultBacked<[String: Int]>
+//    var dictionary: [String: Int]
+}

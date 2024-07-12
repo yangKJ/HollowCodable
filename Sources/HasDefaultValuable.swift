@@ -107,13 +107,11 @@ public enum Empty<T: RangeReplaceableCollection>: HasDefaultValuable where T: Eq
 }
 
 public enum EmptyArray<T>: HasDefaultValuable where T: Hashable & Codable {
-    public static var hasDefaultValue: [T] {
-        return Array<Array.Element>()
-    }
+    public static var hasDefaultValue: [T] { [] }
 }
 
 public enum EmptyDictionary<K, V>: HasDefaultValuable where K: Hashable & Codable, V: Equatable & Codable {
-    public static var hasDefaultValue: [K: V] { Dictionary() }
+    public static var hasDefaultValue: [K: V] { [:] }
 }
 
 public enum FirstCase<T: CaseIterable>: HasDefaultValuable where T: Codable, T: Equatable {

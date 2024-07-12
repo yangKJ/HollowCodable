@@ -7,6 +7,9 @@
 
 import Foundation
 
+public typealias BoolFalse = BooleanValue<False>
+public typealias BoolTrue = BooleanValue<True>
+
 /// String or Int -> Bool converter.
 /// Uses <= 0 as false, and > 0 as true.
 /// Uses lowercase "true"/"yes"/"y"/"t"/"1"/">0" and "false"/"no"/"f"/"n"/"0".

@@ -10,6 +10,7 @@ import Foundation
 enum TestCase: String, CaseIterable {
     case compatiblesHandyJSONValueTests = "Compatibles HandyJSON test"
     
+    case emptyDefaultsTests = "Empty default value test"
     case enumTests = "Enum test"
     case hexColor = "Hex to color test"
     case rgbColor = "RGB to color test"
@@ -245,6 +246,36 @@ extension TestCase {
             }
             """
             return NonConformingTests.deserialize(from: jsonString)
+        case .emptyDefaultsTests:
+            let jsonString = """
+            {
+                "uInt8" : 1,
+                "int64" : 1,
+                "int" : 1,
+                "double" : 1,
+                "float16" : 1,
+                "int16" : 1,
+                "string" : "1",
+                "uInt" : 1,
+                "uInt64" : 1,
+                "uInt16" : 1,
+                "float" : 1,
+                "dictionary" : {
+                    "1" : 1
+                },
+                "cgFloat" : 1,
+                "set" : [1],
+                "uInt32" : 1,
+                "array" : [
+                    1
+                ],
+                "Int8" : 1,
+                "boolFalse" : true,
+                "boolTrue" : false,
+                "int32" : 1
+            }
+            """
+            return EmptyDefaultsTests.deserialize(from: jsonString)
         }
     }
     
