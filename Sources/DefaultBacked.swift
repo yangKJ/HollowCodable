@@ -49,3 +49,9 @@ public typealias DefaultBackedCoding<T: Transformer> = DefaultBacked<T> where T:
         try AnyBackedEncoding<T>(value).encode(to: encoder)
     }
 }
+
+extension KeyedDecodingContainer {
+    public func decode<T>(_ type: DefaultBacked<T>.Type, forKey key: KeyedDecodingContainer<K>.Key) throws -> DefaultBacked<T> {
+        return try decodeIfPresent(DefaultBacked<T>.self, forKey: key) ?? DefaultBacked.init(T.hasDefaultValue)
+    }
+}

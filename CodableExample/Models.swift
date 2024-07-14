@@ -8,23 +8,39 @@
 import Foundation
 
 struct EnumTests: HollowCodable {
-    var name: String?
-    @EnumCoding<VehicleType> var vehicleType: VehicleType?
+    @EnumCoding<VehicleType>
+    var vehicleType: VehicleType?
+    
+    @DefaultEnumCoding<VehicleType>
+    var hasVehicleType: VehicleType
     
     @DefaultBacked<EnumValue<HasDefType>>
     var hasDefType: HasDefType
     
-    enum VehicleType: String {
+    @DefaultEnumCoding<IntType>
+    var intType: IntType
+    
+    enum VehicleType: String, CaseDefaultProvider, CaseIterable {
         case car
         case motorcycle
     }
     
-    enum HasDefType: String, CaseIterable, HasDefaultValuable {
+    enum HasDefType: String, CaseDefaultProvider {
         case unowned
         case index
         
-        static var hasDefaultValue: HasDefType {
-            .unowned
+        static var defaultCase: HasDefType {
+            .index
+        }
+    }
+    
+    enum IntType: Int, CaseDefaultProvider {
+        case one = 1
+        case two
+        case three
+        
+        static var defaultCase: IntType {
+            .three
         }
     }
 }
@@ -102,8 +118,8 @@ struct LossyDictionaryTests: HollowCodable {
 
 struct LossyArrayTests: HollowCodable {
     @LossyArrayCoding var values: [Int]?
-    //@AnyBacked<LossyArrayValue>
     @LossyArrayCoding var nonPrimitiveValues: [String]?
+    @AnyBacked<LossyArrayValue> var nesting: [String]?
 }
 
 struct AnyValueDictionaryTests: HollowCodable {
@@ -149,20 +165,15 @@ struct StringToTests: HollowCodable {
 
 struct AutoConversionTests: HollowCodable {
     @AnyBacked<CustomStringValue> var named: String?
-    @BackedCoding var intToString: String?
-    @BackedCoding var stringToInt: Int?
-    @BackedCoding var doubleToString: String?
-    @CustomStringCoding var doubleToInt: Int?
-    @CustomStringCoding var boolToString: String?
-    @CustomStringCoding var boolToInt: Int?
-    
     @BackedCoding var mapping: String?
-    
-    mutating func didFinishMapping() {
-        if mapping == nil {
-            mapping = "mapping"
-        }
-    }
+    @BackedCoding var intToString: String?
+    @BackedCoding var doubleToString: String?
+    @AutoConvertedCoding var boolToString: String?
+    @AutoConvertedCoding var stringToInt: Int?
+    @AutoConvertedCoding var doubleToInt: Int?
+    @AutoConvertedCoding var boolToInt: Int?
+    @AutoConvertedCoding var intToBool: Bool?
+    @AutoConvertedCoding var stringToBool: Bool?
 }
 
 class NonConformingTests: HollowCodable {
@@ -192,6 +203,8 @@ class NonConformingTests: HollowCodable {
 }
 
 struct EmptyDefaultsTests: HollowCodable {
+    @DefaultBacked<Bool>
+    var bool: Bool
     @DefaultBacked<BoolFalse>
     var boolFalse: Bool
     @DefaultBacked<BoolTrue>
@@ -201,35 +214,48 @@ struct EmptyDefaultsTests: HollowCodable {
     
     @DefaultBacked<Int>
     var int: Int
+    @DefaultBacked<Int8>
+    var Int8: Int8
     @DefaultBacked<Int16>
     var int16: Int16
     @DefaultBacked<Int32>
     var int32: Int32
     @DefaultBacked<Int64>
     var int64: Int64
-    @DefaultBacked<Int8>
-    var Int8: Int8
     @DefaultBacked<UInt>
     var uInt: UInt
+    @DefaultBacked<UInt8>
+    var uInt8: UInt8
     @DefaultBacked<UInt16>
     var uInt16: UInt16
     @DefaultBacked<UInt32>
     var uInt32: UInt32
     @DefaultBacked<UInt64>
     var uInt64: UInt64
-    @DefaultBacked<UInt8>
-    var uInt8: UInt8
     
+    @DefaultBacked<Float>
+    var float: Float
+    @DefaultBacked<Double>
+    var double: Double
     @DefaultBacked<CGFloat>
     var cgFloat: CGFloat
     
-    @DefaultBacked<Double>
-    var double: Double
-    @DefaultBacked<Float>
-    var float: Float
-    
-//    @DefaultBacked<[Int]>
-//    var array: [Int]
-//    @DefaultBacked<[String: Int]>
-//    var dictionary: [String: Int]
+    @DefaultBacked<[Int]>
+    var array: [Int]
+    @DefaultBacked<Set<Int>>
+    var set: Set<Int>
+    @DefaultBacked<[String: Int]>
+    var dictionary: [String: Int]
+}
+
+struct HasNotKeyTests: HollowCodable {
+    @IgnoredKey var ignored: String?
+    @Immutable var uuid: Int
+    @AnyBacked<String> var val: String?
+    @DefaultBacked<Int> var int: Int
+    @BackedCoding<String> var string: String?
+    @FalseBoolCoding var bool: Bool
+    @HexColorCoding var color: HollowColor?
+    @LossyArrayCoding var array: [Int]?
+    @StringToCoding<Int> var losslessString: Int?
 }

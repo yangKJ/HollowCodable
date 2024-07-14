@@ -208,3 +208,9 @@ extension AnyBacked: Hashable where T.DecodeType: Hashable {
         hasher.combine(wrappedValue)
     }
 }
+
+extension KeyedDecodingContainer {
+    public func decode<T>(_ type: AnyBacked<T>.Type, forKey key: KeyedDecodingContainer<K>.Key) throws -> AnyBacked<T> {
+        return try decodeIfPresent(AnyBacked<T>.self, forKey: key) ?? AnyBacked()
+    }
+}

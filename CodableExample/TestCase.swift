@@ -11,6 +11,7 @@ enum TestCase: String, CaseIterable {
     case compatiblesHandyJSONValueTests = "Compatibles HandyJSON test"
     
     case emptyDefaultsTests = "Empty default value test"
+    case hasNotKeyTests = "Has not the key test"
     case enumTests = "Enum test"
     case hexColor = "Hex to color test"
     case rgbColor = "RGB to color test"
@@ -58,8 +59,18 @@ extension TestCase {
             }
             """
             return CompatiblesValueTests.deserialize(from: jsonString)
+        case .hasNotKeyTests:
+            let jsonString = "{\"uuid\": 860}"
+            return HasNotKeyTests.deserialize(from: jsonString)
         case .enumTests:
-            let jsonString = "{\"name\":\"Tesla\",\"vehicleType\":\"motorcycle\",\"hasDefType\":null}"
+            let jsonString = """
+            {
+                "vehicleType": "motorcycle",
+                "hasVehicleType": null,
+                "hasDefType": null,
+                "intType": null
+            }
+            """
             return EnumTests.deserialize(from: jsonString)
         case .composition:
             let jsonString = "{\"num\":12345,\"comp1\":{\"aInt\":1,\"aString\":\"aaaaa\"}}"
@@ -124,12 +135,14 @@ extension TestCase {
                 "stringToInt": {
                     "one": 1,
                     "two": 2,
-                    "three": null
+                    "three": null,
+                    "forth": "4"
                 },
                 "intToString": {
                     "1": "one",
                     "2": "two",
-                    "3": null
+                    "3": null,
+                    "4": 100
                 }
             }
             """
@@ -138,7 +151,8 @@ extension TestCase {
             let jsonString = """
             {
                 "values": [1, null, "3", false, 4],
-                "nonPrimitiveValues": ["7", 8, null]
+                "nonPrimitiveValues": ["7", 8, null, "9"],
+                "nesting": ["Condy", "Yuan", null, ["Yang", null]]
             }
             """
             return LossyArrayTests.deserialize(from: jsonString)
@@ -222,57 +236,55 @@ extension TestCase {
             let jsonString = """
             {
                 "named": "Condy",
+                "mapping": null,
                 "intToString": 80,
                 "doubleToString": 23.62,
                 "boolToString": true,
                 "stringToInt": "82",
                 "doubleToInt": 20.22,
                 "boolToInt": true,
-                "mapping": null
+                "intToBool": 2,
+                "stringToBool": "false"
             }
             """
             return AutoConversionTests.deserialize(from: jsonString)
         case .nonConformingTests:
             let jsonString = """
             {
-                "infinity" : "infinity",
-                "nan" : "nan",
-                "negativeInfinity" : "-infinity",
-                "regular" : 5,
-                "infinity2" : "infinity",
-                "nan2" : "NaN",
-                "negativeInfinity2" : "-infinity",
-                "regular2" : 7
+                "infinity": "infinity",
+                "nan": "nan",
+                "negativeInfinity": "-infinity",
+                "regular": 5,
+                "infinity2": "infinity",
+                "nan2": "NaN",
+                "negativeInfinity2": "-infinity",
+                "regular2": 7
             }
             """
             return NonConformingTests.deserialize(from: jsonString)
         case .emptyDefaultsTests:
             let jsonString = """
             {
-                "uInt8" : 1,
-                "int64" : 1,
-                "int" : 1,
-                "double" : 1,
-                "float16" : 1,
-                "int16" : 1,
-                "string" : "1",
-                "uInt" : 1,
-                "uInt64" : 1,
-                "uInt16" : 1,
-                "float" : 1,
-                "dictionary" : {
-                    "1" : 1
-                },
-                "cgFloat" : 1,
-                "set" : [1],
-                "uInt32" : 1,
-                "array" : [
-                    1
-                ],
-                "Int8" : 1,
-                "boolFalse" : true,
-                "boolTrue" : false,
-                "int32" : 1
+                "bool": "",
+                "boolFalse": null,
+                "boolTrue": null,
+                "string": null,
+                "int": null,
+                "Int8": null,
+                "int16": null,
+                "int32": null,
+                "int64": null,
+                "uInt": null,
+                "uInt8": null,
+                "uInt16": null,
+                "uInt32": null,
+                "uInt64": null,
+                "float": null,
+                "double": null,
+                "cgFloat": null,
+                "array": null,
+                "set": null,
+                "dictionary": null
             }
             """
             return EmptyDefaultsTests.deserialize(from: jsonString)
