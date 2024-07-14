@@ -7,72 +7,7 @@
 
 import Foundation
 
-public protocol Transformer: Codable {
-    associatedtype DecodeType
-    associatedtype EncodeType: Encodable
-    
-    init?(value: Any)
-    
-    func transform() throws -> DecodeType?
-    
-    static func transform(from value: DecodeType) throws -> EncodeType
-}
-
-extension Transformer {
-    static func hasLossyValue(_ type: Self.Type) -> Bool {
-        let string = String(describing: type)
-        return [
-            "LossyArrayValue",
-            "LossyDictionaryValue",
-            "CustomStringValue",
-        ].contains(where: {
-            string.starts(with: $0)
-        })
-    }
-    
-    static func hasAnyValue(_ type: Self.Type) -> Bool {
-        return type == AnyX.self
-        || type == AnyArray.self
-        || type == AnyDictionary.self
-        || type == AnyDictionaryArray.self
-    }
-}
-
-extension Transformer where Self == DecodeType {
-    public func transform() throws -> DecodeType? {
-        self
-    }
-}
-
-extension Transformer where DecodeType == EncodeType {
-    public static func transform(from value: DecodeType) throws -> EncodeType {
-        value
-    }
-}
-
-extension Transformer where Self: FixedWidthInteger, Self == DecodeType {
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Hollow.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
-}
-
-extension Transformer where Self: LosslessStringConvertible, Self == DecodeType {
-    public init?(value: Any) {
-        if let val = value as? DecodeType {
-            self = val
-        } else if let string = Hollow.transfer2String(with: value) {
-            self.init(string)
-        } else {
-            return nil
-        }
-    }
-}
+public typealias Transformer = DecodeTransformer & EncodeTransformer
 
 extension Int: Transformer {
     public typealias DecodeType = Int
@@ -164,6 +99,20 @@ extension Bool: Transformer {
     }
 }
 
+extension Decimal: Transformer {
+    public typealias DecodeType = Decimal
+    public typealias EncodeType = Decimal
+    public init?(value: Any) {
+        if let val = value as? DecodeType {
+            self = val
+        } else if let val = Hollow.transfer2String(with: value), let decimal = Decimal(string: val) {
+            self = decimal
+        } else {
+            return nil
+        }
+    }
+}
+
 extension Array: Transformer where Array.Element: HollowCodable {
     public typealias DecodeType = Array
     public typealias EncodeType = Array
@@ -176,6 +125,21 @@ extension Array: Transformer where Array.Element: HollowCodable {
             return nil
         }
         self = array
+    }
+}
+
+extension Set: Transformer where Set.Element: HollowCodable {
+    public typealias DecodeType = Set
+    public typealias EncodeType = Set
+    public init?(value: Any) {
+        if let array = value as? [Element] {
+            self = Set(array)
+            return
+        }
+        guard let array = [Element].deserialize(from: value) else {
+            return nil
+        }
+        self = Set(array)
     }
 }
 

@@ -35,7 +35,7 @@ extension PointValue: Transformer {
     }
 }
 
-extension PointValue: HasDefaultValuable {
+extension PointValue: DefaultValueProvider {
     
     public typealias DefaultType = CGPoint
     

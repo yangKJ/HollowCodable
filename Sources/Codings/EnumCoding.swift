@@ -7,8 +7,18 @@
 
 import Foundation
 
-/// 枚举系列
-/// `@EnumCoding`: To be convertable, An enum must conform to RawRepresentable protocol. Nothing special need to do now.
+public protocol CaseDefaultProvider: RawRepresentable {
+    static var defaultCase: Self { get }
+}
+
+extension CaseDefaultProvider where Self: CaseIterable {
+    public static var defaultCase: Self {
+        Self.allCases.first!
+    }
+}
+
+/// Enumeration series,
+/// `@EnumCoding`: To be convertable, An enum must conform to RawRepresentable protocol.
 public struct EnumValue<T: RawRepresentable>: Transformer where T.RawValue: Codable {
     
     let value: T.RawValue
@@ -32,11 +42,11 @@ public struct EnumValue<T: RawRepresentable>: Transformer where T.RawValue: Coda
     }
 }
 
-extension EnumValue: HasDefaultValuable where T: CaseIterable {
+extension EnumValue: DefaultValueProvider where T: CaseDefaultProvider {
     
     public typealias DefaultType = T
     
     public static var hasDefaultValue: DefaultType {
-        T.allCases.first!
+        T.defaultCase
     }
 }

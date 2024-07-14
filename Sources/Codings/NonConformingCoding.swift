@@ -17,65 +17,19 @@ public protocol NonConformingDecimalValueProvider {
     static var nan: String { get }
 }
 
-/// Uses the `ValueProvider` for (de)serialization of a non-conforming `Float`
-public struct NonConformingFloatValue<ValueProvider: NonConformingDecimalValueProvider>: Transformer {
-    
-    let value: Float
-    
-    public typealias DecodeType = Float
-    public typealias EncodeType = String
-    
-    public init?(value: Any) {
-        if let value = value as? Float {
-            self.value = value
-            return
-        }
-        guard let string = Hollow.transfer2String(with: value), !string.hc.isEmpty2 else {
-            return nil
-        }
-        switch string {
-        case ValueProvider.positiveInfinity:
-            self.value = Float.infinity
-        case ValueProvider.negativeInfinity:
-            self.value = -Float.infinity
-        case ValueProvider.nan:
-            self.value = Float.nan
-        default:
-            guard let value = Float(string) else {
-                return nil
-            }
-            self.value = value
-        }
-    }
-    
-    public func transform() throws -> Float? {
-        value
-    }
-    
-    public static func transform(from value: Float) throws -> String {
-        // For some reason the switch with nan doesn't work 🤷‍♂️ as of Swift 5.2
-        if value.isNaN {
-            return ValueProvider.nan
-        } else if value == Float.infinity {
-            return ValueProvider.positiveInfinity
-        } else if value == -Float.infinity {
-            return ValueProvider.negativeInfinity
-        } else {
-            return String(describing: value)
-        }
-    }
-}
+public typealias NonConformingFloatValue<T: NonConformingDecimalValueProvider> = NonConformingValue<T, Float>
+public typealias NonConformingDoubleValue<T: NonConformingDecimalValueProvider> = NonConformingValue<T, Double>
 
-/// Uses the `ValueProvider` for (de)serialization of a non-conforming `Double`
-public struct NonConformingDoubleValue<ValueProvider: NonConformingDecimalValueProvider>: Transformer {
+/// Uses the `ValueProvider` for (de)serialization of a non-conforming `Floating`.
+public struct NonConformingValue<ValueProvider: NonConformingDecimalValueProvider, Floating: FloatingPoint>: Transformer where Floating: Codable & LosslessStringConvertible {
     
-    let value: Double
+    let value: Floating
     
-    public typealias DecodeType = Double
+    public typealias DecodeType = Floating
     public typealias EncodeType = String
     
     public init?(value: Any) {
-        if let value = value as? Double {
+        if let value = value as? Floating {
             self.value = value
             return
         }
@@ -84,32 +38,33 @@ public struct NonConformingDoubleValue<ValueProvider: NonConformingDecimalValueP
         }
         switch string {
         case ValueProvider.positiveInfinity:
-            self.value = Double.infinity
+            self.value = .infinity
         case ValueProvider.negativeInfinity:
-            self.value = -Double.infinity
+            self.value = -.infinity
         case ValueProvider.nan:
-            self.value = Double.nan
+            self.value = .nan
         default:
-            guard let value = Double(string) else {
+            guard let value = Floating(string) else {
                 return nil
             }
             self.value = value
         }
     }
     
-    public func transform() throws -> Double? {
+    public func transform() throws -> Floating? {
         value
     }
     
-    public static func transform(from value: Double) throws -> String {
+    public static func transform(from value: Floating) throws -> String {
         // For some reason the switch with nan doesn't work 🤷‍♂️ as of Swift 5.2
-        if value.isNaN {
+        switch value {
+        case _ where value.isNaN:
             return ValueProvider.nan
-        } else if value == Double.infinity {
+        case .infinity:
             return ValueProvider.positiveInfinity
-        } else if value == -Double.infinity {
+        case -.infinity:
             return ValueProvider.negativeInfinity
-        } else {
+        default:
             return String(describing: value)
         }
     }

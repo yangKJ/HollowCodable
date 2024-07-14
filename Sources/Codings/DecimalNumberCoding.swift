@@ -35,7 +35,7 @@ public struct DecimalNumberValue: Transformer {
     }
 }
 
-extension DecimalNumberValue: HasDefaultValuable {
+extension DecimalNumberValue: DefaultValueProvider {
     
     public static var hasDefaultValue: NSDecimalNumber {
         .zero

@@ -17,20 +17,29 @@ public struct LossyArrayValue<T: Codable>: Transformer {
     public typealias DecodeType = [T]
     public typealias EncodeType = [T]
     
+    public static var selfDecodingFromDecoder: Bool {
+        true
+    }
+    
     public init?(value: Any) {
         guard let decoder = value as? Decoder, var container = try? decoder.unkeyedContainer() else {
             return nil
         }
-        var elements: [T] = []
+        var items: [T] = []
+        items.reserveCapacity(container.count ?? 0)
         while !container.isAtEnd {
             do {
-                let value = try container.decode(T.self)
-                elements.append(value)
+                //let value = try container.decode(T.self)
+                // At least for PLists, `decodeIfPresent` seems to break when a value is `$null`.
+                // This is why `Optional<T>` is required.
+                if let item = try container.decodeIfPresent(Optional<T>.self) as? T {
+                    items.append(item)
+                }
             } catch {
-                _ = try? container.decode(CodableAnyValue.self)
+                _ = try? container.superDecoder()
             }
         }
-        self.value = elements
+        self.value = items
     }
     
     public func transform() throws -> [T]? {

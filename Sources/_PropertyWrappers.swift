@@ -124,14 +124,9 @@ public typealias EnumCoding<T: RawRepresentable>   = AnyBacked<EnumValue<T>> whe
 public typealias EnumDecoding<T: RawRepresentable> = AnyBackedDecoding<EnumValue<T>> where T.RawValue: Codable
 public typealias EnumEncoding<T: RawRepresentable> = AnyBackedEncoding<EnumValue<T>> where T.RawValue: Codable
 
-/// It has a default value when it is nil, and it is the first enumeration value.
-public typealias HasEnumCoding<T: RawRepresentable>   = DefaultBacked<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
-public typealias HasEnumDecoding<T: RawRepresentable> = DefaultBackedDecoding<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
-public typealias HasEnumEncoding<T: RawRepresentable> = DefaultBackedEncoding<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
-
-public typealias DefaultEnumCoding<T: RawRepresentable>   = DefaultBacked<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
-public typealias DefaultEnumDecoding<T: RawRepresentable> = DefaultBackedDecoding<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
-public typealias DefaultEnumEncoding<T: RawRepresentable> = DefaultBackedEncoding<EnumValue<T>> where T.RawValue: Codable, T: CaseIterable
+public typealias DefaultEnumCoding<T: CaseDefaultProvider>   = DefaultBacked<EnumValue<T>> where T.RawValue: Codable
+public typealias DefaultEnumDecoding<T: CaseDefaultProvider> = DefaultBackedDecoding<EnumValue<T>> where T.RawValue: Codable
+public typealias DefaultEnumEncoding<T: CaseDefaultProvider> = DefaultBackedEncoding<EnumValue<T>> where T.RawValue: Codable
 
 // MARK: - Data
 
@@ -184,6 +179,11 @@ public typealias LosslessStringCoding<T: Codable & LosslessStringConvertible>   
 public typealias LosslessStringDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessStringValue<T>>
 public typealias LosslessStringEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessStringValue<T>>
 
-public typealias CustomStringCoding<T: Codable & CustomStringConvertible>   = AnyBacked<CustomStringValue<T>>
-public typealias CustomStringDecoding<T: Codable & CustomStringConvertible> = AnyBackedDecoding<CustomStringValue<T>>
-public typealias CustomStringEncoding<T: Codable & CustomStringConvertible> = AnyBackedEncoding<CustomStringValue<T>>
+/// Automatic change of type, like int <-> string, bool <-> string.
+public typealias AutoConvertedCoding<T: Codable & CustomStringConvertible>   = AnyBacked<AutoConvertedValue<T>>
+public typealias AutoConvertedDecoding<T: Codable & CustomStringConvertible> = AnyBackedDecoding<AutoConvertedValue<T>>
+public typealias AutoConvertedEncoding<T: Codable & CustomStringConvertible> = AnyBackedEncoding<AutoConvertedValue<T>>
+
+public typealias CustomStringCoding<T: Codable & CustomStringConvertible>   = AnyBacked<AutoConvertedValue<T>>
+public typealias CustomStringDecoding<T: Codable & CustomStringConvertible> = AnyBackedDecoding<AutoConvertedValue<T>>
+public typealias CustomStringEncoding<T: Codable & CustomStringConvertible> = AnyBackedEncoding<AutoConvertedValue<T>>

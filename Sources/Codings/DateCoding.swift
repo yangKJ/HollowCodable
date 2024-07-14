@@ -44,7 +44,7 @@ public struct DateValue<D: DateConverter, E: DateConverter>: Transformer {
     }
 }
 
-extension DateValue: HasDefaultValuable {
+extension DateValue: DefaultValueProvider {
     
     public static var hasDefaultValue: Date {
         Date()

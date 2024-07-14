@@ -14,7 +14,7 @@ public typealias BoolTrue = BooleanValue<True>
 /// Uses <= 0 as false, and > 0 as true.
 /// Uses lowercase "true"/"yes"/"y"/"t"/"1"/">0" and "false"/"no"/"f"/"n"/"0".
 /// `@BoolCoding` decodes int/string/bool value json into `Bool`.
-public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where HasDefault.DefaultType == Bool {
+public struct BooleanValue<HasDefault: BooleanTogglable>: Transformer {
     
     let boolean: Bool
     
@@ -24,6 +24,12 @@ public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where Ha
     public init?(value: Any) {
         if let val = value as? Bool {
             self.boolean = val
+            return
+        } else if let val = value as? Int {
+            self.boolean = val > 0 ? true : false
+            return
+        } else if let val = value as? Float {
+            self.boolean = val > 0 ? true : false
             return
         }
         guard let string = Hollow.transfer2String(with: value), !string.hc.isEmpty2 else {
@@ -48,11 +54,11 @@ public struct BooleanValue<HasDefault: HasDefaultValuable>: Transformer where Ha
     }
 }
 
-extension BooleanValue: HasDefaultValuable {
+extension BooleanValue: DefaultValueProvider {
     
     public typealias DefaultType = Bool
     
     public static var hasDefaultValue: DefaultType {
-        HasDefault.hasDefaultValue
+        HasDefault.value
     }
 }

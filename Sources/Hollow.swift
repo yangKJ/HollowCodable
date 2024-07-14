@@ -63,6 +63,8 @@ public struct Hollow {
             return val.description
         case let val as NSDecimalNumber:
             return val.description
+        case let val as Decimal:
+            return val.description
         case _ as NSNull:
             return nil
         default:

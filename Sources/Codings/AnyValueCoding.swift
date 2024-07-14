@@ -9,7 +9,7 @@ import Foundation
 
 /// Support any value property wrapper with dictionary.
 /// `@DictionaryCoding` decodes any value json into `[String: Any]`.
-public struct AnyDictionary: Transformer, HasDefaultValuable {
+public struct AnyDictionary: Transformer, DefaultValueProvider {
     
     let dict: [String: CodableAnyValue]
     
@@ -43,7 +43,7 @@ public struct AnyDictionary: Transformer, HasDefaultValuable {
 
 /// Support any value dictionary property wrapper with array.
 /// `@ArrayDictionaryCoding` decodes any value json into `[[String: Any]]`.
-public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
+public struct AnyDictionaryArray: Transformer, DefaultValueProvider {
     
     let dictArray: [[String: CodableAnyValue]]
     
@@ -87,7 +87,7 @@ public struct AnyDictionaryArray: Transformer, HasDefaultValuable {
 
 /// Support any value property wrapper with array.
 /// `@ArrayCoding` decodes any value json into `[Any]`.
-public struct AnyArray: Transformer, HasDefaultValuable {
+public struct AnyArray: Transformer, DefaultValueProvider {
     
     let array: [CodableAnyValue]
     

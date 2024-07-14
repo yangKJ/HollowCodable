@@ -26,7 +26,7 @@
 		8797BFC22C37802000B4F488 /* Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8797BFC12C37802000B4F488 /* Wrapper.swift */; };
 		879E77A02C3D37D80047AA6E /* Mixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879E779F2C3D37D80047AA6E /* Mixed.swift */; };
 		87E349062C3E609A00DF781C /* HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E349052C3E609A00DF781C /* HandyJSON.swift */; };
-		87E349082C3E6C3D00DF781C /* CustomStringCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E349072C3E6C3D00DF781C /* CustomStringCoding.swift */; };
+		87E349082C3E6C3D00DF781C /* AutoConvertedCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E349072C3E6C3D00DF781C /* AutoConvertedCoding.swift */; };
 		87EC9BCA2C22761A001DD724 /* BoolCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BC92C22761A001DD724 /* BoolCoding.swift */; };
 		87EC9BCC2C227C98001DD724 /* Transformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BCB2C227C98001DD724 /* Transformer.swift */; };
 		87EC9BCE2C22820C001DD724 /* PointCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BCD2C22820C001DD724 /* PointCoding.swift */; };
@@ -37,13 +37,16 @@
 		87F2AB842C1FCF2B006DF62F /* KeyStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB832C1FCF2B006DF62F /* KeyStrategy.swift */; };
 		87F2AB862C1FCFDE006DF62F /* Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB852C1FCFDE006DF62F /* Ext.swift */; };
 		87F2AB882C200C8A006DF62F /* Enserializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB872C200C8A006DF62F /* Enserializer.swift */; };
+		F7046ACB2C42FB5300D0038F /* BooleanTogglable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7046ACA2C42FB5300D0038F /* BooleanTogglable.swift */; };
 		F70CFD4F2C2998BB0056CB9F /* CodableAnyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70CFD4E2C2998BB0056CB9F /* CodableAnyValue.swift */; };
 		F71C68532C38155A0071EC9E /* HomeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68522C38155A0071EC9E /* HomeListView.swift */; };
 		F71C68552C3815F90071EC9E /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68542C3815F90071EC9E /* TestCase.swift */; };
 		F71C68572C3A4D0B0071EC9E /* LossyArrayCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68562C3A4D0B0071EC9E /* LossyArrayCoding.swift */; };
 		F71C68592C3A4D220071EC9E /* LossyDictionaryCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71C68582C3A4D220071EC9E /* LossyDictionaryCoding.swift */; };
 		F747FFD62C231846001A4680 /* RGBColorCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F747FFD52C231846001A4680 /* RGBColorCoding.swift */; };
-		F747FFD82C232328001A4680 /* HasDefaultValuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F747FFD72C232328001A4680 /* HasDefaultValuable.swift */; };
+		F747FFD82C232328001A4680 /* DefaultValueProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F747FFD72C232328001A4680 /* DefaultValueProvider.swift */; };
+		F752E05E2C41F4D100C8C42B /* DecodeTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F752E05D2C41F4D100C8C42B /* DecodeTransformer.swift */; };
+		F752E0602C41F4F500C8C42B /* EncodeTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F752E05F2C41F4F500C8C42B /* EncodeTransformer.swift */; };
 		F76AF7902C16A29A005DC327 /* CodableExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF78F2C16A29A005DC327 /* CodableExampleApp.swift */; };
 		F76AF7922C16A29A005DC327 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7912C16A29A005DC327 /* ContentView.swift */; };
 		F76AF7942C16A29B005DC327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F76AF7932C16A29B005DC327 /* Assets.xcassets */; };
@@ -95,7 +98,7 @@
 		8797BFC12C37802000B4F488 /* Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wrapper.swift; sourceTree = "<group>"; };
 		879E779F2C3D37D80047AA6E /* Mixed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mixed.swift; sourceTree = "<group>"; };
 		87E349052C3E609A00DF781C /* HandyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandyJSON.swift; sourceTree = "<group>"; };
-		87E349072C3E6C3D00DF781C /* CustomStringCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStringCoding.swift; sourceTree = "<group>"; };
+		87E349072C3E6C3D00DF781C /* AutoConvertedCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoConvertedCoding.swift; sourceTree = "<group>"; };
 		87EC9BC92C22761A001DD724 /* BoolCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoolCoding.swift; sourceTree = "<group>"; };
 		87EC9BCB2C227C98001DD724 /* Transformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformer.swift; sourceTree = "<group>"; };
 		87EC9BCD2C22820C001DD724 /* PointCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointCoding.swift; sourceTree = "<group>"; };
@@ -106,13 +109,16 @@
 		87F2AB832C1FCF2B006DF62F /* KeyStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStrategy.swift; sourceTree = "<group>"; };
 		87F2AB852C1FCFDE006DF62F /* Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext.swift; sourceTree = "<group>"; };
 		87F2AB872C200C8A006DF62F /* Enserializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enserializer.swift; sourceTree = "<group>"; };
+		F7046ACA2C42FB5300D0038F /* BooleanTogglable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanTogglable.swift; sourceTree = "<group>"; };
 		F70CFD4E2C2998BB0056CB9F /* CodableAnyValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableAnyValue.swift; sourceTree = "<group>"; };
 		F71C68522C38155A0071EC9E /* HomeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeListView.swift; sourceTree = "<group>"; };
 		F71C68542C3815F90071EC9E /* TestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		F71C68562C3A4D0B0071EC9E /* LossyArrayCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LossyArrayCoding.swift; sourceTree = "<group>"; };
 		F71C68582C3A4D220071EC9E /* LossyDictionaryCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LossyDictionaryCoding.swift; sourceTree = "<group>"; };
 		F747FFD52C231846001A4680 /* RGBColorCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBColorCoding.swift; sourceTree = "<group>"; };
-		F747FFD72C232328001A4680 /* HasDefaultValuable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasDefaultValuable.swift; sourceTree = "<group>"; };
+		F747FFD72C232328001A4680 /* DefaultValueProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultValueProvider.swift; sourceTree = "<group>"; };
+		F752E05D2C41F4D100C8C42B /* DecodeTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeTransformer.swift; sourceTree = "<group>"; };
+		F752E05F2C41F4F500C8C42B /* EncodeTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeTransformer.swift; sourceTree = "<group>"; };
 		F76AF78C2C16A29A005DC327 /* CodableExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodableExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F76AF78F2C16A29A005DC327 /* CodableExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExampleApp.swift; sourceTree = "<group>"; };
 		F76AF7912C16A29A005DC327 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -224,14 +230,17 @@
 				87EC9BD12C22AF55001DD724 /* _PropertyWrappers.swift */,
 				876D56A22C18333C0006E25E /* AnyBacked.swift */,
 				F76AF7A12C16A415005DC327 /* ApiResponse.swift */,
+				F7046ACA2C42FB5300D0038F /* BooleanTogglable.swift */,
 				F70CFD4E2C2998BB0056CB9F /* CodableAnyValue.swift */,
 				877482A22C3632990056B778 /* CodingKeyMapping.swift */,
 				F7B997952C27467D006D1C45 /* Converter.swift */,
+				F752E05D2C41F4D100C8C42B /* DecodeTransformer.swift */,
 				F7EA7B682C205EA40048E264 /* DefaultBacked.swift */,
+				F747FFD72C232328001A4680 /* DefaultValueProvider.swift */,
 				F76AF7A82C16A415005DC327 /* Deserializer.swift */,
+				F752E05F2C41F4F500C8C42B /* EncodeTransformer.swift */,
 				87F2AB872C200C8A006DF62F /* Enserializer.swift */,
 				87F2AB852C1FCFDE006DF62F /* Ext.swift */,
-				F747FFD72C232328001A4680 /* HasDefaultValuable.swift */,
 				F76AF7AD2C16A415005DC327 /* Hollow.swift */,
 				F76AF7B22C16A415005DC327 /* HollowCodable.swift */,
 				87341A2E2C217D4400DF23FF /* IgnoredKey.swift */,
@@ -254,9 +263,9 @@
 			isa = PBXGroup;
 			children = (
 				871EE7BB2C29504100E8BE37 /* AnyValueCoding.swift */,
+				87E349072C3E6C3D00DF781C /* AutoConvertedCoding.swift */,
 				F7B997932C272CF4006D1C45 /* Base64DataCoding.swift */,
 				87EC9BC92C22761A001DD724 /* BoolCoding.swift */,
-				87E349072C3E6C3D00DF781C /* CustomStringCoding.swift */,
 				F76AF7A22C16A415005DC327 /* DataCoding.swift */,
 				87EC9BCF2C22AD2D001DD724 /* DateCoding.swift */,
 				F76AF7A62C16A415005DC327 /* DateFormatterCoding.swift */,
@@ -354,6 +363,7 @@
 			files = (
 				F70CFD4F2C2998BB0056CB9F /* CodableAnyValue.swift in Sources */,
 				F76AF7C52C16A415005DC327 /* Immutable.swift in Sources */,
+				F7046ACB2C42FB5300D0038F /* BooleanTogglable.swift in Sources */,
 				F76AF7922C16A29A005DC327 /* ContentView.swift in Sources */,
 				87199B3C2C34FDB1008FFF19 /* TransformType.swift in Sources */,
 				877482A92C36393E0056B778 /* ISO8601DateTransform.swift in Sources */,
@@ -362,8 +372,10 @@
 				F76AF7CA2C16A415005DC327 /* ReplaceKeys.swift in Sources */,
 				F76AF7BE2C16A415005DC327 /* DecimalNumberCoding.swift in Sources */,
 				F76AF7B82C16A415005DC327 /* ApiResponse.swift in Sources */,
-				87E349082C3E6C3D00DF781C /* CustomStringCoding.swift in Sources */,
+				87E349082C3E6C3D00DF781C /* AutoConvertedCoding.swift in Sources */,
+				F752E05E2C41F4D100C8C42B /* DecodeTransformer.swift in Sources */,
 				87F066D72C3E2283006EB2F0 /* Merger.swift in Sources */,
+				F752E0602C41F4F500C8C42B /* EncodeTransformer.swift in Sources */,
 				F76AF7C62C16A415005DC327 /* ISO8601DateCoding.swift in Sources */,
 				87F2AB842C1FCF2B006DF62F /* KeyStrategy.swift in Sources */,
 				F747FFD62C231846001A4680 /* RGBColorCoding.swift in Sources */,
@@ -374,7 +386,7 @@
 				87F066D52C3E19EA006EB2F0 /* LosslessStringCoding.swift in Sources */,
 				876D56A32C18333C0006E25E /* AnyBacked.swift in Sources */,
 				876D56A52C183D6F0006E25E /* RGBAColorCoding.swift in Sources */,
-				F747FFD82C232328001A4680 /* HasDefaultValuable.swift in Sources */,
+				F747FFD82C232328001A4680 /* DefaultValueProvider.swift in Sources */,
 				879E77A02C3D37D80047AA6E /* Mixed.swift in Sources */,
 				871EE7BC2C29504100E8BE37 /* AnyValueCoding.swift in Sources */,
 				F7EA7B692C205EA40048E264 /* DefaultBacked.swift in Sources */,

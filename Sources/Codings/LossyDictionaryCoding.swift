@@ -17,6 +17,10 @@ public struct LossyDictionaryValue<Key: Hashable & Codable, Value: Codable>: Tra
     public typealias DecodeType = [Key: Value]
     public typealias EncodeType = [Key: Value]
     
+    public static var selfDecodingFromDecoder: Bool {
+        true
+    }
+    
     private struct LossyDecodableValue<T: Decodable>: Decodable {
         let value: T
         public init(from decoder: Decoder) throws {

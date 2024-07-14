@@ -39,7 +39,7 @@ extension RectValue: Transformer {
     }
 }
 
-extension RectValue: HasDefaultValuable {
+extension RectValue: DefaultValueProvider {
     
     public typealias DefaultType = CGRect
     

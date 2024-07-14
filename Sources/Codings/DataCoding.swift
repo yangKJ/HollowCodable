@@ -38,7 +38,7 @@ public struct DataValue<T: DataConverter>: Transformer {
     }
 }
 
-extension DataValue: HasDefaultValuable {
+extension DataValue: DefaultValueProvider {
     
     public typealias DefaultType = Data
     

@@ -64,3 +64,21 @@ extension HollowCodable {
         return options
     }
 }
+
+extension Int: HollowCodable { }
+extension Int8: HollowCodable { }
+extension Int16: HollowCodable { }
+extension Int32: HollowCodable { }
+extension Int64: HollowCodable { }
+extension UInt: HollowCodable { }
+extension UInt8: HollowCodable { }
+extension UInt16: HollowCodable { }
+extension UInt32: HollowCodable { }
+extension UInt64: HollowCodable { }
+extension Float: HollowCodable { }
+extension Double: HollowCodable { }
+extension CGFloat: HollowCodable { }
+extension String: HollowCodable { }
+extension Bool: HollowCodable { }
+extension Data: HollowCodable { }
+extension Date: HollowCodable { }

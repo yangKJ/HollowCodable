@@ -48,7 +48,7 @@ extension RGBA: Transformer {
     }
 }
 
-extension RGBA: HasDefaultValuable {
+extension RGBA: DefaultValueProvider {
     
     public static var hasDefaultValue: HollowColor {
         .clear

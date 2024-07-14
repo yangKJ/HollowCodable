@@ -13,26 +13,34 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
     
     public var wrappedValue: T.DecodeType?
     
-    @inline(__always) public init() {
+    @inlinable public init() {
         self.wrappedValue = nil
     }
     
-    @inline(__always) public init(_ wrappedValue: T.DecodeType?) {
+    @inlinable public init(_ wrappedValue: T.DecodeType?) {
         self.wrappedValue = wrappedValue
     }
     
-    @inline(__always) public init(from decoder: Decoder) throws {
-        self.wrappedValue = try AnyBackedDecoding<T>(from: decoder).wrappedValue
+    @inlinable public init(from decoder: Decoder) throws {
+        self.wrappedValue = try AnyBackedDecoding<T>.init(from: decoder).wrappedValue
     }
     
-    @inline(__always) public func encode(to encoder: Encoder) throws {
+    @inlinable public func encode(to encoder: Encoder) throws {
         try AnyBackedEncoding<T>(wrappedValue).encode(to: encoder)
     }
 }
 
-@propertyWrapper public struct AnyBackedDecoding<T: Transformer>: Decodable {
+@propertyWrapper public struct AnyBackedDecoding<T: DecodeTransformer>: Decodable {
     
     public var wrappedValue: T.DecodeType?
+    
+    @inlinable public init() {
+        self.wrappedValue = nil
+    }
+    
+    @inlinable public init(_ wrappedValue: T.DecodeType?) {
+        self.wrappedValue = wrappedValue
+    }
     
     @inline(__always) public init(from decoder: Decoder) throws {
         let loggerDataCorruptedError = { (container: SingleValueDecodingContainer) in
@@ -42,10 +50,19 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             let err = DecodingError.dataCorruptedError(in: container, debugDescription: "Failed to convert an instance of \(T.DecodeType.self)")
             Hollow.Logger.logDebug(err)
         }
-        if T.hasLossyValue(T.self) {
+        if T.selfDecodingFromDecoder {
             self.wrappedValue = try T.init(value: decoder)?.transform()
             if self.wrappedValue == nil {
                 let container = try decoder.singleValueContainer()
+                loggerDataCorruptedError(container)
+            }
+            return
+        }
+        if T.hasAnyValue(T.self) {
+            let container = try decoder.singleValueContainer()
+            let value = try container.decode(CodableAnyValue.self)
+            self.wrappedValue = try T.init(value: value)?.transform()
+            if self.wrappedValue == nil {
                 loggerDataCorruptedError(container)
             }
             return
@@ -54,17 +71,7 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
         if container.decodeNil() {
             self.wrappedValue = nil
             loggerDataCorruptedError(container)
-            return
-        }
-        if T.hasAnyValue(T.self) {
-            let value = try container.decode(CodableAnyValue.self)
-            self.wrappedValue = try T.init(value: value)?.transform()
-            if self.wrappedValue == nil {
-                loggerDataCorruptedError(container)
-            }
-            return
-        }
-        if let value = try? container.decode<T>(T.self) {
+        } else if let value = try? container.decode<T>(T.self) {
             self.wrappedValue = try value.transform()
         } else if let value = try? container.decode(String.self) {
             self.wrappedValue = try T.init(value: value)?.transform()
@@ -96,6 +103,8 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(UInt64.self) {
             self.wrappedValue = try T.init(value: value)?.transform()
+        } else if let value = try? container.decode(Decimal.self) {
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else {
             self.wrappedValue = nil
             loggerDataCorruptedError(container)
@@ -103,33 +112,29 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
     }
 }
 
-@propertyWrapper public struct AnyBackedEncoding<T: Transformer>: Encodable {
+@propertyWrapper public struct AnyBackedEncoding<T: EncodeTransformer>: Encodable {
     
     public let wrappedValue: T.DecodeType?
     
-    @inline(__always) public init() {
+    @inlinable public init() {
         self.wrappedValue = nil
     }
     
-    @inline(__always) public init(_ wrappedValue: T.DecodeType?) {
+    @inlinable public init(_ wrappedValue: T.DecodeType?) {
         self.wrappedValue = wrappedValue
     }
     
-    @inline(__always) public func encode(to encoder: Encoder) throws {
+    @inlinable public func encode(to encoder: Encoder) throws {
+        if T.selfEncodingFromEncoder {
+            try T.transform(from: self.wrappedValue, to: encoder)
+            return
+        }
         var container = encoder.singleValueContainer()
-        if T.hasLossyValue(T.self) {
-            if let wrappedValue = self.wrappedValue as? Encodable {
-                //try wrappedValue.encode(to: encoder)
-                try container.encode(wrappedValue)
-            } else {
-                try container.encodeNil()
-            }
-        } else if let value = self.wrappedValue {
-            if let value = try? T.transform(from: value) {
-                try container.encode(value)
-            } else {
-                try container.encodeNil()
-            }
+        // Encodes a nil value using `encodeNil` rather than it being omitted.
+        if case Optional<Any>.none = wrappedValue as Any {
+            try container.encodeNil()
+        } else if let value = try? T.transform(from: wrappedValue!) {
+            try container.encode(value)
         } else {
             try container.encodeNil()
         }

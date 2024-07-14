@@ -18,7 +18,7 @@ public typealias HexColor_ = HexColor<False>
 
 /// Support the hex string color with format `#RGB`、`#RGBA`、`#RRGGBB`、`#RRGGBBAA`
 /// `@HexColorCoding`: For a Color property that should be serialized to a hex encoded String.
-public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha.DefaultType == Bool {
+public struct HexColor<HasAlpha: BooleanTogglable>: Transformer {
     
     var hex: String?
     var hexInt: Int?
@@ -56,7 +56,7 @@ public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha
         //hexString += String(format: "%06X", rgb)
         var hexString: String = "#"
         hexString += String(format: "%02X%02X%02X", r, g, b)
-        if HasAlpha.hasDefaultValue {
+        if HasAlpha.value {
             let a = Int((comps[safe: 3] ?? 1.0) * 255.0)
             hexString += String(format: "%02X", a)
         }
@@ -109,7 +109,7 @@ public struct HexColor<HasAlpha: HasDefaultValuable>: Transformer where HasAlpha
     }
 }
 
-extension HexColor: HasDefaultValuable {
+extension HexColor: DefaultValueProvider {
     
     public static var hasDefaultValue: HollowColor {
         .clear
