@@ -14,8 +14,9 @@
 2. Some non-Codable attributes cannot be ignored. The coding key needs to be implemented manually.
 3. Decode does not support multiple coding keys mapping to the same property.
 4. The default values of the model cannot be used, and it is obviously unreasonable to throw missing data errors instead of using the default values in the definition when decode data is missing.
-5. There is no support for simple type conversions, such as converting 0/1 to false/true, "123" to Int 123, or vice versa, who can ensure that the server will not accidentally modify the field type and cause the app to fail?
-6. Do not support Any property, many times our home page model will have a lot of submodels, but each submodel data structure is not the same, then need to decoding into Any, and then according to the module to confirm the submodel.
+5. The server deletes an outdated field of the model, and then the old version of the app will fall into an error, even without this field the old version of the client can still work normally, Ought to it's just invalid data display missing.
+6. There is no support for simple type conversions, such as converting 0/1 to false/true, "123" to Int 123, or vice versa, who can ensure that the server will not accidentally modify the field type and cause the app to fail?
+7. Do not support Any property, many times our home page model will have a lot of submodels, but each submodel data structure is not the same, then need to decoding into Any, and then according to the module to confirm the submodel.
 
 ok, All of these issues can be resolved after you use [HollowCodable](https://github.com/yangKJ/HollowCodable), so you're welcome!
 
@@ -24,7 +25,7 @@ ok, All of these issues can be resolved after you use [HollowCodable](https://gi
 - Immutable: Made immutable via property wrapper, It can be used with other Coding.
 
 ```swift
-struct YourModel: HollowCodable {
+struct ImmutableTests: HollowCodable {
     @Immutable
     var id: Int
     
@@ -36,7 +37,7 @@ struct YourModel: HollowCodable {
 - IgnoredKey: Add this to an Optional Property to not included it when Encoding or Decoding.
 
 ```swift
-struct YourModel: HollowCodable {
+struct IgnoredKeyTests: HollowCodable {
     @IgnoredKey
     var ignorKey: String? = "Condy" // Be equivalent to use `lazy`.
     
@@ -45,11 +46,12 @@ struct YourModel: HollowCodable {
 ```
 
 - DefaultBacked: Set different default values for common types.
-  - This library has built-in many default values, such as Int, Bool, String, Array...
+  - When the missed key or the value is null, will set the default value.
+  - This library has built-in many default values, such as Int, Bool, String, Map, Array...
   - if we want to set a different default value for the field.
   
 ```swift
-struct YourModel: HollowCodable {
+struct DefaultValueTests: HollowCodable {
     @DefaultBacked<Int>
     var val: Int // If the field is not an optional, default is 0.
     
@@ -58,9 +60,12 @@ struct YourModel: HollowCodable {
     
     @DefaultBacked<String>
     var string: String // If the field is not an optional, default is "".
-
+    
+    @DefaultBacked<AnyArray>
+    var list: [String: Any] // If the field is not an optional, default is [].
+    
     @DefaultBacked<AnyDictionary>
-    var list: [String: Any] // If the field is not an optional, default is [:].
+    var mapp: [String: Any] // If the field is not an optional, default is [:].
 }
 ```
 
@@ -69,16 +74,16 @@ struct YourModel: HollowCodable {
 - Base64Coding: For a Data property that should be serialized to a Base64 encoded String.
 
 ```swift
-struct YourModel: HollowCodable {
+struct DataValueTests: HollowCodable {
     @Base64Coding
     var base64Data: Data?
 }
 ```
 
-- [Base64DataTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/Base64DataTransform.swift): Serialized to a base 64 Data encoded String.
+- Base64DataTransform: Serialized to a base 64 Data encoded String.
 
 ```swift
-struct YourModel: HollowCodable {
+struct DataValueTransformTests: HollowCodable {
     
     var base64Data: Data?
     
@@ -115,7 +120,7 @@ public enum YourData: DataConverter {
 }
 
 Used:
-struct YourModel: HollowCodable {
+struct CustomDataValueTests: HollowCodable {
     @AnyBacked<DataValue<YourData>>
     var data: Data?
 }
@@ -130,15 +135,15 @@ struct YourModel: HollowCodable {
 - RFC3339DateCoding: Decodes `String` or `TimeInterval` values as an RFC 3339 date.
 
 ```swift
-struct YourModel: HollowCodable {
+struct DateValueFormatTests: HollowCodable {
     @ISO8601DateCoding
-    var iso8601: Date? // Now decodes to ISO8601 date.
+    var iso8601Date: Date? // Now decodes to ISO8601 date.
     
     @RFC2822DateCoding
-    var data1: Date? // Now decodes RFC 2822 date.
+    var rfc2822Date: Date? // Now decodes RFC 2822 date.
     
     @RFC3339DateCoding
-    var data2: Date? // Now decodes RFC 3339 date.
+    var rfc3339Date: Date? // Now decodes RFC 3339 date.
 }
 ```
 
@@ -146,7 +151,7 @@ struct YourModel: HollowCodable {
 - MillisecondsSince1970DateCoding: For a Date property that should be serialized to MillisecondsSince1970.
 
 ```swift
-struct YourModel: HollowCodable {
+struct DateValueTimestampTests: HollowCodable {
     @SecondsSince1970DateCoding
     var timestamp: Date // Now encodes to SecondsSince1970
     
@@ -158,37 +163,46 @@ struct YourModel: HollowCodable {
 Supports (de)serialization using different formats, like:
 
 ```swift
-struct YourModel: HollowCodable {
+struct DifferentDateFormatTests: HollowCodable {
     @DateCoding<Hollow.DateFormat.yyyy_mm_dd, Hollow.Timestamp.secondsSince1970>
-    var time: Date? // Decoding use `yyyy-MM-dd` and Encoding use `seconds` timestamp.
+    var time: Date? // Decoding use `yyyy-MM-dd`, Encoding use `seconds` timestamp.
 }
 ```
 
-- [CustomDateFormatTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/CustomDateFormatTransform.swift): Serialized to a custom Date encoded String.
-- [DateFormatterTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DateFormatterTransform.swift): Serialized to a custom Date encoded String.
-- [ISO8601DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/ISO8601DateTransform.swift): Serialized to a iso8601 time format Date encoded String.
-- [RFC3339DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/RFC3339DateTransform.swift): Serialized to a RFC 3339 time format Date encoded String.
-- [RFC2822DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/RFC2822DateTransform.swift): Serialized to a RFC 2822 time format Date encoded String.
-- [TimestampDateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/TimestampDateTransform.swift): Serialized to a timestamp Since1970 time format Date encoded String/TimeInterval.
+- DateFormatterTransform: Serialized to a custom Date encoded String.
+- ISO8601DateTransform: Serialized to a iso8601 time format Date encoded String.
+- CustomDateFormatTransform: Serialized to a custom Date encoded String.
+- RFC3339DateTransform: Serialized to a RFC 3339 time format Date encoded String.
+- RFC2822DateTransform: Serialized to a RFC 2822 time format Date encoded String.
+- TimestampDateTransform: Serialized to a timestamp Since1970 time Date encoded String/TimeInterval.
 
 ```swift
-struct YourModel: HollowCodable {
+struct DateValueTransformTests: HollowCodable {
     
-    var iso8601: Date? // Now decodes to ISO8601 date.
+    var iso8601Date: Date? // Now decodes to ISO8601 date.
     
-    var data1: Date? // Now decodes RFC 2822 date.
+    var rfc2822Date: Date? // Now decodes RFC 2822 date.
     
-    var data2: Date? // Now decodes RFC 3339 date.
+    var rfc3339Date: Date? // Now decodes RFC 3339 date.
     
     var timestampDate: Date? // Now decodes seconds Since1970 date.
     
     static var codingKeys: [CodingKeyMapping] {
         return [
-            TransformKeys(location: CodingKeys.iso8601, tranformer: ISO8601DateTransform()),
-            CodingKeys.data1 <-- RFC2822DateTransform(),
-            CodingKeys.data2 <-- RFC3339DateTransform(),
+            CodingKeys.iso8601Date <-- ISO8601DateTransform(),
+            CodingKeys.rfc2822Date <-- RFC2822DateTransform(),
+            CodingKeys.rfc3339Date <-- RFC3339DateTransform(),
             CodingKeys.timestampDate <-- TimestampDateTransform(type: .seconds),
         ]
+    }
+    
+    or compatible HandyJSON use:
+    
+    static func mapping(mapper: HelpingMapper) {
+        mapper <<< CodingKeys.iso8601Date <-- ISO8601DateTransform()
+        mapper <<< CodingKeys.rfc2822Date <-- RFC2822DateTransform()
+        mapper <<< CodingKeys.rfc3339Date <-- RFC3339DateTransform()
+        mapper <<< CodingKeys.timestampDate <-- TimestampDateTransform()
     }
 }
 ```
@@ -201,7 +215,7 @@ struct YourModel: HollowCodable {
 - RGBAColorCoding: Decoding a red/green/blue/alpha to color.
 
 ```swift
-struct YourModel: HollowCodable {
+struct ColorTests: HollowCodable {
     @HexColorCoding
     var color: HollowColor?
     
@@ -220,9 +234,15 @@ struct YourModel: HollowCodable {
 - TrueBoolCoding: If the field is not an optional type, default true value. 
 
 ```swift
-struct YourModel: HollowCodable {
+struct BoolTests: HollowCodable {
     @Immutable @BoolCoding
     var bar: Bool?
+    
+    @BoolCoding 
+    var boolAsInt: Bool? // Uses <= 0 as false, and > 0 as true.
+    
+    @BoolCoding 
+    var boolAsString: Bool?
     
     @FalseBoolCoding
     var hasD: Bool
@@ -234,37 +254,75 @@ struct YourModel: HollowCodable {
 
 ### Enum
 
-- EnumCoding: To be convertable, An enum must conform to RawRepresentable protocol. Nothing special need to do now.
+- EnumCoding: To be convertable, An enum must conform to RawRepresentable protocol.
 
 ```swift
-struct YourModel: HollowCodable {
+struct EnumTests: HollowCodable {
     @EnumCoding<AnimalType>
-    var animal: AnimalType? // 
+    var animal: AnimalType?
+    
+    @DefaultEnumCoding<AnimalType>
+    var hasAnimal: AnimalType // When animal is nil, it is Dog. 
 }
 
-enum AnimalType: String {
+// Supports setting custom default values with `CaseDefaultProvider` protocol.
+enum AnimalType: String, CaseDefaultProvider {
     case Cat = "cat"
     case Dog = "dog"
     case Bird = "bird"
+    
+    // You can set the default value, when animal is nil.
+    static var defaultCase: AnimalType {
+        .Dog
+    }
 }
 ```
 
 ### NSDecimalNumber
 
-- NSDecimalNumberCoding: Decoding the `String`、`Double`、`Float`、`CGFloat`、`Int` or `Int64` to a NSDecimalNumber property.
+- NSDecimalNumberCoding: Decoding the `String`,`Double`,`Float`,`CGFloat`,`Int` or `Int64` to a NSDecimalNumber property.
 
 ```swift
-struct YourModel: HollowCodable {
+struct DecimalNumberTests: HollowCodable {
     @DecimalNumberCoding
     var amount: NSDecimalNumber?
+}
+```
+
+### String
+
+- LosslessStringCoding: Decodes String and filters invalid values if the Decoder is unable to decode the value.
+- AutoConvertedCoding: Automatic change of type, like int <-> string, bool <-> string.
+
+```swift
+struct StringToTests: HollowCodable {
+    @BackedCoding 
+    var doubleToString: String?
+    
+    @AutoConvertedCoding 
+    var boolToString: String?
+    
+    @StringToCoding<Int> 
+    var int: Int?
+    
+    @LosslessStringCoding<ArticleId> 
+    var articleId: ArticleId?
+    
+    struct ArticleId: LosslessStringConvertible, Codable {
+        var description: String
+        init?(_ description: String) {
+            self.description = description
+        }
+    }
 }
 ```
 
 ### Any
 
 - DictionaryCoding: Support any value property wrapper with dictionary.
-- ArrayCoding: Support any value dictionary property wrapper with array.
-- AnyXCoding: Support for any general type, 
+- ArrayDictionaryCoding: Support any value dictory property wrapper with array.
+- ArrayCoding: Support any value property wrapper with array.
+- AnyXCoding: Support any value property wrapper with Any.
 
 ```swift
 "mixDict": {
@@ -279,14 +337,17 @@ struct YourModel: HollowCodable {
     "opt": null
 }
 
-struct YourModel: HollowCodable {
-    @AnyBacked<AnyDictionary>
+struct AnyValueTests: HollowCodable {
+    @DictionaryCoding
     var mixDict: [String: Any]? // Nested support.
     
-    @AnyBacked<AnyDictionaryArray>
+    @ArrayDictionaryCoding
     var mixLiat: [[String: Any]]?
     
-    @AnyBacked<AnyX>
+    @ArrayCoding
+    var anyArray: [Any]?
+    
+    @AnyXCoding
     var x: Any? // Also nested support.
 }
 ```
@@ -427,22 +488,29 @@ let json = model.toJSONString(prettyPrint: true)
 - [@RGBAColorCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/RGBAColorCoding.swift): RGBA color Encoding or Decoding.
 - [@PointCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/PointCoding.swift): CGPoint Encoding or Decoding.
 - [@RectCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/RectCoding.swift): CGRect Encoding or Decoding.
-- [@DictionaryCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/AnyDictionaryCoding.swift): Any dictionary([String: Any]) Encoding or Decoding.
+- [@DictionaryCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/AnyValueCoding.swift): Any dictionary([String: Any]) Encoding or Decoding.
+- [@ArrayCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/AnyValueCoding.swift): Decodes any value json into array([Any]).
+- [@AutoConvertCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/AutoConvertCoding.swift): Decodes String and filters invalid values if the Decoder is unable to decode the value.
+- [@NonConformingFloatCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/NonConformingCoding.swift): Decodes of a non-conforming Float.
+- [@NonConformingDoubleCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/NonConformingCoding.swift): Decodes of a non-conforming Double.
+- [@LossyArrayCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/LossyArrayCoding.swift): Decodes Arrays and filters invalid values if the Decoder is unable to decode the value.
+- [@LosslessStringCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/LosslessStringCoding.swift): Decodes String and filters invalid values if the Decoder is unable to decode the value.
+- [@LossyDictionaryCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/LossyDictionaryCoding.swift): Decodes Dictionaries and filters invalid key-value pairs if the Decoder is unable to decode the value.
 
 And support customization, you only need to implement the [Transformer](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transformer.swift) protocol.
 
-It also supports the attribute wrapper that can set the default value, and you need to implement the [HasDefaultValuable](https://github.com/yangKJ/HollowCodable/blob/master/Sources/HasDefaultValuable.swift) protocol.
+It also supports the attribute wrapper that can set the default value, and you need to implement the [DefaultValueProvider](https://github.com/yangKJ/HollowCodable/blob/master/Sources/DefaultValueProvider.swift) protocol.
 
 ### Available Transforms
 - [Base64DataTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/Base64DataTransform.swift): Serialized to a base 64 Data encoded String.
 - [DataTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DataTransform.swift): Serialized to a custom Data encoded String.
+- [TimestampDateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/TimestampDateTransform.swift): Serialized to a timestamp Since1970 time format Date encoded String/TimeInterval.
 - [DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DateTransform.swift): Serialized to a custom Data encoded String.
-- [CustomDateFormatTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/CustomDateFormatTransform.swift): Serialized to a custom Date encoded String.
 - [DateFormatterTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DateFormatterTransform.swift): Serialized to a custom Date encoded String.
 - [ISO8601DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/ISO8601DateTransform.swift): Serialized to a iso8601 time format Date encoded String.
-- [RFC3339DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/RFC3339DateTransform.swift): Serialized to a RFC 3339 time format Date encoded String.
-- [RFC2822DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/RFC2822DateTransform.swift): Serialized to a RFC 2822 time format Date encoded String.
-- [TimestampDateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/TimestampDateTransform.swift): Serialized to a timestamp Since1970 time format Date encoded String/TimeInterval.
+- [CustomDateFormatTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DateFormatTransform.swift): Serialized to a custom Date encoded String.
+- [RFC3339DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DateFormatTransform.swift): Serialized to a RFC 3339 time format Date encoded String.
+- [RFC2822DateTransform](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transforms/DateFormatTransform.swift): Serialized to a RFC 2822 time format Date encoded String.
 
 And support customization, you only need to implement the [TransformType](https://github.com/yangKJ/HollowCodable/blob/master/Sources/TransformType.swift) protocol.
 
