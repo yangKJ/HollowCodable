@@ -76,3 +76,12 @@ public struct LossyDictionaryValue<Key: Hashable & Codable, Value: Codable>: Tra
         ).map { ($0, $1) }
     }
 }
+
+extension LossyDictionaryValue: DefaultValueProvider {
+    
+    public typealias DefaultType = [Key: Value]
+    
+    public static var hasDefaultValue: DefaultType {
+        [:]
+    }
+}

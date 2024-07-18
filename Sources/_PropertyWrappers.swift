@@ -136,7 +136,7 @@ public typealias Base64Encoding = AnyBackedEncoding<DataValue<Hollow.Base64Data>
 
 // MARK: - Dictionary
 
-/// Support any value property wrapper with dictionary.
+/// Support any value property wrapper with dictionary, decodes any value json into `[String:Any]`.
 public typealias DictionaryCoding   = AnyBacked<AnyDictionary>
 public typealias DictionaryDecoding = AnyBackedDecoding<AnyDictionary>
 public typealias DictionaryEncoding = AnyBackedEncoding<AnyDictionary>
@@ -148,11 +148,12 @@ public typealias LossyDictionaryEncoding<K: Hashable & Codable, V: Codable> = An
 
 // MARK: - Array
 
+/// Support any value property wrapper with array, decodes any value json into `[Any]`.
 public typealias ArrayCoding   = AnyBacked<AnyArray>
 public typealias ArrayDecoding = AnyBackedDecoding<AnyArray>
 public typealias ArrayEncoding = AnyBackedEncoding<AnyArray>
 
-/// Support any value dictionary property wrapper with array.
+/// Support any value dictionary property wrapper with array, decodes any value json into `[[String:Any]]`.
 public typealias ArrayDictionaryCoding   = AnyBacked<AnyDictionaryArray>
 public typealias ArrayDictionaryDecoding = AnyBackedDecoding<AnyDictionaryArray>
 public typealias ArrayDictionaryEncoding = AnyBackedEncoding<AnyDictionaryArray>
@@ -163,6 +164,11 @@ public typealias LossyArrayDecoding<T: Codable> = AnyBackedDecoding<LossyArrayVa
 public typealias LossyArrayEncoding<T: Codable> = AnyBackedEncoding<LossyArrayValue<T>>
 
 // MARK: - Any
+
+/// Support any value property wrapper with Any, decodes any value json into `Any`.
+public typealias AnyValueCoding   = AnyBacked<AnyX>
+public typealias AnyValueDecoding = AnyBackedDecoding<AnyX>
+public typealias AnyValueEncoding = AnyBackedEncoding<AnyX>
 
 public typealias AnyXCoding   = AnyBacked<AnyX>
 public typealias AnyXDecoding = AnyBackedDecoding<AnyX>

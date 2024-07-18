@@ -114,12 +114,18 @@ struct GZIPDataTests: HollowCodable {
 struct LossyDictionaryTests: HollowCodable {
     @AnyBacked<LossyDictionaryValue> var stringToInt: [String: Int]?
     @LossyDictionaryCoding var intToString: [Int: String]?
+    
+    @DefaultBacked<LossyDictionaryValue>
+    var hasDict: [String: Int]
 }
 
 struct LossyArrayTests: HollowCodable {
     @LossyArrayCoding var values: [Int]?
     @LossyArrayCoding var nonPrimitiveValues: [String]?
     @AnyBacked<LossyArrayValue> var nesting: [String]?
+    
+    @DefaultBacked<LossyArrayValue>
+    var hasArray: [String]
 }
 
 struct AnyValueDictionaryTests: HollowCodable {
@@ -154,7 +160,7 @@ struct DecimalNumberTests: HollowCodable {
 struct StringToTests: HollowCodable {
     @StringToCoding<Int> var int: Int?
     @LosslessStringCoding<ArticleId> var articleId: ArticleId?
-    
+    @DefaultBacked<LosslessStringValue> var hasString: String
     struct ArticleId: LosslessStringConvertible, Codable {
         var description: String
         init?(_ description: String) {
@@ -174,6 +180,11 @@ struct AutoConversionTests: HollowCodable {
     @AutoConvertedCoding var boolToInt: Int?
     @AutoConvertedCoding var intToBool: Bool?
     @AutoConvertedCoding var stringToBool: Bool?
+    
+    @DefaultBacked<AutoConvertedValue> var hasInt: Int
+    //@DefaultBacked<AutoConvertedValue> var hasBool: Bool
+    @DefaultBacked<AutoConvertedValue> var hasDouble: Double
+    //@DefaultBacked<AutoConvertedValue> var hasString: String
 }
 
 class NonConformingTests: HollowCodable {
@@ -195,6 +206,11 @@ class NonConformingTests: HollowCodable {
     @NonConformingDoubleCoding<NonConformingValueProvider>
     var nan2: Double?
     
+    @DefaultBacked<NonConformingFloatValue<NonConformingValueProvider>>
+    var hasFloat: Float
+    @DefaultBacked<NonConformingDoubleValue<NonConformingValueProvider>>
+    var hasDouble: Double
+    
     struct NonConformingValueProvider: NonConformingDecimalValueProvider {
         static var positiveInfinity: String = "100"
         static var negativeInfinity: String = "-100"
@@ -211,6 +227,8 @@ struct EmptyDefaultsTests: HollowCodable {
     var boolTrue: Bool
     @DefaultBacked<String>
     var string: String
+    @DefaultBacked<String>
+    var blankString: String
     
     @DefaultBacked<Int>
     var int: Int

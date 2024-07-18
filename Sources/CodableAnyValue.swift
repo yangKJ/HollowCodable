@@ -9,45 +9,81 @@ import Foundation
 
 public indirect enum CodableAnyValue: Codable {
     case null
-    case string(String)
+    case bool(Bool)
     case int(Int)
     case float(Float)
-    case bool(Bool)
     case double(Double)
+    case string(String)
+    case url(URL)
+    case uuid(UUID)
     case date(Date)
     case data(Data)
+    case decimal(Decimal)
     case array([CodableAnyValue])
     case dictionary([String: CodableAnyValue])
 }
 
-public extension CodableAnyValue {
+extension CodableAnyValue {
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let dict = try? container.decode([String: CodableAnyValue].self) {
-            self = .dictionary(dict)
-        } else if let array = try? container.decode([CodableAnyValue].self) {
-            self = .array(array)
-        } else if let string = try? container.decode(String.self) {
-            self = .string(string)
-        } else if let int = try? container.decode(Int.self) {
-            self = .int(int)
-        } else if let double = try? container.decode(Double.self) {
-            self = .double(double)
-        } else if let bool = try? container.decode(Bool.self) {
-            self = .bool(bool)
-        } else if let float = try? container.decode(Float.self) {
-            self = .float(float)
-        } else if let date = try? container.decode(Date.self) {
-            self = .date(date)
-        } else if let data = try? container.decode(Data.self) {
-            self = .data(data)
-        } else {
-            self = .null
-        }
+    public enum Error: Swift.Error {
+        case unsupportedType
+        case unsupportedValue(Any)
     }
     
-    func encode(to encoder: Encoder) throws {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if container.decodeNil() {
+            self = .null
+            return
+        }
+        if let bool = try? container.decode(Bool.self) {
+            self = .bool(bool)
+            return
+        }
+        if let int = try? container.decode(Int.self) {
+            self = .int(int)
+            return
+        }
+        if let float = try? container.decode(Float.self) {
+            self = .float(float)
+            return
+        }
+        if let double = try? container.decode(Double.self) {
+            self = .double(double)
+            return
+        }
+        if let string = try? container.decode(String.self) {
+            self = .string(string)
+            return
+        }
+        if let date = try? container.decode(Date.self) {
+            self = .date(date)
+            return
+        }
+        if let data = try? container.decode(Data.self) {
+            self = .data(data)
+            return
+        }
+        if let url = try? container.decode(URL.self) {
+            self = .url(url)
+            return
+        }
+        if let uuid = try? container.decode(UUID.self) {
+            self = .uuid(uuid)
+            return
+        }
+        if let array = try? container.decode([CodableAnyValue].self) {
+            self = .array(array)
+            return
+        }
+        if let dict = try? container.decode([String: CodableAnyValue].self) {
+            self = .dictionary(dict)
+            return
+        }
+        throw CodableAnyValue.Error.unsupportedType
+    }
+    
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
         case .null:
@@ -70,9 +106,17 @@ public extension CodableAnyValue {
             try container.encode(date)
         case .data(let data):
             try container.encode(data)
+        case .uuid(let uuid):
+            try container.encode(uuid)
+        case .url(let url):
+            try container.encode(url)
+        case .decimal(let decimal):
+            try container.encode(decimal)
         }
     }
-    
+}
+
+extension CodableAnyValue {
     var value: Any? {
         switch self {
         case .null:
@@ -95,6 +139,12 @@ public extension CodableAnyValue {
             return value
         case .data(let value):
             return value
+        case .uuid(let value):
+            return value
+        case .url(let value):
+            return value
+        case .decimal(let value):
+            return value
         }
     }
     
@@ -102,10 +152,6 @@ public extension CodableAnyValue {
         switch value {
         case Optional<Any>.none:
             self = .null
-        case let val as [String: CodableAnyValue]:
-            self = .dictionary(val)
-        case let val as [CodableAnyValue]:
-            self = .array(val)
         case let val as String:
             self = .string(val)
         case let val as Int:
@@ -120,6 +166,16 @@ public extension CodableAnyValue {
             self = .data(val)
         case let val as Date:
             self = .date(val)
+        case let val as UUID:
+            self = .uuid(val)
+        case let val as URL:
+            self = .url(val)
+        case let val as Decimal:
+            self = .decimal(val)
+        case let val as [CodableAnyValue]:
+            self = .array(val)
+        case let val as [String: CodableAnyValue]:
+            self = .dictionary(val)
         default:
             return nil
         }

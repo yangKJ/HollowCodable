@@ -15,7 +15,8 @@ public struct ApiResponse<T: Codable>: HasResponsable {
     
     public typealias DataType = T
     
-    @DefaultBacked<Int> public var code: Int
+    @DefaultBacked<AutoConvertedValue<Int>>
+    public var code: Int
     
     public var message: String?
     

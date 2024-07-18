@@ -19,16 +19,16 @@ public struct Hollow {
         switch value {
         case let val as String:
             return val
-        case let val as Int:
-            return String(describing: val)
+        case let val as Bool:
+            return val.description
         case let val as Double where val <= 9999999999999998:
             return val.hc.string(minPrecision: 2, maxPrecision: 16)
         case let val as Float:
             return String(describing: val)
         case let val as CGFloat:
             return String(describing: val)
-        case let val as Bool:
-            return val.description
+        case let val as Int:
+            return String(describing: val)
         case let val as Int8:
             return String(describing: val)
         case let val as Int16:
@@ -65,6 +65,10 @@ public struct Hollow {
             return val.description
         case let val as Decimal:
             return val.description
+        case let val as URL:
+            return val.absoluteString
+        case let val as UUID:
+            return val.uuidString
         case _ as NSNull:
             return nil
         default:

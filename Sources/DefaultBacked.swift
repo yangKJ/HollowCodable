@@ -10,7 +10,7 @@ import Foundation
 public typealias DefaultBackedCoding<T: Transformer> = DefaultBacked<T> where T: DefaultValueProvider, T.DefaultType == T.DecodeType
 
 /// Provides a default value for missing `Decodable` data.
-@propertyWrapper public struct DefaultBacked<T: Transformer>: Codable where T: DefaultValueProvider, T.DefaultType == T.DecodeType {
+@propertyWrapper public struct DefaultBacked<T: Transformer & DefaultValueProvider>: Codable where T.DefaultType == T.DecodeType {
     
     public var wrappedValue: T.DecodeType
     
@@ -27,7 +27,7 @@ public typealias DefaultBackedCoding<T: Transformer> = DefaultBacked<T> where T:
     }
 }
 
-@propertyWrapper public struct DefaultBackedDecoding<T: DecodeTransformer>: Decodable where T: DefaultValueProvider, T.DefaultType == T.DecodeType {
+@propertyWrapper public struct DefaultBackedDecoding<T: DecodeTransformer & DefaultValueProvider>: Decodable where T.DefaultType == T.DecodeType {
     
     public var wrappedValue: T.DecodeType
     
@@ -36,7 +36,7 @@ public typealias DefaultBackedCoding<T: Transformer> = DefaultBacked<T> where T:
     }
 }
 
-@propertyWrapper public struct DefaultBackedEncoding<T: EncodeTransformer>: Encodable where T: DefaultValueProvider, T.DefaultType == T.DecodeType {
+@propertyWrapper public struct DefaultBackedEncoding<T: EncodeTransformer & DefaultValueProvider>: Encodable where T.DefaultType == T.DecodeType {
     
     public let wrappedValue: T.DecodeType?
     

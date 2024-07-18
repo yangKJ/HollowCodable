@@ -269,6 +269,7 @@ extension TestCase {
                 "boolFalse": null,
                 "boolTrue": null,
                 "string": null,
+                "blankString": "",
                 "int": null,
                 "Int8": null,
                 "int16": null,

@@ -49,3 +49,12 @@ public struct LossyArrayValue<T: Codable>: Transformer {
 
 extension LossyArrayValue: Equatable where T: Equatable { }
 extension LossyArrayValue: Hashable where T: Hashable { }
+
+extension LossyArrayValue: DefaultValueProvider {
+    
+    public typealias DefaultType = [T]
+    
+    public static var hasDefaultValue: DefaultType {
+        []
+    }
+}

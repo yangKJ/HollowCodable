@@ -18,57 +18,31 @@ public protocol DefaultValueProvider {
     static var hasDefaultValue: DefaultType { get }
 }
 
-extension Int: DefaultValueProvider {
-    public static let hasDefaultValue: Int = 0
+extension DefaultValueProvider where Self: FixedWidthInteger {
+    public static var hasDefaultValue: Self {
+        return .zero
+    }
 }
 
-extension Int8: DefaultValueProvider {
-    public static let hasDefaultValue: Int8 = 0
+extension DefaultValueProvider where Self: BinaryFloatingPoint {
+    public static var hasDefaultValue: Self {
+        return .zero
+    }
 }
 
-extension Int16: DefaultValueProvider {
-    public static let hasDefaultValue: Int16 = 0
-}
-
-extension Int32: DefaultValueProvider {
-    public static let hasDefaultValue: Int32 = 0
-}
-
-extension Int64: DefaultValueProvider {
-    public static let hasDefaultValue: Int64 = 0
-}
-
-extension UInt: DefaultValueProvider {
-    public static let hasDefaultValue: UInt = 0
-}
-
-extension UInt8: DefaultValueProvider {
-    public static let hasDefaultValue: UInt8 = 0
-}
-
-extension UInt16: DefaultValueProvider {
-    public static let hasDefaultValue: UInt16 = 0
-}
-
-extension UInt32: DefaultValueProvider {
-    public static let hasDefaultValue: UInt32 = 0
-}
-
-extension UInt64: DefaultValueProvider {
-    public static let hasDefaultValue: UInt64  = 0
-}
-
-extension Float: DefaultValueProvider {
-    public static let hasDefaultValue: Float = 0.0
-}
-
-extension CGFloat: DefaultValueProvider {
-    public static let hasDefaultValue: CGFloat = 0.0
-}
-
-extension Double: DefaultValueProvider {
-    public static let hasDefaultValue: Double = 0.0
-}
+extension Int: DefaultValueProvider { }
+extension Int8: DefaultValueProvider { }
+extension Int16: DefaultValueProvider { }
+extension Int32: DefaultValueProvider { }
+extension Int64: DefaultValueProvider { }
+extension UInt: DefaultValueProvider { }
+extension UInt8: DefaultValueProvider { }
+extension UInt16: DefaultValueProvider { }
+extension UInt32: DefaultValueProvider { }
+extension UInt64: DefaultValueProvider { }
+extension Float: DefaultValueProvider { }
+extension Double: DefaultValueProvider { }
+extension CGFloat: DefaultValueProvider { }
 
 extension String: DefaultValueProvider {
     public static let hasDefaultValue: String = ""
@@ -79,23 +53,29 @@ extension Bool: DefaultValueProvider {
 }
 
 extension Decimal: DefaultValueProvider {
-    public static let hasDefaultValue: Decimal = Decimal(0)
+    public static let hasDefaultValue: Decimal = .zero
 }
 
 extension Set: DefaultValueProvider where Set.Element: Codable {
-    public static var hasDefaultValue: Set<Set.Element> {
-        return Set<Set.Element>()
+    public static var hasDefaultValue: Set<Element> {
+        return Set<Element>()
     }
 }
 
 extension Array: DefaultValueProvider where Array.Element: Codable {
-    public static var hasDefaultValue: [Element] {
-        return []
+    public static var hasDefaultValue: Array<Element> {
+        return Array<Element>()
     }
 }
 
-extension Dictionary: DefaultValueProvider where Dictionary.Value: Codable {
-    public static var hasDefaultValue: [Key: Value] {
-        return [:]
+extension Dictionary: DefaultValueProvider where Dictionary.Key: Hashable, Dictionary.Value: Codable {
+    public static var hasDefaultValue: Dictionary<Key, Value> {
+        return Dictionary<Key, Value>()
+    }
+}
+
+extension Optional: DefaultValueProvider where Wrapped: Codable {
+    public static var hasDefaultValue: Optional<Wrapped> {
+        return Optional<Any>.none as? Wrapped
     }
 }

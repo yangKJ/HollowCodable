@@ -32,3 +32,10 @@ public struct LosslessStringValue<T: LosslessStringConvertible>: Transformer whe
         value.description
     }
 }
+
+extension LosslessStringValue: DefaultValueProvider {
+    
+    public static var hasDefaultValue: T {
+        T.init("")!
+    }
+}

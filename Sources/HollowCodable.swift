@@ -82,3 +82,6 @@ extension String: HollowCodable { }
 extension Bool: HollowCodable { }
 extension Data: HollowCodable { }
 extension Date: HollowCodable { }
+extension UUID: HollowCodable { }
+extension URL: HollowCodable { }
+extension Decimal: HollowCodable { }

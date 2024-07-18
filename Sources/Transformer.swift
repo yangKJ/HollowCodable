@@ -157,3 +157,19 @@ extension Dictionary: Transformer where Key: Codable, Value: HollowCodable {
         self = dict
     }
 }
+
+extension Optional: Transformer where Wrapped: Codable {
+    public typealias DecodeType = Optional
+    public typealias EncodeType = Optional
+    public init?(value: Any) {
+        if let val = value as? DecodeType {
+            self = val
+        } else if let val = value as? Wrapped {
+            self = Optional(val)
+        } else if Wrapped.self == String.self, let val = Hollow.transfer2String(with: value) {
+            self = Optional(val as! Wrapped)
+        } else {
+            return nil
+        }
+    }
+}

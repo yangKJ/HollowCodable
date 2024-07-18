@@ -9,7 +9,7 @@ import Foundation
 
 public typealias BackedCoding<T: Codable & CustomStringConvertible> = AnyBacked<CustomStringValue<T>>
 
-public typealias CustomStringValue<T: CustomStringConvertible> = AutoConvertedValue<T> where T: Codable
+public typealias CustomStringValue<T: Codable & CustomStringConvertible> = AutoConvertedValue<T>
 
 /// Decodes automatic type conversion.
 /// `@AutoConvertCoding` decodes String and filters invalid values if the Decoder is unable to decode the value.
@@ -40,6 +40,24 @@ public struct AutoConvertedValue<T: CustomStringConvertible>: Transformer where 
     
     public func transform() throws -> T? {
         value
+    }
+}
+
+extension AutoConvertedValue: DefaultValueProvider where T: Numeric {
+    public static var hasDefaultValue: T {
+        return .zero
+    }
+}
+
+extension AutoConvertedValue where T == String {
+    public static var hasDefaultValue: T {
+        ""
+    }
+}
+
+extension AutoConvertedValue where T == Bool {
+    public static var hasDefaultValue: T {
+        false
     }
 }
 
@@ -134,32 +152,32 @@ extension CustomStringValue {
         return nil
     }
     
-    static func decodeValue<Binary>(with container: SingleValueDecodingContainer, type: Binary.Type) -> T? where Binary: BinaryInteger & LosslessStringConvertible {
+    static func decodeValue<TT>(with container: SingleValueDecodingContainer, type: TT.Type) -> T? where TT: FixedWidthInteger & LosslessStringConvertible {
         if let value = try? container.decode(Int64.self) {
-            return Binary(value) as? T
+            return TT(value) as? T
         } else if let value = try? container.decode(String.self) {
-            return Binary(value) as? T
+            return TT(value) as? T
         } else if let value = try? container.decode(UInt64.self) {
-            return Binary(value) as? T
+            return TT(value) as? T
         } else if let value = try? container.decode(Double.self) {
-            return Binary(value) as? T
+            return TT(value) as? T
         } else if let value = try? container.decode(Bool.self) {
-            return Binary(value ? 1 : 0) as? T
+            return TT(value ? 1 : 0) as? T
         }
         return nil
     }
     
-    static func decodeValue<Binary>(with container: SingleValueDecodingContainer, type: Binary.Type) -> T? where Binary: BinaryFloatingPoint & LosslessStringConvertible {
+    static func decodeValue<TT>(with container: SingleValueDecodingContainer, type: TT.Type) -> T? where TT: BinaryFloatingPoint & LosslessStringConvertible {
         if let value = try? container.decode(Int64.self) {
-            return Binary(value) as? T
+            return TT(value) as? T
         } else if let value = try? container.decode(String.self) {
-            return Binary(value) as? T
+            return TT(value) as? T
         } else if let value = try? container.decode(UInt64.self) {
-            return Binary(value) as? T
+            return TT(value) as? T
         } else if let value = try? container.decode(Double.self) {
-            return Binary(value) as? T
+            return TT(value) as? T
         } else if let value = try? container.decode(Bool.self) {
-            return Binary(value ? 1 : 0) as? T
+            return TT(value ? 1 : 0) as? T
         }
         return nil
     }
