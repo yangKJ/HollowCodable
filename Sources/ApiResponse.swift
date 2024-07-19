@@ -45,11 +45,11 @@ extension ApiResponse where T: HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> Self {
-        var result = try Hollow.decode(Self.self, element: element, subType: T.self)
-        result.data = result.data?.mutating({
+        var response = try JSONDeserializer<Self>.deserialize(from: element, using: T.self)
+        response.data = response.data?.mutating({
             $0.didFinishMapping()
         }) as? T
-        return result
+        return response
     }
 }
 
@@ -64,7 +64,7 @@ extension ApiResponse where T: Collection, T.Element: HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> Self {
-        var response = try Hollow.decode(Self.self, element: element, subType: T.Element.self)
+        var response = try JSONDeserializer<Self>.deserialize(from: element, using: T.Element.self)
         response.data = response.data?.map {
             $0.mutating {
                 $0.didFinishMapping()
@@ -85,7 +85,7 @@ extension HollowCodable where Self: HasResponsable, DataType: HollowCodable {
     }
     
     public static func deserialize(element: Any) throws -> ApiResponse<DataType> {
-        var response = try Hollow.decode(ApiResponse<DataType>.self, element: element, subType: DataType.self)
+        var response = try JSONDeserializer<ApiResponse<DataType>>.deserialize(from: element, using: DataType.self)
         response.data = response.data?.mutating({
             $0.didFinishMapping()
         }) as? DataType
@@ -104,7 +104,7 @@ extension HollowCodable where Self: HasResponsable, DataType: Collection, DataTy
     }
     
     public static func deserialize(element: Any) throws -> ApiResponse<[DataType.Element]> {
-        var response = try Hollow.decode(ApiResponse<[DataType.Element]>.self, element: element, subType: DataType.Element.self)
+        var response = try JSONDeserializer<ApiResponse<[DataType.Element]>>.deserialize(from: element, using: DataType.Element.self)
         response.data = response.data?.map {
             $0.mutating {
                 $0.didFinishMapping()

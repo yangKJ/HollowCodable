@@ -9,16 +9,26 @@ import Foundation
 
 extension HollowCodable {
     
-    public static func deserialize(from element: Any) -> Self? {
+    /// Deserializes into a model.
+    /// - Parameters:
+    ///   - element: Bedeserialize data value.
+    ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
+    /// - Returns: Model.
+    public static func deserialize(from element: Any, designatedPath: String? = nil) -> Self? {
         do {
-            return try deserialize(element: element)
+            return try deserialize(element: element, designatedPath: designatedPath)
         } catch {
             return nil
         }
     }
     
-    public static func deserialize(element: Any) throws -> Self {
-        return try Hollow.decode(Self.self, element: element, subType: Self.self).mutating {
+    /// Deserializes into a model.
+    /// - Parameters:
+    ///   - element: Bedeserialize data value.
+    ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
+    /// - Returns: Model.
+    public static func deserialize(element: Any, designatedPath: String? = nil) throws -> Self {
+        try JSONDeserializer<Self>.deserialize(from: element, designatedPath: designatedPath, using: Self.self).mutating {
             $0.didFinishMapping()
         }
     }
@@ -26,16 +36,26 @@ extension HollowCodable {
 
 extension Collection where Element: HollowCodable {
     
-    public static func deserialize(from element: Any) -> [Element]? {
+    /// Deserializes into an array of models, such as `[{...}, {...}, {...}]`.
+    /// - Parameters:
+    ///   - element: Bedeserialize data value.
+    ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
+    /// - Returns: Array of models.
+    public static func deserialize(from element: Any, designatedPath: String? = nil) -> [Element]? {
         do {
-            return try deserialize(element: element)
+            return try deserialize(element: element, designatedPath: designatedPath)
         } catch {
             return nil
         }
     }
     
-    public static func deserialize(element: Any) throws -> [Element] {
-        return try Hollow.decode([Element].self, element: element, subType: Element.self).map {
+    /// Deserializes into an array of models, such as `[{...}, {...}, {...}]`.
+    /// - Parameters:
+    ///   - element: Bedeserialize data value.
+    ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
+    /// - Returns: Array of models.
+    public static func deserialize(element: Any, designatedPath: String? = nil) throws -> [Element] {
+        try JSONDeserializer<[Element]>.deserialize(from: element, designatedPath: designatedPath, using: Element.self).map {
             $0.mutating {
                 $0.didFinishMapping()
             }
@@ -45,36 +65,29 @@ extension Collection where Element: HollowCodable {
 
 extension Dictionary where Key: Decodable, Value: HollowCodable {
     
-    public static func deserialize(from element: Any) -> Dictionary<Key, Value>? {
+    /// Deserializes into an dictionary of models.
+    /// - Parameters:
+    ///   - element: Bedeserialize data value.
+    ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
+    /// - Returns: Dictionary of models.
+    public static func deserialize(from element: Any, designatedPath: String? = nil) -> Dictionary<Key, Value>? {
         do {
-            return try deserialize(element: element)
+            return try deserialize(element: element, designatedPath: designatedPath)
         } catch {
             return nil
         }
     }
     
-    public static func deserialize(element: Any) throws -> Dictionary<Key, Value> {
-        return try Hollow.decode([Key: Value].self, element: element, subType: Value.self).mapValues {
+    /// Deserializes into an dictionary of models.
+    /// - Parameters:
+    ///   - element: Bedeserialize data value.
+    ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
+    /// - Returns: Dictionary of models.
+    public static func deserialize(element: Any, designatedPath: String? = nil) throws -> Dictionary<Key, Value> {
+        try JSONDeserializer<[Key:Value]>.deserialize(from: element, designatedPath: designatedPath, using: Value.self).mapValues {
             $0.mutating {
                 $0.didFinishMapping()
             }
         }
-    }
-}
-
-extension Hollow {
-    
-    static func decode<T: Decodable>(_ type: T.Type, element: Any, subType: HollowCodable.Type) throws -> T {
-        let decoder = JSONDecoder()
-        decoder.setupKeyStrategy(subType)
-        let data: Data
-        if let data_ = element as? Data {
-            data = data_
-        } else if let string = element as? String {
-            data = string.data(using: .utf8, allowLossyConversion: false) ?? Data()
-        } else {
-            data = try JSONSerialization.data(withJSONObject: element)
-        }
-        return try decoder.decode(type, from: data)
     }
 }

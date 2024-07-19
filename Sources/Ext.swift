@@ -61,6 +61,13 @@ extension Collection {
     }
 }
 
+extension HollowWrapper where Base == Data {
+    
+    func toJSONObject() -> Any? {
+        try? JSONSerialization.jsonObject(with: base, options: .allowFragments)
+    }
+}
+
 extension HollowWrapper where Base == String {
     
     /// Whether the string is empty after excluding white space and line feed string.
@@ -73,7 +80,7 @@ extension HollowWrapper where Base == String {
             return nil
         }
         return base.data(using: .utf8).flatMap {
-            try? JSONSerialization.jsonObject(with: $0)
+            try? JSONSerialization.jsonObject(with: $0, options: .allowFragments)
         }
     }
     

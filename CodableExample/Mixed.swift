@@ -89,9 +89,7 @@ struct MixedTests: HollowCodable {
     }
     
     mutating func didFinishMapping() {
-        if title == nil {
-            title = "123"
-        }
+        title = (title ?? "") + "Give me a Star."
         if color == nil {
             color = .green
         }

@@ -28,3 +28,4 @@ extension HollowCompatible {
 extension String: HollowCompatible { }
 extension Double: HollowCompatible { }
 extension NSDecimalNumber: HollowCompatible { }
+extension Data: HollowCompatible { }

@@ -10,6 +10,8 @@ import Foundation
 enum TestCase: String, CaseIterable {
     case compatiblesHandyJSONValueTests = "Compatibles HandyJSON test"
     
+    case designatedPath = "Designated path test"
+    
     case emptyDefaultsTests = "Empty default value test"
     case hasNotKeyTests = "Has not the key test"
     case enumTests = "Enum test"
@@ -42,6 +44,9 @@ extension TestCase {
         case .mix:
             let data = Res.jsonData("Codable")!
             return ApiResponse<[MixedTests]>.deserialize(from: data)
+        case .designatedPath:
+            let data = Res.jsonData("Codable")!
+            return [MixedTests].deserialize(from: data, designatedPath: "data")?.last
         case .compatiblesHandyJSONValueTests:
             let jsonString = """
             {
