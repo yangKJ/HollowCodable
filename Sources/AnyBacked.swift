@@ -58,7 +58,7 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             }
             return
         }
-        if T.hasAnyValue(T.self) {
+        if T.useCodableAnyValueDecoding {
             let container = try decoder.singleValueContainer()
             let value = try container.decode(CodableAnyValue.self)
             self.wrappedValue = try T.init(value: value)?.transform()

@@ -11,9 +11,19 @@ public struct JSONDeserializer<T: Decodable> {
     
     /// Finds the internal dictionary in any as the `designatedPath` specified, and map it to a Model.
     /// `designatedPath` is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
-    public static func deserialize(from element: Any, designatedPath: String? = nil, using type: HollowCodable.Type) throws -> T {
+    public static func deserialize(from element: Any, designatedPath: String? = nil, options: HollowDecoderOptions = [], using type: HollowCodable.Type) throws -> T {
         let decoder = JSONDecoder()
-        decoder.setupKeyStrategy(type)
+        decoder.setupKeyStrategy(type, options: options)
+        if options.contains(.allowsJSON5) {
+            if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
+                decoder.allowsJSON5 = true
+            }
+        }
+        if options.contains(.assumesTopLevelDictionary) {
+            if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
+                decoder.assumesTopLevelDictionary = true
+            }
+        }
         let data: Data
         if let designatedPath = designatedPath, !designatedPath.isEmpty {
             if let obj = toObject(element) {

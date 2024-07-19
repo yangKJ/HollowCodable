@@ -16,6 +16,8 @@ public protocol DecodeTransformer: Decodable {
     func transform() throws -> DecodeType?
     
     static var selfDecodingFromDecoder: Bool { get }
+    
+    static var useCodableAnyValueDecoding: Bool { get }
 }
 
 extension DecodeTransformer {
@@ -24,11 +26,8 @@ extension DecodeTransformer {
         false
     }
     
-    static func hasAnyValue(_ type: Self.Type) -> Bool {
-        return type == AnyX.self
-        || type == AnyArray.self
-        || type == AnyDictionary.self
-        || type == AnyDictionaryArray.self
+    public static var useCodableAnyValueDecoding: Bool {
+        false
     }
 }
 

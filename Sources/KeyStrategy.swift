@@ -37,7 +37,7 @@ extension JSONEncoder {
 
 extension JSONDecoder {
     
-    func setupKeyStrategy<T: HollowCodable>(_ type: T.Type) {
+    func setupKeyStrategy<T: HollowCodable>(_ type: T.Type, options: HollowDecoderOptions) {
         let mapper = T.setupCodingKeyMappingKeys()
         if !mapper.replaceKeys.isEmpty {
             let keys = mapper.replaceKeys.toDecoderingMappingKeys

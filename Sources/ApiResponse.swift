@@ -36,16 +36,16 @@ public struct ApiResponse<T: Codable>: HasResponsable {
 
 extension ApiResponse where T: HollowCodable {
     
-    public static func deserialize(from element: Any) -> Self? {
+    public static func deserialize(from element: Any, options: HollowDecoderOptions = []) -> Self? {
         do {
-            return try deserialize(element: element)
+            return try deserialize(element: element, options: options)
         } catch {
             return nil
         }
     }
     
-    public static func deserialize(element: Any) throws -> Self {
-        var response = try JSONDeserializer<Self>.deserialize(from: element, using: T.self)
+    public static func deserialize(element: Any, options: HollowDecoderOptions = []) throws -> Self {
+        var response = try JSONDeserializer<Self>.deserialize(from: element, options: options, using: T.self)
         response.data = response.data?.mutating({
             $0.didFinishMapping()
         }) as? T
@@ -55,16 +55,16 @@ extension ApiResponse where T: HollowCodable {
 
 extension ApiResponse where T: Collection, T.Element: HollowCodable {
     
-    public static func deserialize(from element: Any) -> Self? {
+    public static func deserialize(from element: Any, options: HollowDecoderOptions = []) -> Self? {
         do {
-            return try deserialize(element: element)
+            return try deserialize(element: element, options: options)
         } catch {
             return nil
         }
     }
     
-    public static func deserialize(element: Any) throws -> Self {
-        var response = try JSONDeserializer<Self>.deserialize(from: element, using: T.Element.self)
+    public static func deserialize(element: Any, options: HollowDecoderOptions = []) throws -> Self {
+        var response = try JSONDeserializer<Self>.deserialize(from: element, options: options, using: T.Element.self)
         response.data = response.data?.map {
             $0.mutating {
                 $0.didFinishMapping()
@@ -76,16 +76,16 @@ extension ApiResponse where T: Collection, T.Element: HollowCodable {
 
 extension HollowCodable where Self: HasResponsable, DataType: HollowCodable {
     
-    public static func deserialize(from element: Any) -> ApiResponse<DataType>? {
+    public static func deserialize(from element: Any, options: HollowDecoderOptions = []) -> ApiResponse<DataType>? {
         do {
-            return try deserialize(element: element)
+            return try deserialize(element: element, options: options)
         } catch {
             return nil
         }
     }
     
-    public static func deserialize(element: Any) throws -> ApiResponse<DataType> {
-        var response = try JSONDeserializer<ApiResponse<DataType>>.deserialize(from: element, using: DataType.self)
+    public static func deserialize(element: Any, options: HollowDecoderOptions = []) throws -> ApiResponse<DataType> {
+        var response = try JSONDeserializer<ApiResponse<DataType>>.deserialize(from: element, options: options, using: DataType.self)
         response.data = response.data?.mutating({
             $0.didFinishMapping()
         }) as? DataType
@@ -95,16 +95,16 @@ extension HollowCodable where Self: HasResponsable, DataType: HollowCodable {
 
 extension HollowCodable where Self: HasResponsable, DataType: Collection, DataType.Element: HollowCodable {
     
-    public static func deserialize(from element: Any) -> ApiResponse<[DataType.Element]>? {
+    public static func deserialize(from element: Any, options: HollowDecoderOptions = []) -> ApiResponse<[DataType.Element]>? {
         do {
-            return try deserialize(element: element)
+            return try deserialize(element: element, options: options)
         } catch {
             return nil
         }
     }
     
-    public static func deserialize(element: Any) throws -> ApiResponse<[DataType.Element]> {
-        var response = try JSONDeserializer<ApiResponse<[DataType.Element]>>.deserialize(from: element, using: DataType.Element.self)
+    public static func deserialize(element: Any, options: HollowDecoderOptions = []) throws -> ApiResponse<[DataType.Element]> {
+        var response = try JSONDeserializer<ApiResponse<[DataType.Element]>>.deserialize(from: element, options: options, using: DataType.Element.self)
         response.data = response.data?.map {
             $0.mutating {
                 $0.didFinishMapping()

@@ -16,6 +16,10 @@ public struct AnyDictionary: Transformer, DefaultValueProvider {
     public typealias DecodeType = [String: Any]
     public typealias EncodeType = [String: CodableAnyValue]
     
+    public static var useCodableAnyValueDecoding: Bool {
+        true
+    }
+    
     public static var hasDefaultValue: [String: Any] {
         [:]
     }
@@ -49,6 +53,10 @@ public struct AnyDictionaryArray: Transformer, DefaultValueProvider {
     
     public typealias DecodeType = [[String: Any]]
     public typealias EncodeType = [[String: CodableAnyValue]]
+    
+    public static var useCodableAnyValueDecoding: Bool {
+        true
+    }
     
     public static var hasDefaultValue: [[String: Any]] {
         []
@@ -94,6 +102,10 @@ public struct AnyArray: Transformer, DefaultValueProvider {
     public typealias DecodeType = [Any]
     public typealias EncodeType = [CodableAnyValue]
     
+    public static var useCodableAnyValueDecoding: Bool {
+        true
+    }
+    
     public static var hasDefaultValue: [Any] {
         []
     }
@@ -132,6 +144,10 @@ public struct AnyX: Transformer {
     public typealias DecodeType = Any
     public typealias EncodeType = CodableAnyValue
     
+    public static var useCodableAnyValueDecoding: Bool {
+        true
+    }
+    
     public init?(value: Any) {
         guard let value = value as? CodableAnyValue else {
             return nil
@@ -144,9 +160,6 @@ public struct AnyX: Transformer {
     }
     
     public static func transform(from value: Any) throws -> CodableAnyValue {
-        guard let value = CodableAnyValue.init(value: value) else {
-            throw HollowError.transformAnyValueFailed
-        }
-        return value
+        CodableAnyValue.init(value: value) ?? .null
     }
 }

@@ -12,7 +12,6 @@ public enum HollowError: Swift.Error {
     case stringToData
     case dataToString
     case dateToString
-    case transformAnyValueFailed
     case toDictionary
     case toJSONString
 }
@@ -39,8 +38,6 @@ extension HollowError: CustomStringConvertible, LocalizedError {
             return "The data to string is nil."
         case .dateToString:
             return "The value to date is nil."
-        case .transformAnyValueFailed:
-            return "The any to routine value is nil."
         case .toDictionary:
             return "Description Failed to convert to dictionary."
         case .toJSONString:
@@ -58,8 +55,6 @@ extension HollowError: CustomStringConvertible, LocalizedError {
         case .dataToString:
             return nil
         case .dateToString:
-            return nil
-        case .transformAnyValueFailed:
             return nil
         case .toDictionary:
             return nil
