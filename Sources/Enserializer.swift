@@ -31,10 +31,7 @@ extension Encodable where Self: HollowCodable {
         let data = try toData()
         let value = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
         guard let dict = value as? [String: Any] else {
-            let userInfo = [
-                NSLocalizedDescriptionKey: "Description Failed to convert to dictionary."
-            ]
-            throw NSError(domain: "com.condy.hollow.codable", code: -100018, userInfo: userInfo)
+            throw HollowError.toDictionary
         }
         return dict
     }
@@ -43,6 +40,9 @@ extension Encodable where Self: HollowCodable {
         try? toJSONString(prettyPrinted: prettyPrint)
     }
     
+    /// Serializes into a JSON string.
+    /// - Parameter prettyPrinted: Whether to format print (adds line breaks in the JSON)
+    /// - Returns: JSON string.
     public func toJSONString(prettyPrinted: Bool = false) throws -> String {
         let jsonData = try toData(prettyPrint: prettyPrinted)
         return String(decoding: jsonData, as: UTF8.self)
@@ -59,6 +59,9 @@ extension Collection where Element: HollowCodable {
         try? toJSONString(prettyPrinted: prettyPrint)
     }
     
+    /// Serializes into a JSON string.
+    /// - Parameter prettyPrinted: Whether to format print (adds line breaks in the JSON)
+    /// - Returns: JSON string.
     public func toJSONString(prettyPrinted: Bool = false) throws -> String {
         let array = self.toJSON()
         let jsonData: Data
@@ -68,10 +71,7 @@ extension Collection where Element: HollowCodable {
             jsonData = try JSONSerialization.data(withJSONObject: array, options: [])
         }
         guard let string = String(data: jsonData, encoding: String.Encoding.utf8) else {
-            let userInfo = [
-                NSLocalizedDescriptionKey: "The json string is empty."
-            ]
-            throw NSError(domain: "com.condy.hollow.codable", code: -100013, userInfo: userInfo)
+            throw HollowError.toJSONString
         }
         return string
     }
@@ -100,10 +100,7 @@ extension Dictionary where Key: Encodable, Value: HollowCodable {
             jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
         }
         guard let string = String(data: jsonData, encoding: String.Encoding.utf8) else {
-            let userInfo = [
-                NSLocalizedDescriptionKey: "The json string is empty."
-            ]
-            throw NSError(domain: "com.condy.hollow.codable", code: -100013, userInfo: userInfo)
+            throw HollowError.toJSONString
         }
         return string
     }

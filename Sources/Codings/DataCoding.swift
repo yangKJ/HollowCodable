@@ -29,10 +29,7 @@ public struct DataValue<T: DataConverter>: Transformer {
     
     public static func transform(from value: Data) throws -> String {
         guard let string = T.transformToValue(with: value) else {
-            let userInfo = [
-                NSLocalizedDescriptionKey: "The data to string is nil."
-            ]
-            throw NSError(domain: "com.condy.hollow.codable", code: -100014, userInfo: userInfo)
+            throw HollowError.dataToString
         }
         return string
     }

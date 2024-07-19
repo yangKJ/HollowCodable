@@ -145,10 +145,7 @@ public struct AnyX: Transformer {
     
     public static func transform(from value: Any) throws -> CodableAnyValue {
         guard let value = CodableAnyValue.init(value: value) else {
-            let userInfo = [
-                NSLocalizedDescriptionKey: "The any to routine value is nil."
-            ]
-            throw NSError(domain: "com.condy.hollow.codable", code: -100014, userInfo: userInfo)
+            throw HollowError.transformAnyValueFailed
         }
         return value
     }

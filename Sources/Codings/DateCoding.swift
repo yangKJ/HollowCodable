@@ -25,20 +25,14 @@ public struct DateValue<D: DateConverter, E: DateConverter>: Transformer {
     
     public func transform() throws -> Date? {
         guard let dateString = dateString else {
-            let userInfo = [
-                NSLocalizedDescriptionKey: "The value to date is nil."
-            ]
-            throw NSError(domain: "com.condy.hollow.codable", code: -100015, userInfo: userInfo)
+            throw HollowError.dateToString
         }
         return D.transformFromValue(with: dateString)
     }
     
     public static func transform(from value: Date) throws -> String {
         guard let string = E.transformToValue(with: value) else {
-            let userInfo = [
-                NSLocalizedDescriptionKey: "The date to string is nil."
-            ]
-            throw NSError(domain: "com.condy.hollow.codable", code: -100014, userInfo: userInfo)
+            throw HollowError.dateToString
         }
         return string
     }
