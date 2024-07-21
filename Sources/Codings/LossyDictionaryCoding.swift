@@ -53,6 +53,9 @@ public struct LossyDictionaryValue<Key: Hashable & Codable, Value: Codable>: Tra
             } else {
                 return nil
             }
+            if elements.isEmpty {
+                return nil
+            }
             self.value = elements
         } catch {
             return nil

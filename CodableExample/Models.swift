@@ -111,33 +111,32 @@ struct GZIPDataTests: HollowCodable {
     }
 }
 
-struct LossyDictionaryTests: HollowCodable {
+struct LossyTests: HollowCodable {
     @AnyBacked<LossyDictionaryValue> var stringToInt: [String: Int]?
     @LossyDictionaryCoding var intToString: [Int: String]?
+    @AnyBacked<LossyArrayValue> var values: [String]?
+    @LossyArrayCoding var array: [Int]?
+    @LossyArrayCoding var strings: [String]?
     
     @DefaultBacked<LossyDictionaryValue>
     var hasDict: [String: Int]
-}
-
-struct LossyArrayTests: HollowCodable {
-    @LossyArrayCoding var values: [Int]?
-    @LossyArrayCoding var nonPrimitiveValues: [String]?
-    @AnyBacked<LossyArrayValue> var nesting: [String]?
-    
     @DefaultBacked<LossyArrayValue>
     var hasArray: [String]
 }
 
-struct AnyValueDictionaryTests: HollowCodable {
-    @DefaultBacked<AnyDictionary> var defaultDict: [String: Any]
+struct AnyValueTests: HollowCodable {
     //@AnyBacked<AnyDictionary>
     @DictionaryCoding var anyDict: [String: Any]?
-}
-
-struct AnyValueDictionaryArrayTests: HollowCodable {
-    @DefaultBacked<AnyDictionaryArray> var defaultList: [[String: Any]]
     //@AnyBacked<AnyDictionaryArray>
     @ArrayDictionaryCoding var mixList: [[String: Any]]?
+    //@AnyBacked<AnyArray>
+    @ArrayCoding var anyArray: [Any]?
+    //@AnyBacked<AnyX>
+    @AnyXCoding var value: Any?
+    
+    @DefaultBacked<AnyArray> var hasArray: [Any]
+    @DefaultBacked<AnyDictionary> var defaultDict: [String: Any]
+    @DefaultBacked<AnyDictionaryArray> var defaultList: [[String: Any]]
 }
 
 struct BoolTests: HollowCodable {
@@ -155,22 +154,55 @@ struct DecimalNumberTests: HollowCodable {
     @DecimalNumberCoding var decimalNumberAsInt: NSDecimalNumber?
     @DecimalNumberCoding var decimalNumberAsDouble: NSDecimalNumber?
     @DecimalNumberCoding var decimalNumberAsString: NSDecimalNumber?
+    @DecimalNumberCoding var hasDecimalNumber: NSDecimalNumber?
+    
+    @AnyBacked<Decimal> var decimal: Decimal?
 }
 
-struct StringToTests: HollowCodable {
-    @StringToCoding<Int> var int: Int?
-    @LosslessStringCoding<ArticleId> var articleId: ArticleId?
-    @DefaultBacked<LosslessStringValue> var hasString: String
+struct LosslessTests: HollowCodable {
+    @LosslessCoding var int: Int?
+    @LosslessCoding var bool: Bool?
+    @LosslessCoding var intBool: Bool?
+    @LosslessCoding var string: String?
+    @AnyBacked<LosslessValue> var intInvalidBool: Bool?
+    @AnyBacked<LosslessValue> var double: Double?
+    @AnyBacked<LosslessValue> var articleId: ArticleId?
+    @DefaultBacked<LosslessValue> var hasInt: Int
+    @DefaultBacked<LosslessValue> var hasBool: Bool
+    @DefaultBacked<LosslessValue> var hasString: String
+    @DefaultBacked<LosslessValue> var hasDouble: Double
+    @DefaultBacked<LosslessValue> var hasArticleId: ArticleId
+    
+    @LosslessArrayCoding var array: [Bool]?
+    @DefaultBacked<LossyArrayValue> var hasArray: [String]
+    
+    @CustomLosslessCoding var hasCustomInt: Int?
+    @AnyBacked<LosslessHasValue<String, CustomLosslessValue>> var customString: String?
+    @AnyBacked<LosslessArrayHasValue<String, CustomLosslessValue>> var custom: [String]?
+    
     struct ArticleId: LosslessStringConvertible, Codable {
         var description: String
         init?(_ description: String) {
             self.description = description
         }
     }
+    
+    typealias CustomLosslessCoding<T: LosslessStringConvertible & Codable> = AnyBacked<LosslessHasValue<T, CustomLosslessValue>>
+    
+    struct CustomLosslessValue: HasLosslessable {
+        static func losslessDecodableTypes(with decoder: Decoder) -> [Decodable?] {
+            return [
+                try? String.init(from: decoder),
+                try? Bool.init(from: decoder),
+                try? Int.init(from: decoder),
+                38
+            ]
+        }
+    }
 }
 
 struct AutoConversionTests: HollowCodable {
-    @AnyBacked<CustomStringValue> var named: String?
+    @AnyBacked<AutoConvertedValue> var named: String?
     @BackedCoding var mapping: String?
     @BackedCoding var intToString: String?
     @BackedCoding var doubleToString: String?
@@ -182,9 +214,9 @@ struct AutoConversionTests: HollowCodable {
     @AutoConvertedCoding var stringToBool: Bool?
     
     @DefaultBacked<AutoConvertedValue> var hasInt: Int
-    //@DefaultBacked<AutoConvertedValue> var hasBool: Bool
+    @DefaultBacked<AutoConvertedValue> var hasBool: Bool
     @DefaultBacked<AutoConvertedValue> var hasDouble: Double
-    //@DefaultBacked<AutoConvertedValue> var hasString: String
+    @DefaultBacked<AutoConvertedValue> var hasString: String
 }
 
 class NonConformingTests: HollowCodable {
@@ -272,8 +304,14 @@ struct HasNotKeyTests: HollowCodable {
     @AnyBacked<String> var val: String?
     @DefaultBacked<Int> var int: Int
     @BackedCoding<String> var string: String?
-    @FalseBoolCoding var bool: Bool
+    @FalseBoolCoding var falseBool: Bool
+    @TrueBoolCoding var trueBool: Bool
     @HexColorCoding var color: HollowColor?
-    @LossyArrayCoding var array: [Int]?
-    @StringToCoding<Int> var losslessString: Int?
+    @RGBColorCoding var rgb: HollowColor?
+    @LossyArrayCoding var lossyArray: [Int]?
+    @LossyDictionaryCoding var lossyDict: [String: String]?
+    @StringToCoding var losslessInt: Int?
+    @LosslessCoding var losslessString: String?
+    @ArrayCoding var anyArray: [Any]?
+    @DictionaryCoding var anyDict: [String: Any]?
 }

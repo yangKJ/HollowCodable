@@ -9,12 +9,14 @@ import Foundation
 
 public typealias HasDefaultValuable = DefaultValueProvider
 
-/// The @DefaultBacked property wrapper takes a DefaultValueProvider as a parameter.
+/// Provides a default value for missing `Decodable` data.
+/// The `@DefaultBacked` property wrapper takes a DefaultValueProvider as a parameter.
 /// This type provides the default value when a value is not present or is nil.
 public protocol DefaultValueProvider {
     
     associatedtype DefaultType
     
+    /// The fallback value used when decoding fails.
     static var hasDefaultValue: DefaultType { get }
 }
 

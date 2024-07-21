@@ -75,6 +75,6 @@ extension NonConformingValue: DefaultValueProvider {
     public typealias DefaultType = Floating
     
     public static var hasDefaultValue: Floating {
-        0
+        .zero
     }
 }

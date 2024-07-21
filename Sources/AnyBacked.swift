@@ -103,7 +103,15 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
             self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(UInt64.self) {
             self.wrappedValue = try T.init(value: value)?.transform()
+        } else if let value = try? container.decode(UUID.self) {
+            self.wrappedValue = try T.init(value: value)?.transform()
+        } else if let value = try? container.decode(URL.self) {
+            self.wrappedValue = try T.init(value: value)?.transform()
         } else if let value = try? container.decode(Decimal.self) {
+            self.wrappedValue = try T.init(value: value)?.transform()
+        } else if let value = try? container.decode(Date.self) {
+            self.wrappedValue = try T.init(value: value)?.transform()
+        } else if let value = try? container.decode(Data.self) {
             self.wrappedValue = try T.init(value: value)?.transform()
         } else {
             self.wrappedValue = nil
@@ -126,7 +134,12 @@ public typealias AnyBackedCoding<T: Transformer> = AnyBacked<T>
     
     @inlinable public func encode(to encoder: Encoder) throws {
         if T.selfEncodingFromEncoder {
-            try T.transform(from: self.wrappedValue, to: encoder)
+            if let wrappedValue = self.wrappedValue {
+                try T.transform(from: wrappedValue, to: encoder)
+            } else {
+                var container = encoder.singleValueContainer()
+                try container.encodeNil()
+            }
             return
         }
         var container = encoder.singleValueContainer()

@@ -9,7 +9,9 @@ import Foundation
 
 public typealias DefaultBackedCoding<T: Transformer> = DefaultBacked<T> where T: DefaultValueProvider, T.DefaultType == T.DecodeType
 
+/// Decodes values with a reasonable default value.
 /// Provides a default value for missing `Decodable` data.
+/// `@DefaultBacked` attempts to decode a value and falls back to a default type provided by the generic `DefaultValueProvider`.
 @propertyWrapper public struct DefaultBacked<T: Transformer & DefaultValueProvider>: Codable where T.DefaultType == T.DecodeType {
     
     public var wrappedValue: T.DecodeType

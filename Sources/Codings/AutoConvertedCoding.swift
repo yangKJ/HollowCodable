@@ -7,12 +7,11 @@
 
 import Foundation
 
-public typealias BackedCoding<T: Codable & CustomStringConvertible> = AnyBacked<CustomStringValue<T>>
-
-public typealias CustomStringValue<T: Codable & CustomStringConvertible> = AutoConvertedValue<T>
+public typealias BackedCoding<T: Codable & CustomStringConvertible> = AnyBacked<AutoConvertedValue<T>>
 
 /// Decodes automatic type conversion.
 /// `@AutoConvertCoding` decodes String and filters invalid values if the Decoder is unable to decode the value.
+/// Automatic change of type, like int <-> string, bool <-> string.
 public struct AutoConvertedValue<T: CustomStringConvertible>: Transformer where T: Codable {
     
     let value: T
@@ -43,25 +42,28 @@ public struct AutoConvertedValue<T: CustomStringConvertible>: Transformer where 
     }
 }
 
-extension AutoConvertedValue: DefaultValueProvider where T: Numeric {
+extension AutoConvertedValue: DefaultValueProvider {
     public static var hasDefaultValue: T {
-        return .zero
+        switch T.self {
+        case is any FloatingPoint.Type:
+            return 0.0 as! T
+        case is any FixedWidthInteger.Type:
+            return 0 as! T
+        case is any Numeric.Type:
+            return 0 as! T
+        case is Bool.Type:
+            return false as! T
+        case is String.Type:
+            return "" as! T
+        case is Decimal.Type:
+            return Decimal.zero as! T
+        default:
+            return Optional<Any>.none as! T
+        }
     }
 }
 
-extension AutoConvertedValue where T == String {
-    public static var hasDefaultValue: T {
-        ""
-    }
-}
-
-extension AutoConvertedValue where T == Bool {
-    public static var hasDefaultValue: T {
-        false
-    }
-}
-
-extension CustomStringValue {
+extension AutoConvertedValue {
     
     static func decodeValue(with decoder: Decoder) -> T? {
         guard let container = try? decoder.singleValueContainer() else {

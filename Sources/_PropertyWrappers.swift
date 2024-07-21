@@ -141,7 +141,7 @@ public typealias DictionaryCoding   = AnyBacked<AnyDictionary>
 public typealias DictionaryDecoding = AnyBackedDecoding<AnyDictionary>
 public typealias DictionaryEncoding = AnyBackedEncoding<AnyDictionary>
 
-/// Filters any nil values when decoding
+/// Decodes Dictionaries filtering invalid key-value pairs.
 public typealias LossyDictionaryCoding<K: Hashable & Codable, V: Codable>   = AnyBacked<LossyDictionaryValue<K, V>>
 public typealias LossyDictionaryDecoding<K: Hashable & Codable, V: Codable> = AnyBackedDecoding<LossyDictionaryValue<K,V>>
 public typealias LossyDictionaryEncoding<K: Hashable & Codable, V: Codable> = AnyBackedEncoding<LossyDictionaryValue<K,V>>
@@ -158,10 +158,14 @@ public typealias ArrayDictionaryCoding   = AnyBacked<AnyDictionaryArray>
 public typealias ArrayDictionaryDecoding = AnyBackedDecoding<AnyDictionaryArray>
 public typealias ArrayDictionaryEncoding = AnyBackedEncoding<AnyDictionaryArray>
 
-/// Filters any nil values when decoding.
+/// Decodes Dictionaries filtering invalid value pairs.
 public typealias LossyArrayCoding<T: Codable>   = AnyBacked<LossyArrayValue<T>>
 public typealias LossyArrayDecoding<T: Codable> = AnyBackedDecoding<LossyArrayValue<T>>
 public typealias LossyArrayEncoding<T: Codable> = AnyBackedEncoding<LossyArrayValue<T>>
+
+public typealias LosslessArrayCoding<T: Codable & LosslessStringConvertible>   = AnyBacked<LosslessArrayValue<T>>
+public typealias LosslessArrayDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessArrayValue<T>>
+public typealias LosslessArrayEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessArrayValue<T>>
 
 // MARK: - Any
 
@@ -176,14 +180,13 @@ public typealias AnyXEncoding = AnyBackedEncoding<AnyX>
 
 // MARK: - String
 
-public typealias StringToCoding<T: Codable & LosslessStringConvertible>   = AnyBacked<LosslessStringValue<T>>
-public typealias StringToDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessStringValue<T>>
-public typealias StringToEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessStringValue<T>>
+public typealias StringToCoding<T: Codable & LosslessStringConvertible>   = AnyBacked<LosslessValue<T>>
+public typealias StringToDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessValue<T>>
+public typealias StringToEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessValue<T>>
 
-/// Filters any nil values when decoding.
-public typealias LosslessStringCoding<T: Codable & LosslessStringConvertible>   = AnyBacked<LosslessStringValue<T>>
-public typealias LosslessStringDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessStringValue<T>>
-public typealias LosslessStringEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessStringValue<T>>
+public typealias LosslessStringCoding<T: Codable & LosslessStringConvertible>   = AnyBacked<LosslessValue<T>>
+public typealias LosslessStringDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessValue<T>>
+public typealias LosslessStringEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessValue<T>>
 
 /// Automatic change of type, like int <-> string, bool <-> string.
 public typealias AutoConvertedCoding<T: Codable & CustomStringConvertible>   = AnyBacked<AutoConvertedValue<T>>
@@ -193,3 +196,9 @@ public typealias AutoConvertedEncoding<T: Codable & CustomStringConvertible> = A
 public typealias CustomStringCoding<T: Codable & CustomStringConvertible>   = AnyBacked<AutoConvertedValue<T>>
 public typealias CustomStringDecoding<T: Codable & CustomStringConvertible> = AnyBackedDecoding<AutoConvertedValue<T>>
 public typealias CustomStringEncoding<T: Codable & CustomStringConvertible> = AnyBackedEncoding<AutoConvertedValue<T>>
+
+// MARK: - Lossless
+
+public typealias LosslessCoding<T: Codable & LosslessStringConvertible>   = AnyBacked<LosslessValue<T>>
+public typealias LosslessDecoding<T: Codable & LosslessStringConvertible> = AnyBackedDecoding<LosslessValue<T>>
+public typealias LosslessEncoding<T: Codable & LosslessStringConvertible> = AnyBackedEncoding<LosslessValue<T>>

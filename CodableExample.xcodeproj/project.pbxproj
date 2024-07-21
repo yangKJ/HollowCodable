@@ -35,7 +35,7 @@
 		87EC9BCE2C22820C001DD724 /* PointCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BCD2C22820C001DD724 /* PointCoding.swift */; };
 		87EC9BD02C22AD2D001DD724 /* DateCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BCF2C22AD2D001DD724 /* DateCoding.swift */; };
 		87EC9BD22C22AF55001DD724 /* _PropertyWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EC9BD12C22AF55001DD724 /* _PropertyWrappers.swift */; };
-		87F066D52C3E19EA006EB2F0 /* LosslessStringCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F066D42C3E19EA006EB2F0 /* LosslessStringCoding.swift */; };
+		87F066D52C3E19EA006EB2F0 /* LosslessValueCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F066D42C3E19EA006EB2F0 /* LosslessValueCoding.swift */; };
 		87F066D72C3E2283006EB2F0 /* Merger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F066D62C3E2283006EB2F0 /* Merger.swift */; };
 		87F2AB842C1FCF2B006DF62F /* KeyStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB832C1FCF2B006DF62F /* KeyStrategy.swift */; };
 		87F2AB862C1FCFDE006DF62F /* Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F2AB852C1FCFDE006DF62F /* Ext.swift */; };
@@ -73,6 +73,8 @@
 		F76AF7D02C16A604005DC327 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76AF7CF2C16A604005DC327 /* Models.swift */; };
 		F76AF7D22C16B1C5005DC327 /* HollowCodable.podspec in Resources */ = {isa = PBXBuildFile; fileRef = F76AF7D12C16B1C5005DC327 /* HollowCodable.podspec */; };
 		F76AF7D42C16B201005DC327 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F76AF7D32C16B201005DC327 /* README.md */; };
+		F770C5032C4CA03A00C42037 /* HasLosslessable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F770C5022C4CA03A00C42037 /* HasLosslessable.swift */; };
+		F770C5052C4CAB3900C42037 /* LosslessArrayCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F770C5042C4CAB3900C42037 /* LosslessArrayCoding.swift */; };
 		F7B9978E2C2723C9006D1C45 /* RFC2822DateCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B9978D2C2723C9006D1C45 /* RFC2822DateCoding.swift */; };
 		F7B997902C2723E7006D1C45 /* RFC3339DateCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B9978F2C2723E7006D1C45 /* RFC3339DateCoding.swift */; };
 		F7B997942C272CF4006D1C45 /* Base64DataCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B997932C272CF4006D1C45 /* Base64DataCoding.swift */; };
@@ -110,7 +112,7 @@
 		87EC9BCD2C22820C001DD724 /* PointCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointCoding.swift; sourceTree = "<group>"; };
 		87EC9BCF2C22AD2D001DD724 /* DateCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCoding.swift; sourceTree = "<group>"; };
 		87EC9BD12C22AF55001DD724 /* _PropertyWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _PropertyWrappers.swift; sourceTree = "<group>"; };
-		87F066D42C3E19EA006EB2F0 /* LosslessStringCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LosslessStringCoding.swift; sourceTree = "<group>"; };
+		87F066D42C3E19EA006EB2F0 /* LosslessValueCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LosslessValueCoding.swift; sourceTree = "<group>"; };
 		87F066D62C3E2283006EB2F0 /* Merger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Merger.swift; sourceTree = "<group>"; };
 		87F2AB832C1FCF2B006DF62F /* KeyStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStrategy.swift; sourceTree = "<group>"; };
 		87F2AB852C1FCFDE006DF62F /* Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ext.swift; sourceTree = "<group>"; };
@@ -150,6 +152,8 @@
 		F76AF7CF2C16A604005DC327 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		F76AF7D12C16B1C5005DC327 /* HollowCodable.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HollowCodable.podspec; sourceTree = SOURCE_ROOT; };
 		F76AF7D32C16B201005DC327 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		F770C5022C4CA03A00C42037 /* HasLosslessable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasLosslessable.swift; sourceTree = "<group>"; };
+		F770C5042C4CAB3900C42037 /* LosslessArrayCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LosslessArrayCoding.swift; sourceTree = "<group>"; };
 		F7B9978D2C2723C9006D1C45 /* RFC2822DateCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC2822DateCoding.swift; sourceTree = "<group>"; };
 		F7B9978F2C2723E7006D1C45 /* RFC3339DateCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFC3339DateCoding.swift; sourceTree = "<group>"; };
 		F7B997932C272CF4006D1C45 /* Base64DataCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64DataCoding.swift; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 				F752E05F2C41F4F500C8C42B /* EncodeTransformer.swift */,
 				87F2AB872C200C8A006DF62F /* Enserializer.swift */,
 				87F2AB852C1FCFDE006DF62F /* Ext.swift */,
+				F770C5022C4CA03A00C42037 /* HasLosslessable.swift */,
 				F76AF7AD2C16A415005DC327 /* Hollow.swift */,
 				F76AF7B22C16A415005DC327 /* HollowCodable.swift */,
 				8768D38B2C4A5CC700B48517 /* HollowDecoderOptions.swift */,
@@ -282,7 +287,8 @@
 				F76AF7AA2C16A415005DC327 /* EnumCoding.swift */,
 				F76AF7AC2C16A415005DC327 /* HexColorCoding.swift */,
 				F76AF7AF2C16A415005DC327 /* ISO8601DateCoding.swift */,
-				87F066D42C3E19EA006EB2F0 /* LosslessStringCoding.swift */,
+				F770C5042C4CAB3900C42037 /* LosslessArrayCoding.swift */,
+				87F066D42C3E19EA006EB2F0 /* LosslessValueCoding.swift */,
 				F71C68562C3A4D0B0071EC9E /* LossyArrayCoding.swift */,
 				F71C68582C3A4D220071EC9E /* LossyDictionaryCoding.swift */,
 				8795AF492C4106D200C022A4 /* NonConformingCoding.swift */,
@@ -375,6 +381,7 @@
 				F7046ACB2C42FB5300D0038F /* BooleanTogglable.swift in Sources */,
 				F76AF7922C16A29A005DC327 /* ContentView.swift in Sources */,
 				87199B3C2C34FDB1008FFF19 /* TransformType.swift in Sources */,
+				F770C5052C4CAB3900C42037 /* LosslessArrayCoding.swift in Sources */,
 				877482A92C36393E0056B778 /* ISO8601DateTransform.swift in Sources */,
 				877482A52C36342B0056B778 /* DateFormatterTransform.swift in Sources */,
 				F71C68552C3815F90071EC9E /* TestCase.swift in Sources */,
@@ -393,7 +400,7 @@
 				87F2AB882C200C8A006DF62F /* Enserializer.swift in Sources */,
 				877482B52C367A060056B778 /* Operators.swift in Sources */,
 				877482A12C3631FD0056B778 /* TimestampDateTransform.swift in Sources */,
-				87F066D52C3E19EA006EB2F0 /* LosslessStringCoding.swift in Sources */,
+				87F066D52C3E19EA006EB2F0 /* LosslessValueCoding.swift in Sources */,
 				876D56A32C18333C0006E25E /* AnyBacked.swift in Sources */,
 				876D56A52C183D6F0006E25E /* RGBAColorCoding.swift in Sources */,
 				F747FFD82C232328001A4680 /* DefaultValueProvider.swift in Sources */,
@@ -433,6 +440,7 @@
 				F76AF7C92C16A415005DC327 /* HollowCodable.swift in Sources */,
 				877482A72C36355C0056B778 /* DateFormatTransform.swift in Sources */,
 				F76AF7B92C16A415005DC327 /* DataCoding.swift in Sources */,
+				F770C5032C4CA03A00C42037 /* HasLosslessable.swift in Sources */,
 				877482B32C3677CB0056B778 /* DateTransform.swift in Sources */,
 				F71C68532C38155A0071EC9E /* HomeListView.swift in Sources */,
 				F76AF7CE2C16A599005DC327 /* Res.swift in Sources */,

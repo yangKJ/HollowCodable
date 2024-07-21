@@ -17,7 +17,7 @@ public protocol EncodeTransformer: Encodable {
     
     static func transform(from value: DecodeType) throws -> EncodeType
     
-    static func transform(from value: DecodeType?, to encoder: Encoder) throws
+    static func transform(from value: DecodeType, to encoder: Encoder) throws
 }
 
 extension EncodeTransformer {
@@ -26,7 +26,7 @@ extension EncodeTransformer {
         false
     }
     
-    public static func transform(from value: DecodeType?, to encoder: Encoder) throws {
+    public static func transform(from value: DecodeType, to encoder: Encoder) throws {
         
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Decodes Arrays filtering invalid values if applicable
+/// Decodes Arrays filtering invalid values if applicable.
 /// `@LossyArrayCoding` decodes Arrays and filters invalid values if the Decoder is unable to decode the value.
 /// This is useful if the Array is intended to contain non-optional types.
 public struct LossyArrayValue<T: Codable>: Transformer {
@@ -38,6 +38,9 @@ public struct LossyArrayValue<T: Codable>: Transformer {
             } catch {
                 _ = try? container.superDecoder()
             }
+        }
+        if items.isEmpty {
+            return nil
         }
         self.value = items
     }

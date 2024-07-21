@@ -14,6 +14,11 @@ enum TestCase: String, CaseIterable {
     
     case emptyDefaultsTests = "Empty default value test"
     case hasNotKeyTests = "Has not the key test"
+    case losslessTests = "Lossless value test"
+    case lossyTests = "Lossy value test"
+    case anyValueTests = "Any value test"
+    case autoConversionTests = "Automatic type conversion test"
+    
     case enumTests = "Enum test"
     case hexColor = "Hex to color test"
     case rgbColor = "RGB to color test"
@@ -21,15 +26,9 @@ enum TestCase: String, CaseIterable {
     case iso8601DeteTests = "ISO8601 date formatter test"
     case base64DataTests = "Base 64 string to data"
     case gzipDataTests = "Custom gzip string to data"
-    case lossyDictionaryTests = "Lossy dictionary test"
-    case lossyArrayTests = "Lossy array and any value dict array"
-    case anyValueDictionaryTests = "Any value dictionary test"
-    case anyValueDictionaryArrayTests = "Any value dictionary array test"
     case boolTests = "Bool as int/string test"
     case decimalNumberTests = "NSDecimalNumber as int/double/string"
     case pointTests = "CGPoint tests"
-    case stringToTests = "Lossless string value"
-    case autoConversionTests = "Automatic type conversion test"
     case nonConformingTests = "Non conforming float/double value"
     
     case composition = "Nesting test"
@@ -134,7 +133,7 @@ extension TestCase {
         case .gzipDataTests:
             let jsonString = "{\"gzip\":\"H4sIAAAAAAAAAzOocHM2c7RwAQBIoAw7CAAAAA==\"}"
             return GZIPDataTests.deserialize(from: jsonString)
-        case .lossyDictionaryTests:
+        case .lossyTests:
             let jsonString = """
             {
                 "stringToInt": {
@@ -148,22 +147,17 @@ extension TestCase {
                     "2": "two",
                     "3": null,
                     "4": 100
-                }
+                },
+                "array": [1, null, "3", false, 4],
+                "values": ["7", 8, null, "9"],
+                "strings": ["Condy", "Yuan", null, ["Yang", null]]
             }
             """
-            return LossyDictionaryTests.deserialize(from: jsonString)
-        case .lossyArrayTests:
+            return LossyTests.deserialize(from: jsonString)
+        case .anyValueTests:
             let jsonString = """
             {
-                "values": [1, null, "3", false, 4],
-                "nonPrimitiveValues": ["7", 8, null, "9"],
-                "nesting": ["Condy", "Yuan", null, ["Yang", null]]
-            }
-            """
-            return LossyArrayTests.deserialize(from: jsonString)
-        case .anyValueDictionaryTests:
-            let jsonString = """
-            {
+                "value": 5,
                 "defaultDict": null,
                 "anyDict": {
                     "sub": {
@@ -176,13 +170,7 @@ extension TestCase {
                     }],
                     "three": null,
                     "val": 28
-                }
-            }
-            """
-            return AnyValueDictionaryTests.deserialize(from: jsonString)
-        case .anyValueDictionaryArrayTests:
-            let jsonString = """
-            {
+                },
                 "defaultList": null,
                 "mixList": [{
                     "benc": "Condy"
@@ -193,10 +181,11 @@ extension TestCase {
                         "val": 718
                     },
                     "named": "Yuan"
-                }]
+                }],
+                "anyArray": [1, "2", true, ["3", 4]]
             }
             """
-            return AnyValueDictionaryArrayTests.deserialize(from: jsonString)
+            return AnyValueTests.deserialize(from: jsonString)
         case .boolTests:
             let jsonString = """
             {
@@ -214,7 +203,8 @@ extension TestCase {
                 "decimalNumber": null,
                 "decimalNumberAsInt": 2,
                 "decimalNumberAsDouble": 35623.56,
-                "decimalNumberAsString": "120.8"
+                "decimalNumberAsString": "120.8",
+                "decimal": 5.0
             }
             """
             return DecimalNumberTests.deserialize(from: jsonString)
@@ -229,14 +219,22 @@ extension TestCase {
             }
             """
             return PointTests.deserialize(from: jsonString)
-        case .stringToTests:
+        case .losslessTests:
             let jsonString = """
             {
                 "int": "100",
-                "articleId": "abc"
+                "bool": "true",
+                "intBool": 1,
+                "intInvalidBool": 2,
+                "string": 42,
+                "double": "7.1",
+                "articleId": "abc",
+                "array": [0, 1, "2", null, 3, true],
+                "customString": null,
+                "custom": ["1", "3", 4, null]
             }
             """
-            return StringToTests.deserialize(from: jsonString)
+            return LosslessTests.deserialize(from: jsonString)
         case .autoConversionTests:
             let jsonString = """
             {

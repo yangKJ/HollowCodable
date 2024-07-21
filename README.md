@@ -291,7 +291,7 @@ struct DecimalNumberTests: HollowCodable {
 
 ### String
 
-- LosslessStringCoding: Decodes String and filters invalid values if the Decoder is unable to decode the value.
+- LosslessStringCoding: Decodes Codable values into their respective preferred types.
 - AutoConvertedCoding: Automatic change of type, like int <-> string, bool <-> string.
 
 ```swift
@@ -493,8 +493,8 @@ let json = model.toJSONString(prettyPrint: true)
 - [@AutoConvertCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/AutoConvertCoding.swift): Decodes String and filters invalid values if the Decoder is unable to decode the value.
 - [@NonConformingFloatCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/NonConformingCoding.swift): Decodes of a non-conforming Float.
 - [@NonConformingDoubleCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/NonConformingCoding.swift): Decodes of a non-conforming Double.
+- [@LosslessCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/LosslessCoding.swift): Decodes Codable values into their respective preferred types.
 - [@LossyArrayCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/LossyArrayCoding.swift): Decodes Arrays and filters invalid values if the Decoder is unable to decode the value.
-- [@LosslessStringCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/LosslessStringCoding.swift): Decodes String and filters invalid values if the Decoder is unable to decode the value.
 - [@LossyDictionaryCoding](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Codings/LossyDictionaryCoding.swift): Decodes Dictionaries and filters invalid key-value pairs if the Decoder is unable to decode the value.
 
 And support customization, you only need to implement the [Transformer](https://github.com/yangKJ/HollowCodable/blob/master/Sources/Transformer.swift) protocol.
