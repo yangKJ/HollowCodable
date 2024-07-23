@@ -318,7 +318,7 @@ struct HasNotKeyTests: HollowCodable {
 
 class SnakeToCamelTests: HollowCodable {
     @Immutable var named: String?
-    @AnyBacked<AutoConvertedValue> var snkCamel: Int?
+    @BackedCoding var snkCamel: Int?
     @DefaultBacked<AutoConvertedValue<Int>> var oneTwoThree: Int
     @StringToCoding var _oneTwoThree_: String?
     @SecondsSince1970DateCoding var timestampString: Date?

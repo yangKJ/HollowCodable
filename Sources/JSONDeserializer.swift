@@ -14,13 +14,11 @@ public struct JSONDeserializer<T: Decodable> {
     public static func deserialize(from element: Any, designatedPath: String? = nil, options: DecodingOptions = [], using type: HollowCodable.Type) throws -> T {
         let decoder = JSONDecoder()
         decoder.setupKeyStrategy(type, options: options)
-        if options.contains(.allowsJSON5) {
-            if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
+        if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
+            if options.contains(.allowsJSON5) {
                 decoder.allowsJSON5 = true
             }
-        }
-        if options.contains(.assumesTopLevelDictionary) {
-            if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
+            if options.contains(.assumesTopLevelDictionary) {
                 decoder.assumesTopLevelDictionary = true
             }
         }

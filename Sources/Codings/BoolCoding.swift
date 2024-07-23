@@ -10,6 +10,18 @@ import Foundation
 public typealias BoolFalse = BooleanValue<False>
 public typealias BoolTrue = BooleanValue<True>
 
+public protocol BooleanTogglable {
+    static var value: Bool { get }
+}
+
+public enum False: BooleanTogglable {
+    public static let value: Bool = false
+}
+
+public enum True: BooleanTogglable {
+    public static let value: Bool = true
+}
+
 /// String or Int -> Bool converter.
 /// Uses <= 0 as false, and > 0 as true.
 /// Uses lowercase "true"/"yes"/"y"/"t"/"1"/">0" and "false"/"no"/"f"/"n"/"0".
