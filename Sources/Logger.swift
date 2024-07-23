@@ -61,16 +61,25 @@ extension Hollow.Logger {
             let codingPath = codingPath(context: context)
             string += "\(key): No value associated with \(codingPath)"
         case .valueNotFound(_, let context):
-            let codingPath = codingPath(context: context)
             let key = context.codingPath.last?.stringValue ?? ""
+            if key.starts(with: "Index ") {
+                return
+            }
+            let codingPath = codingPath(context: context)
             string += "\(key): " + context.debugDescription + " from \(codingPath)"
         case .typeMismatch(_, let context):
-            let codingPath = codingPath(context: context)
             let key = context.codingPath.last?.stringValue ?? ""
+            if key.starts(with: "Index ") {
+                return
+            }
+            let codingPath = codingPath(context: context)
             string += "\(key): " + context.debugDescription + " from \(codingPath)"
         case .dataCorrupted(let context):
-            let codingPath = codingPath(context: context)
             let key = context.codingPath.last?.stringValue ?? ""
+            if key.starts(with: "Index ") {
+                return
+            }
+            let codingPath = codingPath(context: context)
             string += "\(key): " + context.debugDescription + " from \(codingPath)"
         default:
             return

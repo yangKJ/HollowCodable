@@ -36,7 +36,7 @@ public struct ApiResponse<T: Codable>: HasResponsable {
 
 extension ApiResponse where T: HollowCodable {
     
-    public static func deserialize(from element: Any, options: HollowDecoderOptions = []) -> Self? {
+    public static func deserialize(from element: Any, options: DecodingOptions = []) -> Self? {
         do {
             return try deserialize(element: element, options: options)
         } catch {
@@ -44,7 +44,7 @@ extension ApiResponse where T: HollowCodable {
         }
     }
     
-    public static func deserialize(element: Any, options: HollowDecoderOptions = []) throws -> Self {
+    public static func deserialize(element: Any, options: DecodingOptions = []) throws -> Self {
         var response = try JSONDeserializer<Self>.deserialize(from: element, options: options, using: T.self)
         response.data = response.data?.mutating({
             $0.didFinishMapping()
@@ -55,7 +55,7 @@ extension ApiResponse where T: HollowCodable {
 
 extension ApiResponse where T: Collection, T.Element: HollowCodable {
     
-    public static func deserialize(from element: Any, options: HollowDecoderOptions = []) -> Self? {
+    public static func deserialize(from element: Any, options: DecodingOptions = []) -> Self? {
         do {
             return try deserialize(element: element, options: options)
         } catch {
@@ -63,7 +63,7 @@ extension ApiResponse where T: Collection, T.Element: HollowCodable {
         }
     }
     
-    public static func deserialize(element: Any, options: HollowDecoderOptions = []) throws -> Self {
+    public static func deserialize(element: Any, options: DecodingOptions = []) throws -> Self {
         var response = try JSONDeserializer<Self>.deserialize(from: element, options: options, using: T.Element.self)
         response.data = response.data?.map {
             $0.mutating {
@@ -76,7 +76,7 @@ extension ApiResponse where T: Collection, T.Element: HollowCodable {
 
 extension HollowCodable where Self: HasResponsable, DataType: HollowCodable {
     
-    public static func deserialize(from element: Any, options: HollowDecoderOptions = []) -> ApiResponse<DataType>? {
+    public static func deserialize(from element: Any, options: DecodingOptions = []) -> ApiResponse<DataType>? {
         do {
             return try deserialize(element: element, options: options)
         } catch {
@@ -84,7 +84,7 @@ extension HollowCodable where Self: HasResponsable, DataType: HollowCodable {
         }
     }
     
-    public static func deserialize(element: Any, options: HollowDecoderOptions = []) throws -> ApiResponse<DataType> {
+    public static func deserialize(element: Any, options: DecodingOptions = []) throws -> ApiResponse<DataType> {
         var response = try JSONDeserializer<ApiResponse<DataType>>.deserialize(from: element, options: options, using: DataType.self)
         response.data = response.data?.mutating({
             $0.didFinishMapping()
@@ -95,7 +95,7 @@ extension HollowCodable where Self: HasResponsable, DataType: HollowCodable {
 
 extension HollowCodable where Self: HasResponsable, DataType: Collection, DataType.Element: HollowCodable {
     
-    public static func deserialize(from element: Any, options: HollowDecoderOptions = []) -> ApiResponse<[DataType.Element]>? {
+    public static func deserialize(from element: Any, options: DecodingOptions = []) -> ApiResponse<[DataType.Element]>? {
         do {
             return try deserialize(element: element, options: options)
         } catch {
@@ -103,7 +103,7 @@ extension HollowCodable where Self: HasResponsable, DataType: Collection, DataTy
         }
     }
     
-    public static func deserialize(element: Any, options: HollowDecoderOptions = []) throws -> ApiResponse<[DataType.Element]> {
+    public static func deserialize(element: Any, options: DecodingOptions = []) throws -> ApiResponse<[DataType.Element]> {
         var response = try JSONDeserializer<ApiResponse<[DataType.Element]>>.deserialize(from: element, options: options, using: DataType.Element.self)
         response.data = response.data?.map {
             $0.mutating {

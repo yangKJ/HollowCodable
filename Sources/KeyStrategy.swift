@@ -37,13 +37,24 @@ extension JSONEncoder {
 
 extension JSONDecoder {
     
-    func setupKeyStrategy<T: HollowCodable>(_ type: T.Type, options: HollowDecoderOptions) {
+    func setupKeyStrategy<T: HollowCodable>(_ type: T.Type, options: DecodingOptions) {
         let mapper = T.setupCodingKeyMappingKeys()
-        if !mapper.replaceKeys.isEmpty {
+        if !mapper.replaceKeys.isEmpty || options.hasCodingKeyConvertStrategy() {
             let keys = mapper.replaceKeys.toDecoderingMappingKeys
             self.keyDecodingStrategy = .custom({ codingPath in
-                let key = codingPath.last!.stringValue
-                return PathCodingKey(stringValue: keys[key] ?? key)
+                var key = codingPath.last!.stringValue
+                if let key_ = keys[key] {
+                    key = key_
+                } else if options.contains(.CodingKeysConvertFromSnakeCase) {
+                    key = key.hc.snakeToCamel()
+                } else if options.contains(.CodingKeysConvertFromCamelCase) {
+                    key = key.hc.camelToSnake()
+                } else if options.contains(.CodingKeysConvertFirstLetterLower) {
+                    key = key.hc.firstLetterToLowercase()
+                } else if options.contains(.CodingKeysConvertFirstLetterUpper) {
+                    key = key.hc.firstLetterToUppercase()
+                }
+                return PathCodingKey(stringValue: key)
             })
         }
         if !mapper.dateKeys.isEmpty {

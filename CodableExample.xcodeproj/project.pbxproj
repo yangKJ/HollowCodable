@@ -13,7 +13,7 @@
 		87341A2F2C217D4400DF23FF /* IgnoredKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87341A2E2C217D4400DF23FF /* IgnoredKey.swift */; };
 		8768D3882C49F91600B48517 /* HollowError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768D3872C49F91600B48517 /* HollowError.swift */; };
 		8768D38A2C4A373200B48517 /* JSONDeserializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768D3892C4A373200B48517 /* JSONDeserializer.swift */; };
-		8768D38C2C4A5CC700B48517 /* HollowDecoderOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768D38B2C4A5CC700B48517 /* HollowDecoderOptions.swift */; };
+		8768D38C2C4A5CC700B48517 /* DecodingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768D38B2C4A5CC700B48517 /* DecodingOptions.swift */; };
 		876D56A32C18333C0006E25E /* AnyBacked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A22C18333C0006E25E /* AnyBacked.swift */; };
 		876D56A52C183D6F0006E25E /* RGBAColorCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A42C183D6F0006E25E /* RGBAColorCoding.swift */; };
 		876D56A72C1845470006E25E /* RectCoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876D56A62C1845470006E25E /* RectCoding.swift */; };
@@ -90,7 +90,7 @@
 		87341A2E2C217D4400DF23FF /* IgnoredKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnoredKey.swift; sourceTree = "<group>"; };
 		8768D3872C49F91600B48517 /* HollowError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HollowError.swift; sourceTree = "<group>"; };
 		8768D3892C4A373200B48517 /* JSONDeserializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDeserializer.swift; sourceTree = "<group>"; };
-		8768D38B2C4A5CC700B48517 /* HollowDecoderOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HollowDecoderOptions.swift; sourceTree = "<group>"; };
+		8768D38B2C4A5CC700B48517 /* DecodingOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingOptions.swift; sourceTree = "<group>"; };
 		876D56A22C18333C0006E25E /* AnyBacked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyBacked.swift; sourceTree = "<group>"; };
 		876D56A42C183D6F0006E25E /* RGBAColorCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAColorCoding.swift; sourceTree = "<group>"; };
 		876D56A62C1845470006E25E /* RectCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectCoding.swift; sourceTree = "<group>"; };
@@ -245,6 +245,7 @@
 				877482A22C3632990056B778 /* CodingKeyMapping.swift */,
 				F7B997952C27467D006D1C45 /* Converter.swift */,
 				F752E05D2C41F4D100C8C42B /* DecodeTransformer.swift */,
+				8768D38B2C4A5CC700B48517 /* DecodingOptions.swift */,
 				F7EA7B682C205EA40048E264 /* DefaultBacked.swift */,
 				F747FFD72C232328001A4680 /* DefaultValueProvider.swift */,
 				F76AF7A82C16A415005DC327 /* Deserializer.swift */,
@@ -254,7 +255,6 @@
 				F770C5022C4CA03A00C42037 /* HasLosslessable.swift */,
 				F76AF7AD2C16A415005DC327 /* Hollow.swift */,
 				F76AF7B22C16A415005DC327 /* HollowCodable.swift */,
-				8768D38B2C4A5CC700B48517 /* HollowDecoderOptions.swift */,
 				8768D3872C49F91600B48517 /* HollowError.swift */,
 				87341A2E2C217D4400DF23FF /* IgnoredKey.swift */,
 				F76AF7AE2C16A415005DC327 /* Immutable.swift */,
@@ -387,7 +387,7 @@
 				F71C68552C3815F90071EC9E /* TestCase.swift in Sources */,
 				F76AF7CA2C16A415005DC327 /* ReplaceKeys.swift in Sources */,
 				F76AF7BE2C16A415005DC327 /* DecimalNumberCoding.swift in Sources */,
-				8768D38C2C4A5CC700B48517 /* HollowDecoderOptions.swift in Sources */,
+				8768D38C2C4A5CC700B48517 /* DecodingOptions.swift in Sources */,
 				F76AF7B82C16A415005DC327 /* ApiResponse.swift in Sources */,
 				87E349082C3E6C3D00DF781C /* AutoConvertedCoding.swift in Sources */,
 				F752E05E2C41F4D100C8C42B /* DecodeTransformer.swift in Sources */,

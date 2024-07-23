@@ -315,3 +315,18 @@ struct HasNotKeyTests: HollowCodable {
     @ArrayCoding var anyArray: [Any]?
     @DictionaryCoding var anyDict: [String: Any]?
 }
+
+class SnakeToCamelTests: HollowCodable {
+    @Immutable var named: String?
+    @AnyBacked<AutoConvertedValue> var snkCamel: Int?
+    @DefaultBacked<AutoConvertedValue<Int>> var oneTwoThree: Int
+    @StringToCoding var _oneTwoThree_: String?
+    @SecondsSince1970DateCoding var timestampString: Date?
+    @HexColorCoding var backgroudColor: HollowColor?
+    
+    @LosslessCoding var lossless_string: String?
+    
+    static func mapping(mapper: HelpingMapper) {
+        mapper <<< CodingKeys.lossless_string <-- ["losslessString", "lossless_string", "lossless_str"]
+    }
+}

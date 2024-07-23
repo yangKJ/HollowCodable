@@ -11,6 +11,7 @@ enum TestCase: String, CaseIterable {
     case compatiblesHandyJSONValueTests = "Compatibles HandyJSON test"
     
     case designatedPath = "Designated path test"
+    case snakeToCamel = "Snake to camel key test"
     
     case emptyDefaultsTests = "Empty default value test"
     case hasNotKeyTests = "Has not the key test"
@@ -46,6 +47,19 @@ extension TestCase {
         case .designatedPath:
             let data = Res.jsonData("Codable")!
             return [MixedTests].deserialize(from: data, designatedPath: "data")?.last
+        case .snakeToCamel:
+            let jsonString = """
+            {
+                "named": "Condy",
+                "snkCamel": 8,
+                "one_two_three": "123",
+                "_one_two_three_": "snake to camel",
+                "timestamp_string": "1558978068",
+                "backgroud_color": "0x7A4FDA",
+                "lossless_str": 2345
+            }
+            """
+            return SnakeToCamelTests.deserialize(from: jsonString, options: .CodingKeysConvertFromSnakeCase)
         case .compatiblesHandyJSONValueTests:
             let jsonString = """
             {
@@ -324,6 +338,8 @@ extension TestCase {
             }
             let string = String(data: data, encoding: .utf8)
             return try? HexColor_.init(value: string ?? "")?.transform()
+        case .snakeToCamel:
+            return (model as? SnakeToCamelTests)?.backgroudColor
         default:
             return nil
         }

@@ -40,6 +40,9 @@ extension TransformKeys {
         if let value = try? container.decode(Int.self) {
             return tranformer.transformFromJSON(value) as? Date
         }
+        if let value = try? container.decode(Date.self) {
+            return tranformer.transformFromJSON(value) as? Date
+        }
         return nil
     }
     
@@ -48,6 +51,9 @@ extension TransformKeys {
             return nil
         }
         if let value = try? container.decode(String.self) {
+            return tranformer.transformFromJSON(value) as? Data
+        }
+        if let value = try? container.decode(Data.self) {
             return tranformer.transformFromJSON(value) as? Data
         }
         return nil

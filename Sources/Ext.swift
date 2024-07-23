@@ -97,7 +97,7 @@ extension HollowWrapper where Base == String {
         return result
     }
     
-    private func snakeToCamel() -> String {
+    func snakeToCamel() -> String {
         guard !base.isEmpty, let firstNonUnderscore = base.firstIndex(where: { $0 != "_" }) else {
             return base
         }
@@ -130,7 +130,7 @@ extension HollowWrapper where Base == String {
         return result
     }
     
-    private func camelToSnake() -> String {
+    func camelToSnake() -> String {
         var chars = Array(base)
         for (i, char) in chars.enumerated().reversed() {
             if char.isUppercase {
@@ -141,6 +141,20 @@ extension HollowWrapper where Base == String {
             }
         }
         return String(chars)
+    }
+    
+    func firstLetterToLowercase() -> String {
+        guard !base.isEmpty else {
+            return base
+        }
+        return base.prefix(1).lowercased() + base.dropFirst()
+    }
+    
+    func firstLetterToUppercase() -> String {
+        guard !base.isEmpty else {
+            return base
+        }
+        return base.prefix(1).uppercased() + base.dropFirst()
     }
 }
 

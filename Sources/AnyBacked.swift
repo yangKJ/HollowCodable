@@ -224,6 +224,14 @@ extension AnyBacked: Hashable where T.DecodeType: Hashable {
 
 extension KeyedDecodingContainer {
     public func decode<T>(_ type: AnyBacked<T>.Type, forKey key: KeyedDecodingContainer<K>.Key) throws -> AnyBacked<T> {
-        return try decodeIfPresent(AnyBacked<T>.self, forKey: key) ?? AnyBacked()
+        if let result = try? decodeIfPresent(AnyBacked<T>.self, forKey: key) {
+            return result
+        }
+        // if Value is Optional，return nil
+        if let valueType = T.DecodeType.self as? ExpressibleByNilLiteral.Type {
+            let value = valueType.init(nilLiteral: ()) as? T.DecodeType
+            return AnyBacked(value)
+        }
+        return AnyBacked()
     }
 }

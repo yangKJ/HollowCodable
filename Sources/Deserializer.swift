@@ -13,9 +13,9 @@ extension HollowCodable {
     /// - Parameters:
     ///   - element: Bedeserialize data value.
     ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
-    ///   - options: Options for decoding the given property. See `HollowDecoderOptions`.
+    ///   - options: Options for decoding the given property. See `DecodingOptions`.
     /// - Returns: Model.
-    public static func deserialize(from element: Any, designatedPath: String? = nil, options: HollowDecoderOptions = []) -> Self? {
+    public static func deserialize(from element: Any, designatedPath: String? = nil, options: DecodingOptions = []) -> Self? {
         do {
             return try deserialize(element: element, designatedPath: designatedPath, options: options)
         } catch {
@@ -27,9 +27,9 @@ extension HollowCodable {
     /// - Parameters:
     ///   - element: Bedeserialize data value.
     ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
-    ///   - options: Options for decoding the given property. See `HollowDecoderOptions`.
+    ///   - options: Options for decoding the given property. See `DecodingOptions`.
     /// - Returns: Model.
-    public static func deserialize(element: Any, designatedPath: String? = nil, options: HollowDecoderOptions = []) throws -> Self {
+    public static func deserialize(element: Any, designatedPath: String? = nil, options: DecodingOptions = []) throws -> Self {
         try JSONDeserializer<Self>.deserialize(from: element, designatedPath: designatedPath, options: options, using: Self.self).mutating {
             $0.didFinishMapping()
         }
@@ -42,9 +42,9 @@ extension Collection where Element: HollowCodable {
     /// - Parameters:
     ///   - element: Bedeserialize data value.
     ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
-    ///   - options: Options for decoding the given property. See `HollowDecoderOptions`.
+    ///   - options: Options for decoding the given property. See `DecodingOptions`.
     /// - Returns: Array of models.
-    public static func deserialize(from element: Any, designatedPath: String? = nil, options: HollowDecoderOptions = []) -> [Element]? {
+    public static func deserialize(from element: Any, designatedPath: String? = nil, options: DecodingOptions = []) -> [Element]? {
         do {
             return try deserialize(element: element, designatedPath: designatedPath, options: options)
         } catch {
@@ -56,9 +56,9 @@ extension Collection where Element: HollowCodable {
     /// - Parameters:
     ///   - element: Bedeserialize data value.
     ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
-    ///   - options: Options for decoding the given property. See `HollowDecoderOptions`.
+    ///   - options: Options for decoding the given property. See `DecodingOptions`.
     /// - Returns: Array of models.
-    public static func deserialize(element: Any, designatedPath: String? = nil, options: HollowDecoderOptions = []) throws -> [Element] {
+    public static func deserialize(element: Any, designatedPath: String? = nil, options: DecodingOptions = []) throws -> [Element] {
         try JSONDeserializer<[Element]>.deserialize(from: element, designatedPath: designatedPath, options: options, using: Element.self).map {
             $0.mutating {
                 $0.didFinishMapping()
@@ -73,9 +73,9 @@ extension Dictionary where Key: Decodable, Value: HollowCodable {
     /// - Parameters:
     ///   - element: Bedeserialize data value.
     ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
-    ///   - options: Options for decoding the given property. See `HollowDecoderOptions`.
+    ///   - options: Options for decoding the given property. See `DecodingOptions`.
     /// - Returns: Dictionary of models.
-    public static func deserialize(from element: Any, designatedPath: String? = nil, options: HollowDecoderOptions = []) -> Dictionary<Key, Value>? {
+    public static func deserialize(from element: Any, designatedPath: String? = nil, options: DecodingOptions = []) -> Dictionary<Key, Value>? {
         do {
             return try deserialize(element: element, designatedPath: designatedPath, options: options)
         } catch {
@@ -87,9 +87,9 @@ extension Dictionary where Key: Decodable, Value: HollowCodable {
     /// - Parameters:
     ///   - element: Bedeserialize data value.
     ///   - designatedPath: Specifies the data path to decode, like `result.data.orderInfo`.
-    ///   - options: Options for decoding the given property. See `HollowDecoderOptions`.
+    ///   - options: Options for decoding the given property. See `DecodingOptions`.
     /// - Returns: Dictionary of models.
-    public static func deserialize(element: Any, designatedPath: String? = nil, options: HollowDecoderOptions = []) throws -> Dictionary<Key, Value> {
+    public static func deserialize(element: Any, designatedPath: String? = nil, options: DecodingOptions = []) throws -> Dictionary<Key, Value> {
         try JSONDeserializer<[Key:Value]>.deserialize(from: element, designatedPath: designatedPath, options: options, using: Value.self).mapValues {
             $0.mutating {
                 $0.didFinishMapping()
