@@ -113,6 +113,20 @@ extension Decimal: Transformer {
     }
 }
 
+extension URL: Transformer {
+    public typealias DecodeType = URL
+    public typealias EncodeType = URL
+    public init?(value: Any) {
+        if let val = value as? DecodeType {
+            self = val
+        } else if let val = value as? String, val.hc.isValidLink, let url = URL(string: val) {
+            self = url
+        } else {
+            return nil
+        }
+    }
+}
+
 extension Array: Transformer where Array.Element: HollowCodable {
     public typealias DecodeType = Array
     public typealias EncodeType = Array

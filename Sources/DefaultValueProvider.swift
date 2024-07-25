@@ -58,6 +58,14 @@ extension Decimal: DefaultValueProvider {
     public static let hasDefaultValue: Decimal = .zero
 }
 
+extension Data: DefaultValueProvider {
+    public static let hasDefaultValue: Data = Data()
+}
+
+extension Date: DefaultValueProvider {
+    public static let hasDefaultValue: Date = Date(timeIntervalSinceReferenceDate: 0)
+}
+
 extension Set: DefaultValueProvider where Set.Element: Codable {
     public static var hasDefaultValue: Set<Element> {
         return Set<Element>()

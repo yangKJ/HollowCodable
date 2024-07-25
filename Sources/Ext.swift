@@ -156,6 +156,24 @@ extension HollowWrapper where Base == String {
         }
         return base.prefix(1).uppercased() + base.dropFirst()
     }
+    
+    var isValidDecimal: Bool {
+        let regex = "((([1-9]{1}[0-9]*(\\.)?)|(0(\\.)))[0-9]{0,2})|0"
+        let presicate = NSPredicate(format: "SELF MATCHES %@", regex)
+        return presicate.evaluate(with: base)
+    }
+    
+    /// Verify that the URL format is correct.
+    var isValidLink: Bool {
+        do {
+            let dataDetector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let options = NSRegularExpression.MatchingOptions(rawValue: 0)
+            let res = dataDetector.matches(in: base, options: options, range: NSMakeRange(0, base.count))
+            return res.count == 1 && res[0].range.location == 0 && res[0].range.length == base.count ? true : false
+        } catch {
+            return false
+        }
+    }
 }
 
 extension HollowWrapper where Base == Double {

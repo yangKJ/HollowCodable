@@ -66,6 +66,10 @@ extension LosslessHasValue: DefaultValueProvider {
             return T.init(false.description)!
         case is String.Type:
             return T.init("")!
+        case is Date.Type:
+            return T.init(Date.hasDefaultValue.description)!
+        case is Data.Type:
+            return T.init(Data.hasDefaultValue.description)!
         default:
             return T.init("")!
         }

@@ -20,6 +20,9 @@
 
 ok, All of these issues can be resolved after you use [HollowCodable](https://github.com/yangKJ/HollowCodable), so you're welcome!
 
+Try to keep the API consistent with [HandyJSON](https://github.com/alibaba/HandyJSON) to reduce replacement costs.
+- 这边API尽量保持与HandyJSON一致，减少替换成本!!!😤
+
 ### Usage
 
 - Immutable: Made immutable via property wrapper, It can be used with other Coding.
@@ -48,7 +51,7 @@ struct IgnoredKeyTests: HollowCodable {
 - DefaultBacked: Set different default values for common types.
   - When the missed key or the value is null, will set the default value.
   - This library has built-in many default values, such as Int, Bool, String, Map, Array...
-  - if we want to set a different default value for the field.
+  - If we want to set a different default value for the field.
   
 ```swift
 struct DefaultValueTests: HollowCodable {

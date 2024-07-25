@@ -14,6 +14,7 @@ public enum HollowError: Swift.Error {
     case dateToString
     case toDictionary
     case toJSONString
+    case unsupportedType
 }
 
 extension HollowError: CustomStringConvertible, LocalizedError {
@@ -42,6 +43,8 @@ extension HollowError: CustomStringConvertible, LocalizedError {
             return "Description Failed to convert to dictionary."
         case .toJSONString:
             return "Converted JSON string is nil."
+        case .unsupportedType:
+            return "The `CodableAnyValue` unsupported type."
         }
     }
     
@@ -59,6 +62,8 @@ extension HollowError: CustomStringConvertible, LocalizedError {
         case .toDictionary:
             return nil
         case .toJSONString:
+            return nil
+        case .unsupportedType:
             return nil
         }
     }

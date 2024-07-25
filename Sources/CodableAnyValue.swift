@@ -25,11 +25,6 @@ public indirect enum CodableAnyValue: Codable {
 
 extension CodableAnyValue {
     
-    public enum Error: Swift.Error {
-        case unsupportedType
-        case unsupportedValue(Any)
-    }
-    
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if container.decodeNil() {
@@ -80,7 +75,7 @@ extension CodableAnyValue {
             self = .dictionary(dict)
             return
         }
-        throw CodableAnyValue.Error.unsupportedType
+        throw HollowError.unsupportedType
     }
     
     public func encode(to encoder: Encoder) throws {

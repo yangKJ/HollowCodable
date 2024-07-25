@@ -10,7 +10,7 @@ import Foundation
 public typealias DateValue2<T: DateConverter> = DateValue<T,T>
 
 /// Decodes and encodes dates using a strategy type.
-/// `@DateValue` decodes dates using a `DateConverter` which provides custom decoding and encoding functionality.
+/// `@DateCoding` decodes dates using a `DateConverter` which provides custom decoding and encoding functionality.
 public struct DateValue<D: DateConverter, E: DateConverter>: Transformer {
     
     var dateString: String?
@@ -43,6 +43,6 @@ public struct DateValue<D: DateConverter, E: DateConverter>: Transformer {
 extension DateValue: DefaultValueProvider {
     
     public static var hasDefaultValue: Date {
-        Date()
+        Date.hasDefaultValue
     }
 }

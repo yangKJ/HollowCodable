@@ -8,7 +8,7 @@
 import Foundation
 
 /// Decodes and encodes data using a strategy type.
-/// `@DataValue` decodes data using a `DataConverter` which provides custom decoding and encoding functionality.
+/// `@DataCoding` decodes data using a `DataConverter` which provides custom decoding and encoding functionality.
 public struct DataValue<T: DataConverter>: Transformer {
     
     let dataString: String
@@ -42,6 +42,6 @@ extension DataValue: DefaultValueProvider {
     public typealias DefaultType = Data
     
     public static var hasDefaultValue: DefaultType {
-        Data()
+        Data.hasDefaultValue
     }
 }

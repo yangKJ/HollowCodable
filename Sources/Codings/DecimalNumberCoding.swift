@@ -23,6 +23,9 @@ public struct DecimalNumberValue: Transformer {
     }
     
     public func transform() throws -> NSDecimalNumber? {
+        guard decimalString.hc.isValidDecimal else {
+            return nil
+        }
         let decimal = NSDecimalNumber(string: decimalString)
         if decimal.isEqual(to: NSDecimalNumber.notANumber) {
             return nil

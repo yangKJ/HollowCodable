@@ -52,11 +52,15 @@ extension AutoConvertedValue: DefaultValueProvider {
         case is any Numeric.Type:
             return 0 as! T
         case is Bool.Type:
-            return false as! T
+            return Bool.hasDefaultValue as! T
         case is String.Type:
-            return "" as! T
+            return String.hasDefaultValue as! T
         case is Decimal.Type:
-            return Decimal.zero as! T
+            return Decimal.hasDefaultValue as! T
+        case is Date.Type:
+            return Date.hasDefaultValue as! T
+        case is Data.Type:
+            return Data.hasDefaultValue as! T
         default:
             return Optional<Any>.none as! T
         }
