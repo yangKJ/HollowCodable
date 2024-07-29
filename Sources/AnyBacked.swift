@@ -227,11 +227,6 @@ extension KeyedDecodingContainer {
         if let result = try? decodeIfPresent(AnyBacked<T>.self, forKey: key) {
             return result
         }
-        // if Value is Optional，return nil
-        if let valueType = T.DecodeType.self as? ExpressibleByNilLiteral.Type {
-            let value = valueType.init(nilLiteral: ()) as? T.DecodeType
-            return AnyBacked(value)
-        }
         return AnyBacked()
     }
 }

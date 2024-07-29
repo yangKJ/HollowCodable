@@ -326,7 +326,10 @@ class SnakeToCamelTests: HollowCodable {
     
     @LosslessCoding var lossless_string: String?
     
+    @AnyBacked<Int> var redValue: Int?
+    
     static func mapping(mapper: HelpingMapper) {
         mapper <<< CodingKeys.lossless_string <-- ["losslessString", "lossless_string", "lossless_str"]
+        mapper <<< CodingKeys.redValue <-- ["redValue", "red", "color.red"]
     }
 }

@@ -56,7 +56,9 @@ extension TestCase {
                 "_one_two_three_": "snake to camel",
                 "timestamp_string": "1558978068",
                 "backgroud_color": "0x7A4FDA",
-                "lossless_str": 2345
+                "lossless_str": 2345,
+                "red": null,
+                "color": {"red":255, "green":233}
             }
             """
             return SnakeToCamelTests.deserialize(from: jsonString, options: .CodingKeysConvertFromSnakeCase)

@@ -11,6 +11,7 @@ public indirect enum CodableAnyValue: Codable {
     case null
     case bool(Bool)
     case int(Int)
+    case uInt(UInt)
     case float(Float)
     case double(Double)
     case string(String)
@@ -37,6 +38,10 @@ extension CodableAnyValue {
         }
         if let int = try? container.decode(Int.self) {
             self = .int(int)
+            return
+        }
+        if let uInt = try? container.decode(UInt.self) {
+            self = .uInt(uInt)
             return
         }
         if let float = try? container.decode(Float.self) {
@@ -91,6 +96,8 @@ extension CodableAnyValue {
             try container.encode(string)
         case .int(let int):
             try container.encode(int)
+        case .uInt(let uInt):
+            try container.encode(uInt)
         case .float(let float):
             try container.encode(float)
         case .bool(let bool):
@@ -124,6 +131,8 @@ extension CodableAnyValue {
             return value
         case .int(let value):
             return value
+        case .uInt(let value):
+            return value
         case .float(let value):
             return value
         case .bool(let value):
@@ -147,10 +156,14 @@ extension CodableAnyValue {
         switch value {
         case Optional<Any>.none:
             self = .null
+        case is Void:
+            self = .null
         case let val as String:
             self = .string(val)
         case let val as Int:
             self = .int(val)
+        case let val as UInt:
+            self = .uInt(val)
         case let val as Float:
             self = .float(val)
         case let val as Bool:

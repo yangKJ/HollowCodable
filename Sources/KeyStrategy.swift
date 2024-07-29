@@ -10,7 +10,7 @@ import Foundation
 extension JSONEncoder {
     
     func setupKeyStrategy<T: HollowCodable>(_ type: T.Type) {
-        let mapper = T.setupCodingKeyMappingKeys()
+        let mapper = HelpingMapper.setupCodingKeyMappingKeys(type)
         if !mapper.replaceKeys.isEmpty {
             let keys = mapper.replaceKeys.toEncoderingMappingKeys
             self.keyEncodingStrategy = .custom({ codingPath in
@@ -37,8 +37,8 @@ extension JSONEncoder {
 
 extension JSONDecoder {
     
-    func setupKeyStrategy<T: HollowCodable>(_ type: T.Type, options: DecodingOptions) {
-        let mapper = T.setupCodingKeyMappingKeys()
+    func setupKeyStrategy<T: HollowCodable>(_ type: T.Type, options: DecodingOptions) -> [NestedKeys] {
+        let mapper = HelpingMapper.setupCodingKeyMappingKeys(type)
         if !mapper.replaceKeys.isEmpty || options.hasCodingKeyConvertStrategy() {
             let keys = mapper.replaceKeys.toDecoderingMappingKeys
             self.keyDecodingStrategy = .custom({ codingPath in
@@ -89,5 +89,6 @@ extension JSONDecoder {
                 throw decodingError
             })
         }
+        return mapper.nestedKeys
     }
 }

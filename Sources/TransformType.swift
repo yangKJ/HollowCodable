@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A TransformType simply defines a static function that transforms a value.
 public protocol TransformType {
     associatedtype Object
     associatedtype JSON

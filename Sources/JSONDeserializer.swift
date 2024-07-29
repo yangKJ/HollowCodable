@@ -13,7 +13,8 @@ public struct JSONDeserializer<T: Decodable> {
     /// `designatedPath` is a string like `result.data.orderInfo`, which each element split by `.` represents key of each layer, or nil
     public static func deserialize(from element: Any, designatedPath: String? = nil, options: DecodingOptions = [], using type: HollowCodable.Type) throws -> T {
         let decoder = JSONDecoder()
-        decoder.setupKeyStrategy(type, options: options)
+        let hasNestedKeys = decoder.setupKeyStrategy(type, options: options)
+        decoder.hasNestedKeys = hasNestedKeys
         if #available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *) {
             if options.contains(.allowsJSON5) {
                 decoder.allowsJSON5 = true

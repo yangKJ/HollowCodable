@@ -37,22 +37,39 @@ public struct ReplaceKeys: CodingKeyMapping {
         self.keyString = location.stringValue
         self.keys = keys
     }
+    
+    var hasNestedKeys: NestedKeys? {
+        let keys = keys.filter {
+            $0.contains(".")
+        }
+        if keys.isEmpty {
+            return nil
+        }
+        return NestedKeys.init(replaceKey: keyString, keys: keys)
+    }
+    
+    var hasNormalKeys: [String] {
+        keys.filter {
+            !$0.contains(".")
+        }
+    }
 }
 
 extension Collection where Element == ReplaceKeys {
     
     public var toDecoderingMappingKeys: Dictionary<String, String> {
         Dictionary(uniqueKeysWithValues: self.map({ a in
-            a.keys.map { ($0, a.keyString) }
+            a.hasNormalKeys.map { ($0, a.keyString) }
         }).reduce([], +))
     }
     
     public var toEncoderingMappingKeys: Dictionary<String, String> {
         Dictionary(uniqueKeysWithValues: self.compactMap {
-            if let key = $0.keys.first {
+            if let key = $0.hasNormalKeys.first {
                 return ($0.keyString, key)
+            } else {
+                return nil
             }
-            return nil
         }.filterDuplicates({
             $0.0
         }))

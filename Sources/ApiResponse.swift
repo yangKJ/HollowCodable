@@ -28,15 +28,18 @@ public struct ApiResponse<T: Codable>: HasResponsable {
     
     public static var codingKeys: [ReplaceKeys] {
         return [
-            ReplaceKeys(location: CodingKeys.data, keys: "data", "list"),
-            ReplaceKeys(location: CodingKeys.message, keys: "message", "msg"),
+            ReplaceKeys(replaceKey: "data", keys: ["data", "list"]),
+            ReplaceKeys(replaceKey: "message", keys: ["message", "msg"]),
         ]
     }
 }
 
 extension ApiResponse where T: HollowCodable {
     
-    public static func deserialize(from element: Any, options: DecodingOptions = []) -> Self? {
+    public static func deserialize(from element: Any?, options: DecodingOptions = []) -> Self? {
+        guard let element = element else {
+            return nil
+        }
         do {
             return try deserialize(element: element, options: options)
         } catch {
@@ -55,7 +58,10 @@ extension ApiResponse where T: HollowCodable {
 
 extension ApiResponse where T: Collection, T.Element: HollowCodable {
     
-    public static func deserialize(from element: Any, options: DecodingOptions = []) -> Self? {
+    public static func deserialize(from element: Any?, options: DecodingOptions = []) -> Self? {
+        guard let element = element else {
+            return nil
+        }
         do {
             return try deserialize(element: element, options: options)
         } catch {
@@ -76,7 +82,10 @@ extension ApiResponse where T: Collection, T.Element: HollowCodable {
 
 extension HollowCodable where Self: HasResponsable, DataType: HollowCodable {
     
-    public static func deserialize(from element: Any, options: DecodingOptions = []) -> ApiResponse<DataType>? {
+    public static func deserialize(from element: Any?, options: DecodingOptions = []) -> ApiResponse<DataType>? {
+        guard let element = element else {
+            return nil
+        }
         do {
             return try deserialize(element: element, options: options)
         } catch {
@@ -95,7 +104,10 @@ extension HollowCodable where Self: HasResponsable, DataType: HollowCodable {
 
 extension HollowCodable where Self: HasResponsable, DataType: Collection, DataType.Element: HollowCodable {
     
-    public static func deserialize(from element: Any, options: DecodingOptions = []) -> ApiResponse<[DataType.Element]>? {
+    public static func deserialize(from element: Any?, options: DecodingOptions = []) -> ApiResponse<[DataType.Element]>? {
+        guard let element = element else {
+            return nil
+        }
         do {
             return try deserialize(element: element, options: options)
         } catch {

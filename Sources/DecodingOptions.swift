@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DecodingOptions: OptionSet {
+public struct DecodingOptions: OptionSet, RawRepresentable, Equatable, Hashable, Sendable {
     public let rawValue: Int
     public init(rawValue: Int) {
         self.rawValue = rawValue
