@@ -125,18 +125,10 @@ struct LossyTests: HollowCodable {
 }
 
 struct AnyValueTests: HollowCodable {
-    //@AnyBacked<AnyDictionary>
-    @DictionaryCoding var anyDict: [String: Any]?
-    //@AnyBacked<AnyDictionaryArray>
-    @ArrayDictionaryCoding var mixList: [[String: Any]]?
-    //@AnyBacked<AnyArray>
-    @ArrayCoding var anyArray: [Any]?
-    //@AnyBacked<AnyX>
-    @AnyXCoding var value: Any?
-    
-    @DefaultBacked<AnyArray> var hasArray: [Any]
-    @DefaultBacked<AnyDictionary> var defaultDict: [String: Any]
-    @DefaultBacked<AnyDictionaryArray> var defaultList: [[String: Any]]
+    @AnyValueCoding var value: Any?
+    @AnyValueCoding var anyDict: [String: Any]?
+    @AnyValueCoding var anyArray: [Any]?
+    @AnyValueCoding var mixValue: [Any]?
 }
 
 struct BoolTests: HollowCodable {
@@ -155,7 +147,7 @@ struct DecimalNumberTests: HollowCodable {
     @DecimalNumberCoding var decimalNumberAsDouble: NSDecimalNumber?
     @DecimalNumberCoding var decimalNumberAsString: NSDecimalNumber?
     @DecimalNumberCoding var hasDecimalNumber: NSDecimalNumber?
-    
+    @BoolCoding var boolean: Bool?
     @AnyBacked<Decimal> var decimal: Decimal?
 }
 
@@ -312,8 +304,8 @@ struct HasNotKeyTests: HollowCodable {
     @LossyDictionaryCoding var lossyDict: [String: String]?
     @StringToCoding var losslessInt: Int?
     @LosslessCoding var losslessString: String?
-    @ArrayCoding var anyArray: [Any]?
-    @DictionaryCoding var anyDict: [String: Any]?
+    @AnyValueCoding var anyArray: [Any]?
+    @AnyValueCoding var anyDict: [String: Any]?
 }
 
 class SnakeToCamelTests: HollowCodable {

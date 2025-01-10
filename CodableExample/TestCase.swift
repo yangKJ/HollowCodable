@@ -174,7 +174,7 @@ extension TestCase {
             let jsonString = """
             {
                 "value": 5,
-                "defaultDict": null,
+                "anyArray": [1, "2", true, ["3", 4]],
                 "anyDict": {
                     "sub": {
                         "amount": "52.9",
@@ -187,18 +187,17 @@ extension TestCase {
                     "three": null,
                     "val": 28
                 },
-                "defaultList": null,
-                "mixList": [{
+                "mixValue": [{
                     "benc": "Condy"
                 }, {
                     "po": 5200
                 }, {
                     "dict": {
-                        "val": 718
+                        "val": 718,
+                        "xx": [1, "2", true, ["3", 4]]
                     },
                     "named": "Yuan"
-                }],
-                "anyArray": [1, "2", true, ["3", 4]]
+                }]
             }
             """
             return AnyValueTests.deserialize(from: jsonString)
@@ -218,8 +217,9 @@ extension TestCase {
             {
                 "decimalNumber": null,
                 "decimalNumberAsInt": 2,
-                "decimalNumberAsDouble": 35623.56,
+                "decimalNumberAsDouble": 3649999999999996.35,
                 "decimalNumberAsString": "120.8",
+                "boolean": true,
                 "decimal": 5.0
             }
             """

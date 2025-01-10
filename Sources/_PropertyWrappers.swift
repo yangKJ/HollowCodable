@@ -136,27 +136,12 @@ public typealias Base64Encoding = AnyBackedEncoding<DataValue<Hollow.Base64Data>
 
 // MARK: - Dictionary
 
-/// Support any value property wrapper with dictionary, decodes any value json into `[String:Any]`.
-public typealias DictionaryCoding   = AnyBacked<AnyDictionary>
-public typealias DictionaryDecoding = AnyBackedDecoding<AnyDictionary>
-public typealias DictionaryEncoding = AnyBackedEncoding<AnyDictionary>
-
 /// Decodes Dictionaries filtering invalid key-value pairs.
 public typealias LossyDictionaryCoding<K: Hashable & Codable, V: Codable>   = AnyBacked<LossyDictionaryValue<K, V>>
 public typealias LossyDictionaryDecoding<K: Hashable & Codable, V: Codable> = AnyBackedDecoding<LossyDictionaryValue<K,V>>
 public typealias LossyDictionaryEncoding<K: Hashable & Codable, V: Codable> = AnyBackedEncoding<LossyDictionaryValue<K,V>>
 
 // MARK: - Array
-
-/// Support any value property wrapper with array, decodes any value json into `[Any]`.
-public typealias ArrayCoding   = AnyBacked<AnyArray>
-public typealias ArrayDecoding = AnyBackedDecoding<AnyArray>
-public typealias ArrayEncoding = AnyBackedEncoding<AnyArray>
-
-/// Support any value dictionary property wrapper with array, decodes any value json into `[[String:Any]]`.
-public typealias ArrayDictionaryCoding   = AnyBacked<AnyDictionaryArray>
-public typealias ArrayDictionaryDecoding = AnyBackedDecoding<AnyDictionaryArray>
-public typealias ArrayDictionaryEncoding = AnyBackedEncoding<AnyDictionaryArray>
 
 /// Decodes Dictionaries filtering invalid value pairs.
 public typealias LossyArrayCoding<T: Codable>   = AnyBacked<LossyArrayValue<T>>
@@ -169,14 +154,10 @@ public typealias LosslessArrayEncoding<T: Codable & LosslessStringConvertible> =
 
 // MARK: - Any
 
-/// Support any value property wrapper with Any, decodes any value json into `Any`.
-public typealias AnyValueCoding   = AnyBacked<AnyX>
-public typealias AnyValueDecoding = AnyBackedDecoding<AnyX>
-public typealias AnyValueEncoding = AnyBackedEncoding<AnyX>
-
-public typealias AnyXCoding   = AnyBacked<AnyX>
-public typealias AnyXDecoding = AnyBackedDecoding<AnyX>
-public typealias AnyXEncoding = AnyBackedEncoding<AnyX>
+/// Support any value property wrapper with any value, decodes any value json into `Any`、`[Any]`、`[String:Any]`.
+public typealias AnyValueCoding<T>   = AnyBacked<AnyValue<T>>
+public typealias AnyValueDecoding<T> = AnyBackedDecoding<AnyValue<T>>
+public typealias AnyValueEncoding<T> = AnyBackedEncoding<AnyValue<T>>
 
 // MARK: - String
 

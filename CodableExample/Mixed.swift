@@ -62,11 +62,11 @@ struct MixedTests: HollowCodable {
         @AnyBacked<Double> var amount: Double?
     }
     
-    @AnyBacked<AnyDictionary>
+    @AnyBacked<AnyValue>
     var mixDict: [String: Any]?
     
-    @AnyBacked<AnyDictionaryArray>
-    var mixList: [[String: Any]]?
+    @AnyBacked<AnyValue>
+    var mixList: [Any]?
     
     @DefaultBacked<[FruitAA]>
     var list: [FruitAA]

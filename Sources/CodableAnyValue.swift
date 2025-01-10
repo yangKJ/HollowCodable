@@ -21,7 +21,7 @@ public indirect enum CodableAnyValue: Codable {
     case data(Data)
     case decimal(Decimal)
     case array([CodableAnyValue])
-    case dictionary([String: CodableAnyValue])
+    case dictionary([String:CodableAnyValue])
 }
 
 extension CodableAnyValue {
@@ -32,52 +32,56 @@ extension CodableAnyValue {
             self = .null
             return
         }
-        if let bool = try? container.decode(Bool.self) {
-            self = .bool(bool)
+        if let value = try? container.decode(Bool.self) {
+            self = .bool(value)
             return
         }
-        if let int = try? container.decode(Int.self) {
-            self = .int(int)
+        if let value = try? container.decode(Int.self) {
+            self = .int(value)
             return
         }
-        if let uInt = try? container.decode(UInt.self) {
-            self = .uInt(uInt)
+        if let value = try? container.decode(Decimal.self) {
+            self = .decimal(value)
             return
         }
-        if let float = try? container.decode(Float.self) {
-            self = .float(float)
+        if let value = try? container.decode(UInt.self) {
+            self = .uInt(value)
             return
         }
-        if let double = try? container.decode(Double.self) {
-            self = .double(double)
+        if let value = try? container.decode(Float.self) {
+            self = .float(value)
             return
         }
-        if let string = try? container.decode(String.self) {
-            self = .string(string)
+        if let value = try? container.decode(Double.self) {
+            self = .double(value)
             return
         }
-        if let date = try? container.decode(Date.self) {
-            self = .date(date)
+        if let value = try? container.decode(String.self) {
+            self = .string(value)
             return
         }
-        if let data = try? container.decode(Data.self) {
-            self = .data(data)
+        if let value = try? container.decode(Date.self) {
+            self = .date(value)
             return
         }
-        if let url = try? container.decode(URL.self) {
-            self = .url(url)
+        if let value = try? container.decode(Data.self) {
+            self = .data(value)
             return
         }
-        if let uuid = try? container.decode(UUID.self) {
-            self = .uuid(uuid)
+        if let value = try? container.decode(URL.self) {
+            self = .url(value)
             return
         }
-        if let array = try? container.decode([CodableAnyValue].self) {
-            self = .array(array)
+        if let value = try? container.decode(UUID.self) {
+            self = .uuid(value)
             return
         }
-        if let dict = try? container.decode([String: CodableAnyValue].self) {
-            self = .dictionary(dict)
+        if let value = try? container.decode([CodableAnyValue].self) {
+            self = .array(value)
+            return
+        }
+        if let value = try? container.decode([String:CodableAnyValue].self) {
+            self = .dictionary(value)
             return
         }
         throw HollowError.unsupportedType
@@ -88,32 +92,32 @@ extension CodableAnyValue {
         switch self {
         case .null:
             try container.encodeNil()
-        case .dictionary(let dict):
-            try container.encode(dict)
-        case .array(let array):
-            try container.encode(array)
-        case .string(let string):
-            try container.encode(string)
-        case .int(let int):
-            try container.encode(int)
-        case .uInt(let uInt):
-            try container.encode(uInt)
-        case .float(let float):
-            try container.encode(float)
-        case .bool(let bool):
-            try container.encode(bool)
-        case .double(let double):
-            try container.encode(double)
-        case .date(let date):
-            try container.encode(date)
-        case .data(let data):
-            try container.encode(data)
-        case .uuid(let uuid):
-            try container.encode(uuid)
-        case .url(let url):
-            try container.encode(url)
-        case .decimal(let decimal):
-            try container.encode(decimal)
+        case .dictionary(let value):
+            try container.encode(value)
+        case .array(let value):
+            try container.encode(value)
+        case .string(let value):
+            try container.encode(value)
+        case .int(let value):
+            try container.encode(value)
+        case .uInt(let value):
+            try container.encode(value)
+        case .float(let value):
+            try container.encode(value)
+        case .bool(let value):
+            try container.encode(value)
+        case .double(let value):
+            try container.encode(value)
+        case .date(let value):
+            try container.encode(value)
+        case .data(let value):
+            try container.encode(value)
+        case .uuid(let value):
+            try container.encode(value)
+        case .url(let value):
+            try container.encode(value)
+        case .decimal(let value):
+            try container.encode(value)
         }
     }
 }
@@ -162,6 +166,8 @@ extension CodableAnyValue {
             self = .string(val)
         case let val as Int:
             self = .int(val)
+        case let val as Decimal:
+            self = .decimal(val)
         case let val as UInt:
             self = .uInt(val)
         case let val as Float:
@@ -178,11 +184,9 @@ extension CodableAnyValue {
             self = .uuid(val)
         case let val as URL:
             self = .url(val)
-        case let val as Decimal:
-            self = .decimal(val)
         case let val as [CodableAnyValue]:
             self = .array(val)
-        case let val as [String: CodableAnyValue]:
+        case let val as [String:CodableAnyValue]:
             self = .dictionary(val)
         default:
             return nil
