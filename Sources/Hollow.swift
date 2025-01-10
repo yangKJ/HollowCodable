@@ -21,6 +21,8 @@ public struct Hollow {
             return val
         case let val as Bool:
             return val.description
+        case let val as Decimal:
+            return val.description
         case let val as Double where val <= 9999999999999998:
             return val.hc.string(minPrecision: 2, maxPrecision: 16)
         case let val as Float:
@@ -62,8 +64,6 @@ public struct Hollow {
         case let val as Date:
             return val.description
         case let val as NSDecimalNumber:
-            return val.description
-        case let val as Decimal:
             return val.description
         case let val as URL:
             return val.absoluteString

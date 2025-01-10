@@ -76,6 +76,17 @@ extension HollowCodable {
         let result = U.deserialize(from: dict)
         return result ?? (self as! U)
     }
+    
+    /// 将相同字段数据映射给出来
+    /// Map the same field data to it.
+    /// - Parameter type: The model to be mapped.
+    /// - Returns: Mapped data.
+    public func mapping<T: HollowCodable>(to type: T.Type) -> T? {
+        guard let dict = self.toJSON() else {
+            return nil
+        }
+        return T.deserialize(from: dict)
+    }
 }
 
 extension Int: HollowCodable { }

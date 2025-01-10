@@ -19,12 +19,7 @@ extension Encodable where Self: HollowCodable {
     }
     
     public func toJSON() -> [String: Any]? {
-        do {
-            let data = try toData()
-            return try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
-        } catch {
-            return nil
-        }
+        return try? toDictionary()
     }
     
     public func toDictionary() throws -> [String: Any] {

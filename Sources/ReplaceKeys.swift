@@ -58,18 +58,17 @@ public struct ReplaceKeys: CodingKeyMapping {
 extension Collection where Element == ReplaceKeys {
     
     public var toDecoderingMappingKeys: Dictionary<String, String> {
-        Dictionary(uniqueKeysWithValues: self.map({ a in
-            a.hasNormalKeys.map { ($0, a.keyString) }
-        }).reduce([], +))
+        Dictionary(uniqueKeysWithValues: self.map { val in
+            val.hasNormalKeys.map { ($0, val.keyString) }
+        }.reduce([], +))
     }
     
     public var toEncoderingMappingKeys: Dictionary<String, String> {
         Dictionary(uniqueKeysWithValues: self.compactMap {
-            if let key = $0.hasNormalKeys.first {
-                return ($0.keyString, key)
-            } else {
+            guard let key = $0.hasNormalKeys.first else {
                 return nil
             }
+            return ($0.keyString, key)
         }.filterDuplicates({
             $0.0
         }))

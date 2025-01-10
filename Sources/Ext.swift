@@ -39,14 +39,11 @@ extension Collection {
     }
     
     func filterDuplicates<E: Equatable>(_ filter: (Element) -> E) -> [Element] {
-        var result = [Element]()
-        for value in self {
-            let key = filter(value)
-            if !result.map({ filter($0) }).contains(key) {
-                result.append(value)
+        return self.reduce(into: [Element]()) {
+            if !$0.map({ filter($0) }).contains(filter($1)) {
+                $0.append($1)
             }
         }
-        return result
     }
     
     func removeFromEnd(_ count: Int) -> [Element]? {
